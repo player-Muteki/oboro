@@ -1824,8 +1824,7 @@ progress {
   background-color: rgb(227 177 201 / 25%);
 }
 
-/* --- 18.10 状态栏与空状态 --- */
-/* 状态栏：粉调液态玻璃（保留樱粉签名，融入玻璃体系） */
+/* --- 18.10 状态栏与空状态：粉调液态玻璃（保留樱粉签名，融入玻璃体系） --- */
 .status-bar {
   font-size: var(--font-ui-smaller);
   border-top: 1px solid var(--status-bar-border-color);
