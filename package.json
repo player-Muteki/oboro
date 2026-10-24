@@ -1,0 +1,13 @@
+{
+  "name": "sakura-macaron-obsidian",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sakura Macaron — 樱粉/夜樱双模式 Obsidian 主题",
+  "scripts": {
+    "lint": "stylelint \"**/*.css\""
+  },
+  "devDependencies": {
+    "stylelint": "^17.0.0",
+    "stylelint-config-obsidianmd": "^0.1.0"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "stylelint-config-obsidianmd",
+  "rules": {
+    "selector-class-pattern": null,
+    "declaration-block-no-duplicate-custom-properties": null
+  }
+}

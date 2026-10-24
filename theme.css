@@ -1,0 +1,1085 @@
+/* =================================================================
+   Obsidian Theme: Sakura Macaron
+   Light: 樱粉 (Sakura Pink) · Dark: 夜樱 (Night Sakura)
+   特性：双模式调色板 · 毛玻璃 · 壁纸引擎 · 代码块七段光带 · 语言胶囊
+   兼容：Obsidian 1.13+（CodeMirror 6 HyperMD 代码块）
+   章节：1 排版与全局背景 · 2/3 双模式调色板 · 4 原生变量接驳层
+         5 标题与加粗 · 6 毛玻璃 · 7 代码块光带 · 8 语言胶囊
+         9 修补补丁 · 10 可选开关 · 末尾 Style Settings 配置
+   ================================================================= */
+
+/* -----------------------------------------------------------------
+   1. Typography & Global Background - 字体与全局动态背景
+   ----------------------------------------------------------------- */
+body {
+  /* 字体：主题级排版入口，可在 设置 → 外观 → 字体 中覆盖 */
+  --rtm-markdown-editor-font: 'Lora', 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+  --rtm-code-font: 'Cascadia Code', 'JetBrains Mono', ui-monospace, sfmono-regular, menlo, consolas, monospace;
+  --font-text-theme: var(--rtm-markdown-editor-font);
+  --font-monospace-theme: var(--rtm-code-font);
+
+  /* 标题字号与字重（--h*-size 为官方变量入口） */
+  --rtm-h1-size: 1.6em;
+  --rtm-h2-size: 1.4em;
+  --rtm-h3-size: 1.2em;
+  --rtm-h4-size: 1.1em;
+  --rtm-h5-size: 1em;
+  --rtm-h6-size: 0.9em;
+  --rtm-h1-weight: 700;
+  --rtm-h2-weight: 600;
+  --rtm-h3-weight: 600;
+  --rtm-h4-weight: 600;
+  --rtm-h5-weight: 600;
+  --rtm-h6-weight: 600;
+  --h1-size: var(--rtm-h1-size);
+  --h2-size: var(--rtm-h2-size);
+  --h3-size: var(--rtm-h3-size);
+  --h4-size: var(--rtm-h4-size);
+  --h5-size: var(--rtm-h5-size);
+  --h6-size: var(--rtm-h6-size);
+
+  /* 代码块圆角 */
+  --rtm-code-radius: 12px;
+  --rtm-code-inline-radius: 4px;
+  --line-height-normal: 1.75;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* 壁纸引擎：--app-bg-image 优先（壁纸），--app-background-gradient 兜底渐变 */
+  background-image: var(--app-bg-image, none), var(--app-background-gradient, none);
+  background-color: var(--background-secondary);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+
+/* 移动端 WKWebView 对滚动容器内的 fixed 背景不可靠，退回随内容定位 */
+@media (hover: none) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
+/* 行内代码圆角（接驳调色板里的 --rtm-code-inline-radius） */
+.markdown-rendered :not(pre) > code {
+  border-radius: var(--rtm-code-inline-radius);
+}
+
+/* -----------------------------------------------------------------
+   2. Light Palette (Day Mode) - 樱粉：高对比度清透
+   ----------------------------------------------------------------- */
+.theme-light {
+  --app-bg-image: var(--dv-light-bg, none);
+  --app-background-gradient: linear-gradient(135deg, #FFF0F5 0%, #FDE4EC 50%, #F8BBD0 100%);
+  --rtm-bg-primary: #FFF0F5;
+  --rtm-bg-primary-alt: #FFF;
+  --rtm-bg-secondary: #FDE4EC;
+  --rtm-bg-secondary-alt: #F8BBD0;
+  --rtm-bg-paper: #FFF8FA;
+  --rtm-txt-accent: #5E3A46;
+  --rtm-txt-accent-mute: #8E6F7A;
+  --rtm-txt-accent-faint: #BFA4AE;
+  --rtm-interactive-accent: #C45A6D;
+  --interactive-accent: var(--rtm-interactive-accent);
+  --interactive-accent-hover: #9E4253;
+  --rtm-code-bg: #F2DEE4;
+  --rtm-code-border-color: #D89CAB;
+  --code-normal: var(--rtm-txt-accent);
+  --code-comment: #775874;
+  --rtm-blockquote-bg: transparent;
+  --rtm-blockquote-border-color: var(--rtm-interactive-accent);
+  --rtm-bold-color: #C45A6D;
+  --rtm-tab-bg-active: var(--rtm-bg-primary);
+  --rtm-tab-bg-active: color-mix(in srgb, var(--rtm-bg-primary) 90%, transparent);
+  --rtm-tab-inactive-bg: var(--rtm-bg-secondary);
+  --rtm-tab-inactive-bg: color-mix(in srgb, var(--rtm-bg-secondary) 75%, transparent);
+  --rtm-tab-inactive-bg-hover: var(--rtm-bg-primary);
+  --rtm-tab-outline-color: var(--rtm-interactive-accent);
+  --rtm-tab-radius: 6px;
+  --rtm-table-header-bg: var(--rtm-bg-secondary);
+  --rtm-table-data-bg: var(--rtm-bg-primary);
+  --rtm-table-data-bg: color-mix(in srgb, var(--rtm-bg-primary) 86%, transparent);
+  --rtm-table-border-color: #E6BAC5;
+  --rtm-tag-bg: var(--rtm-bg-secondary);
+  --rtm-tag-bg: color-mix(in srgb, var(--rtm-bg-secondary) 88%, transparent);
+  --rtm-tag-bg-hover: var(--rtm-interactive-accent);
+  --rtm-tag-color: var(--rtm-txt-accent-mute);
+  --rtm-tag-border-color: transparent;
+  --rtm-workspace-root-bg: var(--rtm-bg-secondary);
+  --rtm-workspace-root-bg: color-mix(in srgb, var(--rtm-bg-secondary) 70%, transparent);
+  --rtm-workspace-leaf-bg: var(--rtm-bg-primary);
+  --rtm-workspace-leaf-bg: color-mix(in srgb, var(--rtm-bg-primary) 85%, transparent);
+  --rtm-markdown-editor-bg: var(--rtm-bg-primary);
+  --rtm-markdown-editor-bg: color-mix(in srgb, var(--rtm-bg-primary) 85%, transparent);
+  --rtm-view-content-bg: var(--rtm-markdown-editor-bg);
+  --rtm-modal-bg: var(--rtm-bg-primary-alt);
+  --rtm-menu-bg: var(--rtm-bg-primary-alt);
+  --rtm-scrollbar-thumb-bg: #E89FB0;
+  --rtm-titlebar-bg-focus: #FCE8EE;
+  --rtm-titlebar-bg: #FFF5F7;
+  --rtm-titlebar-txt-color-focus: #76515C;
+  --rtm-titlebar-txt-color: #9C7781;
+}
+
+/* -----------------------------------------------------------------
+   3. Dark Palette (Night Mode) - 夜樱
+   壳层：编辑器 #3C2D3C · 侧栏 #352737 · 活动栏 #281F2B · 面板 #372737
+   状态栏 #AD7F96 · 正文 #EBC4D7 · 行号 #BC9DB0
+   ----------------------------------------------------------------- */
+.theme-dark {
+  --app-bg-image: var(--dv-dark-bg, none);
+  --app-background-gradient:
+    radial-gradient(120% 90% at 18% 0%, rgb(240 181 206 / 10%) 0%, transparent 62%),
+    radial-gradient(100% 80% at 82% 100%, rgb(204 176 240 / 9%) 0%, transparent 60%),
+    linear-gradient(160deg, #3C2D3C 0%, #33252F 52%, #281F2B 100%);
+  --rtm-bg-primary: #3C2D3C;
+  --rtm-bg-primary-alt: #413240;
+  --rtm-bg-secondary: #352737;
+  --rtm-bg-secondary-alt: #281F2B;
+  --rtm-bg-paper: #3A2E3A;
+  --rtm-txt-accent: #EBC4D7;
+  --rtm-txt-accent-mute: #BC9DB0;
+  --rtm-txt-accent-faint: #7E6577;
+  --rtm-interactive-accent: #E3B1C9;
+  --interactive-accent: var(--rtm-interactive-accent);
+  --interactive-accent-hover: #F0B5CE;
+  --rtm-code-bg: #342834;
+  --rtm-code-border-color: #27202A;
+  --code-normal: #E9C7D8;
+  --code-comment: #BBA9BA;
+  --rtm-blockquote-bg: transparent;
+  --rtm-blockquote-border-color: var(--rtm-interactive-accent);
+  --rtm-bold-color: #E9C7D8;
+  --rtm-tab-bg-active: var(--rtm-bg-primary);
+  --rtm-tab-bg-active: color-mix(in srgb, var(--rtm-bg-primary) 90%, transparent);
+  --rtm-tab-inactive-bg: var(--rtm-bg-secondary);
+  --rtm-tab-inactive-bg: color-mix(in srgb, var(--rtm-bg-secondary) 75%, transparent);
+  --rtm-tab-inactive-bg-hover: var(--rtm-bg-primary);
+  --rtm-tab-outline-color: var(--rtm-interactive-accent);
+  --rtm-tab-radius: 6px;
+  --rtm-table-header-bg: #3E303D;
+  --rtm-table-data-bg: var(--rtm-bg-primary);
+  --rtm-table-data-bg: color-mix(in srgb, var(--rtm-bg-primary) 86%, transparent);
+  --rtm-table-border-color: #27202A;
+  --rtm-tag-bg: #533F50;
+  --rtm-tag-bg: color-mix(in srgb, var(--rtm-interactive-accent) 14%, transparent);
+  --rtm-tag-bg-hover: var(--rtm-interactive-accent);
+  --rtm-tag-color: #F3A4B8;
+  --rtm-tag-border-color: transparent;
+  --rtm-workspace-root-bg: var(--rtm-bg-secondary);
+  --rtm-workspace-root-bg: color-mix(in srgb, var(--rtm-bg-secondary) 70%, transparent);
+  --rtm-workspace-leaf-bg: var(--rtm-bg-primary);
+  --rtm-workspace-leaf-bg: color-mix(in srgb, var(--rtm-bg-primary) 85%, transparent);
+  --rtm-markdown-editor-bg: var(--rtm-bg-primary);
+  --rtm-markdown-editor-bg: color-mix(in srgb, var(--rtm-bg-primary) 85%, transparent);
+  --rtm-view-content-bg: var(--rtm-markdown-editor-bg);
+  --rtm-modal-bg: #342834;
+  --rtm-menu-bg: #3E303D;
+  --rtm-scrollbar-thumb-bg: #7E6577;
+  --rtm-titlebar-bg-focus: #2F2130;
+  --rtm-titlebar-bg: #2F2130;
+  --rtm-titlebar-txt-color-focus: #DCC8D3;
+  --rtm-titlebar-txt-color: #AD98A7;
+}
+
+/* -----------------------------------------------------------------
+   4. Obsidian 原生变量接驳层 - 与第 2/3 节同源
+      深色 88% / 80%、浅色 90% / 84% 不透明度，让第 6 节毛玻璃仍能透出壁纸
+      「先实色、再 color-mix」双写：旧渲染内核自动落回第一行实色
+   ----------------------------------------------------------------- */
+.theme-dark {
+  /* 强调色 HSL 三分量 */
+  --accent-h: 331;
+  --accent-s: 47%;
+  --accent-l: 79%;
+
+  /* 八色基板 */
+  --color-red-rgb: 226, 164, 181;
+  --color-red: #E2A4B5;
+  --color-orange-rgb: 226, 180, 141;
+  --color-orange: #E2B48D;
+  --color-yellow-rgb: 220, 197, 169;
+  --color-yellow: #DCC5A9;
+  --color-green-rgb: 188, 205, 183;
+  --color-green: #BCCDB7;
+  --color-cyan-rgb: 180, 208, 203;
+  --color-cyan: #B4D0CB;
+  --color-blue-rgb: 182, 193, 224;
+  --color-blue: #B6C1E0;
+  --color-purple-rgb: 204, 176, 240;
+  --color-purple: #CCB0F0;
+  --color-pink-rgb: 227, 177, 201;
+  --color-pink: #E3B1C9;
+
+  /* 表面 */
+  --background-primary: #3C2D3C;
+  --background-primary: color-mix(in srgb, #3C2D3C 88%, transparent);
+  --background-primary-alt: #413240;
+  --background-secondary: #352737;
+  --background-secondary: color-mix(in srgb, #352737 80%, transparent);
+  --background-secondary-alt: #281F2B;
+  --background-secondary-alt: color-mix(in srgb, #281F2B 88%, transparent);
+  --background-modifier-border: #27202A;
+  --background-modifier-border-hover: #513D50;
+  --background-modifier-border-focus: #F0B5CE;
+  --background-modifier-form-field: #513D50;
+  --background-modifier-form-field-hover: #513D50;
+  --background-modifier-hover: #453343;
+  --background-modifier-active-hover: #5B3E53;
+  --background-modifier-box-shadow: rgb(0 0 0 / 50%);
+  --divider-color: #27202A;
+
+  /* 文字 */
+  --text-normal: #EBC4D7;
+  --text-muted: #BC9DB0;
+  --text-faint: #7E6577;
+  --text-accent: #F0B5CE;
+  --text-accent-hover: #F5CFE1;
+  --text-on-accent: #3A2E3A;
+  --text-selection: rgb(233 155 203 / 24%);
+  --text-highlight-bg: rgb(227 177 201 / 28%);
+  --text-error: #F49AA6;
+  --link-color: #E6B5CD;
+  --link-color-hover: #F1BCD3;
+  --link-external-color: #E6B5CD;
+  --link-unresolved-color: #B399A8;
+
+  /* 交互 */
+  --interactive-normal: #3E303D;
+  --interactive-hover: #473446;
+
+  /* 代码（夜樱语法色板） */
+  --code-background: #342834;
+  --code-normal: #E9C7D8;
+  --code-comment: #BBA9BA;
+  --code-function: #F3B795;
+  --code-keyword: #F3A4B8;
+  --code-string: #ACD39A;
+  --code-value: #EAD3A0;
+  --code-tag: #F3A4B8;
+  --code-property: #E0C3B8;
+  --code-important: #F49AA6;
+  --code-operator: #DFA0DC;
+
+  /* 引用与标签 */
+  --blockquote-border-color: rgb(227 177 201 / 50%);
+  --blockquote-background-color: transparent;
+  --tag-color: #F3A4B8;
+  --tag-color-hover: #F5CFE1;
+  --tag-background: rgb(227 177 201 / 14%);
+  --tag-background-hover: rgb(227 177 201 / 28%);
+  --tag-border-color: transparent;
+
+  /* 表格 */
+  --table-background: transparent;
+  --table-header-background: #3E303D;
+  --table-header-color: #F5CFE1;
+  --table-row-background: transparent;
+  --table-row-alt-background: rgb(60 45 60 / 35%);
+  --table-border-color: #27202A;
+
+  /* 侧栏与导航 */
+  --ribbon-background: #281F2B;
+  --ribbon-background-collapsed: #281F2B;
+  --nav-item-color: #DCC8D3;
+  --nav-item-color-hover: #F5CFE1;
+  --nav-item-color-active: #F5CFE1;
+  --nav-item-background-hover: #453343;
+  --nav-item-background-active: #5B3E53;
+  --nav-collapse-icon-color: #B399A8;
+
+  /* 标题栏与标签页 */
+  --titlebar-background: #2F2130;
+  --titlebar-background-focused: #2F2130;
+  --titlebar-text-color: #AD98A7;
+  --titlebar-text-color-focused: #DCC8D3;
+  --tab-container-background: #3A2E3A;
+  --tab-background-active: #3C2D3C;
+  --tab-text-color: #C3AFBB;
+  --tab-text-color-active: #F5CFE1;
+  --tab-text-color-focused: #C3AFBB;
+  --tab-text-color-focused-active: #F5CFE1;
+  --tab-outline-color: #27202A;
+
+  /* 状态栏、滚动条与杂项 */
+  --status-bar-background: #AD7F96;
+  --status-bar-text-color: #241522;
+  --status-bar-border-color: #794B65;
+  --scrollbar-thumb-bg: rgb(126 101 119 / 50%);
+  --scrollbar-active-thumb-bg: rgb(126 101 119 / 60%);
+  --scrollbar-bg: transparent;
+  --collapse-icon-color: #B399A8;
+  --checkbox-color: #E3B1C9;
+  --checkbox-color-hover: #F0B5CE;
+  --checkbox-border-color: #7E6577;
+  --caret-color: #F0B5CE;
+  --hr-color: #27202A;
+}
+
+.theme-light {
+  /* 强调色 HSL 三分量 */
+  --accent-h: 349;
+  --accent-s: 47%;
+  --accent-l: 56%;
+
+  /* 八色基板 */
+  --color-red-rgb: 196, 83, 95;
+  --color-red: #C4535F;
+  --color-orange-rgb: 192, 114, 63;
+  --color-orange: #C0723F;
+  --color-yellow-rgb: 169, 138, 50;
+  --color-yellow: #A98A32;
+  --color-green-rgb: 95, 138, 85;
+  --color-green: #5F8A55;
+  --color-cyan-rgb: 78, 138, 128;
+  --color-cyan: #4E8A80;
+  --color-blue-rgb: 74, 111, 165;
+  --color-blue: #4A6FA5;
+  --color-purple-rgb: 138, 95, 158;
+  --color-purple: #8A5F9E;
+  --color-pink-rgb: 196, 90, 109;
+  --color-pink: #C45A6D;
+
+  /* 表面 */
+  --background-primary: #FFF0F5;
+  --background-primary: color-mix(in srgb, #FFF0F5 90%, transparent);
+  --background-primary-alt: #FFF;
+  --background-secondary: #FDE4EC;
+  --background-secondary: color-mix(in srgb, #FDE4EC 84%, transparent);
+  --background-secondary-alt: #F8BBD0;
+  --background-secondary-alt: color-mix(in srgb, #F8BBD0 88%, transparent);
+  --background-modifier-border: #E6BAC5;
+  --background-modifier-border-hover: #D89CAB;
+  --background-modifier-border-focus: #C45A6D;
+  --background-modifier-form-field: #FFF;
+  --background-modifier-form-field-hover: #FFF6F8;
+  --background-modifier-hover: #FAD6E2;
+  --background-modifier-active-hover: #F5C4D3;
+  --background-modifier-box-shadow: rgb(120 77 91 / 18%);
+  --divider-color: #E6BAC5;
+
+  /* 文字 */
+  --text-normal: #5E3A46;
+  --text-muted: #8E6F7A;
+  --text-faint: #BFA4AE;
+  --text-accent: #C45A6D;
+  --text-accent-hover: #9E4253;
+  --text-on-accent: #FFF;
+  --text-selection: rgb(196 90 109 / 18%);
+  --text-highlight-bg: rgb(240 177 194 / 45%);
+  --text-error: #B03A4E;
+  --link-color: #A23B4E;
+  --link-color-hover: #C45A6D;
+  --link-external-color: #A23B4E;
+  --link-unresolved-color: #BFA4AE;
+
+  /* 交互 */
+  --interactive-normal: #FFF6F8;
+  --interactive-hover: #FAD6E2;
+
+  /* 代码（樱粉语法色板：正文墨色 + 暖木彩语法） */
+  --code-background: #F2DEE4;
+  --code-normal: #5E3A46;
+  --code-comment: #775874;
+  --code-function: #99501F;
+  --code-keyword: #BB2557;
+  --code-string: #3C7016;
+  --code-value: #7B5F19;
+  --code-tag: #BE2630;
+  --code-property: #735675;
+  --code-important: #A82C44;
+  --code-operator: #9E3A6D;
+
+  /* 引用与标签 */
+  --blockquote-border-color: rgb(196 90 109 / 45%);
+  --blockquote-background-color: transparent;
+  --tag-color: #C45A6D;
+  --tag-color-hover: #9E4253;
+  --tag-background: rgb(196 90 109 / 10%);
+  --tag-background-hover: rgb(196 90 109 / 20%);
+  --tag-border-color: transparent;
+
+  /* 表格 */
+  --table-background: transparent;
+  --table-header-background: #FDE4EC;
+  --table-header-color: #5E3A46;
+  --table-row-background: transparent;
+  --table-row-alt-background: rgb(255 240 245 / 55%);
+  --table-border-color: #E6BAC5;
+
+  /* 侧栏与导航 */
+  --ribbon-background: #F8BBD0;
+  --ribbon-background: color-mix(in srgb, #F8BBD0 88%, transparent);
+  --ribbon-background-collapsed: #F8BBD0;
+  --ribbon-background-collapsed: color-mix(in srgb, #F8BBD0 88%, transparent);
+  --nav-item-color: #76515C;
+  --nav-item-color-hover: #5E3A46;
+  --nav-item-color-active: #A23B4E;
+  --nav-item-background-hover: rgb(250 214 226 / 80%);
+  --nav-item-background-active: #F5C4D3;
+  --nav-collapse-icon-color: #BFA4AE;
+
+  /* 标题栏与标签页 */
+  --titlebar-background: #FCE8EE;
+  --titlebar-background: color-mix(in srgb, #FCE8EE 90%, transparent);
+  --titlebar-background-focused: #FCE8EE;
+  --titlebar-background-focused: color-mix(in srgb, #FCE8EE 90%, transparent);
+  --titlebar-text-color: #9C7781;
+  --titlebar-text-color-focused: #76515C;
+  --tab-container-background: #FDE4EC;
+  --tab-container-background: color-mix(in srgb, #FDE4EC 88%, transparent);
+  --tab-background-active: #FFF0F5;
+  --tab-background-active: color-mix(in srgb, #FFF0F5 92%, transparent);
+  --tab-text-color: #9C7781;
+  --tab-text-color-active: #5E3A46;
+  --tab-text-color-focused: #9C7781;
+  --tab-text-color-focused-active: #5E3A46;
+  --tab-outline-color: #E6BAC5;
+
+  /* 状态栏、滚动条与杂项 */
+  --status-bar-background: #F8BBD0;
+  --status-bar-background: color-mix(in srgb, #F8BBD0 90%, transparent);
+  --status-bar-text-color: #5E3A46;
+  --status-bar-border-color: #E6BAC5;
+  --scrollbar-thumb-bg: rgb(232 159 176 / 50%);
+  --scrollbar-active-thumb-bg: rgb(232 159 176 / 70%);
+  --scrollbar-bg: transparent;
+  --collapse-icon-color: #BFA4AE;
+  --checkbox-color: #C45A6D;
+  --checkbox-color-hover: #9E4253;
+  --checkbox-border-color: #D89CAB;
+  --caret-color: #C45A6D;
+  --hr-color: #E6BAC5;
+}
+
+/* -----------------------------------------------------------------
+   5. Headings & Bolds - 严格隔离双域色彩
+   ----------------------------------------------------------------- */
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6),
+.cm-header {
+  font-family: var(--rtm-markdown-editor-font);
+  letter-spacing: 0.02em;
+}
+
+.markdown-rendered h1,
+.cm-header-1 {
+  letter-spacing: -0.02em;
+}
+
+.markdown-rendered h1,
+.cm-header-1 {
+  font-size: var(--rtm-h1-size);
+  font-weight: var(--rtm-h1-weight);
+}
+
+.markdown-rendered h2,
+.cm-header-2 {
+  font-size: var(--rtm-h2-size);
+  font-weight: var(--rtm-h2-weight);
+}
+
+.markdown-rendered h3,
+.cm-header-3 {
+  font-size: var(--rtm-h3-size);
+  font-weight: var(--rtm-h3-weight);
+}
+
+.markdown-rendered h4,
+.cm-header-4 {
+  font-size: var(--rtm-h4-size);
+  font-weight: var(--rtm-h4-weight);
+}
+
+.markdown-rendered h5,
+.cm-header-5 {
+  font-size: var(--rtm-h5-size);
+  font-weight: var(--rtm-h5-weight);
+}
+
+.markdown-rendered h6,
+.cm-header-6 {
+  font-size: var(--rtm-h6-size);
+  font-weight: var(--rtm-h6-weight);
+}
+
+.markdown-rendered :is(strong, b),
+.cm-strong {
+  font-weight: var(--font-bold);
+  padding: 0 2px;
+  border: none;
+}
+
+/* === Light: 醇厚高对比·深系樱花木彩墨 === */
+.theme-light {
+  --h1-color: #A23B4E;
+  --h2-color: #BD4F6C;
+  --h3-color: #C96A83;
+  --h4-color: #D47B93;
+  --h5-color: #DF8CA2;
+  --h6-color: #E59EB1;
+}
+
+.theme-light .markdown-rendered :is(strong, b),
+.theme-light .cm-strong {
+  background:
+    linear-gradient(135deg, #D6284F 0%, #E6A100 100%),
+    linear-gradient(rgb(214 40 79 / 5%), rgb(214 40 79 / 5%));
+  background-clip: text, padding-box;
+  background-clip: text, padding-box;
+  -webkit-text-fill-color: transparent;
+}
+
+/* === Dark: 夜樱六色阶梯 === */
+.theme-dark {
+  --h1-color: #EAD3A0;
+  --h2-color: #F3A4B8;
+  --h3-color: #CCB0F0;
+  --h4-color: #ACD39A;
+  --h5-color: #F3B795;
+  --h6-color: #93D2BC;
+}
+
+.theme-dark .markdown-rendered :is(strong, b),
+.theme-dark .cm-strong {
+  background:
+    linear-gradient(135deg, #F3A4B8 0%, #EAD3A0 100%),
+    linear-gradient(rgb(243 164 184 / 12%), rgb(243 164 184 / 12%));
+  background-clip: text, padding-box;
+  background-clip: text, padding-box;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 补丁：拯救被加粗渐变连带裁剪的行内代码块 */
+.markdown-rendered :is(strong, b) code,
+.cm-strong span.cm-inline-code {
+  background-image: none;
+  background-color: var(--code-background);
+  background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-text-fill-color: var(--code-normal);
+  color: var(--code-normal);
+  font-weight: var(--font-normal);
+  border: 1px solid var(--background-modifier-border);
+}
+
+/* 打印/PDF 导出：渐变加粗退回实色，避免透明文字导出空白 */
+@media print {
+  .theme-light .markdown-rendered :is(strong, b),
+  .theme-dark .markdown-rendered :is(strong, b) {
+    background: none;
+    background-clip: border-box;
+    background-clip: border-box;
+    -webkit-text-fill-color: currentcolor;
+    color: var(--bold-color);
+  }
+}
+
+.cm-s-obsidian span.cm-comment,
+.cm-comment,
+.markdown-rendered .token.comment {
+  color: var(--code-comment);
+  font-style: italic;
+}
+
+.markdown-preview-view ul > li::marker {
+  color: var(--interactive-accent);
+}
+
+.markdown-preview-view ol > li::marker {
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.markdown-rendered blockquote,
+.cm-quote {
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* -----------------------------------------------------------------
+   6. Glassmorphism - 通用毛玻璃效果引擎
+   ----------------------------------------------------------------- */
+.workspace-split.mod-horizontal.mod-left-split,
+.workspace-split.mod-horizontal.mod-right-split {
+  backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+
+.workspace-split.mod-root .workspace-leaf-content {
+  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.workspace-tab-header-container {
+  backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+
+/* -----------------------------------------------------------------
+   7. Code Block Base & Light Band - 代码块与七段脉冲光带
+   ----------------------------------------------------------------- */
+.markdown-rendered pre[class*="language-"],
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin {
+  padding-top: 40px;
+  position: relative;
+  border-radius: var(--rtm-code-radius);
+}
+
+/* 顶部半透明底座鼠标穿透，不再阻挡原生 Copy 按钮 */
+.markdown-rendered pre[class*="language-"]::after,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::after {
+  pointer-events: none;
+}
+
+/* --- 7.1 浅色模式：樱花粉系 7 段脉冲光带 --- */
+.theme-light .markdown-rendered pre[class*="language-"]::before,
+.theme-light .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 24px;
+  width: 180px;
+  height: 12px;
+  transform: skewX(-30deg);
+  border-radius: 4px;
+  box-shadow: none;
+
+  /* 上层：白光脉冲；下层：7 段樱花粉系过渡与尾巴渐隐 */
+  background:
+    linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 80%) 50%, transparent 100%) no-repeat,
+    linear-gradient(to right,
+      #D37B8D 0%, #D37B8D 13%,
+      #DE8D9E 13%, #DE8D9E 28%,
+      #E89FB0 28%, #E89FB0 42%,
+      #F0B1C2 42%, #F0B1C2 57%,
+      #F5C4D3 57%, #F5C4D3 71%,
+      #FAD6E2 71%, #FAD6E2 86%,
+      rgb(253 240 244 / 0%) 100%
+    );
+  background-size: 50px 100%, 100% 100%;
+  background-position: -50px 0, 0 0;
+
+  /* 7 段柔和间距遮罩 (6 个缝隙) */
+  mask-image: linear-gradient(to right,
+    #000 0%, #000 12.5%,
+    transparent 13%, transparent 14%,
+    #000 14.5%, #000 27%,
+    transparent 27.5%, transparent 28.5%,
+    #000 29%, #000 41.5%,
+    transparent 42%, transparent 43%,
+    #000 43.5%, #000 56%,
+    transparent 56.5%, transparent 57.5%,
+    #000 58%, #000 70.5%,
+    transparent 71%, transparent 72%,
+    #000 72.5%, #000 85%,
+    transparent 85.5%, transparent 86.5%,
+    #000 87%, #000 100%
+  );
+  mask-image: linear-gradient(to right,
+    #000 0%, #000 12.5%,
+    transparent 13%, transparent 14%,
+    #000 14.5%, #000 27%,
+    transparent 27.5%, transparent 28.5%,
+    #000 29%, #000 41.5%,
+    transparent 42%, transparent 43%,
+    #000 43.5%, #000 56%,
+    transparent 56.5%, transparent 57.5%,
+    #000 58%, #000 70.5%,
+    transparent 71%, transparent 72%,
+    #000 72.5%, #000 85%,
+    transparent 85.5%, transparent 86.5%,
+    #000 87%, #000 100%
+  );
+  z-index: 10;
+  animation: codeblock-macaron-pulse 3.5s infinite ease-in-out;
+}
+
+/* 浅色模式：代码块顶部半透明横条 */
+.theme-light .markdown-rendered pre[class*="language-"]::after,
+.theme-light .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: rgb(255 255 255 / 45%);
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid rgb(211 123 141 / 15%);
+  z-index: 5;
+}
+
+/* --- 7.2 深色模式：夜樱 7 段脉冲光带 --- */
+.theme-dark .markdown-rendered pre[class*="language-"]::before,
+.theme-dark .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 24px;
+  width: 180px;
+  height: 12px;
+  transform: skewX(-30deg);
+  border-radius: 4px;
+  box-shadow: none;
+
+  /* 上层：白光脉冲；下层：7 段夜樱语法色与尾巴渐隐 */
+  background:
+    linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 70%) 50%, transparent 100%) no-repeat,
+    linear-gradient(to right,
+      #F3A4B8 0%, #F3A4B8 13%,
+      #F3B795 13%, #F3B795 28%,
+      #EAD3A0 28%, #EAD3A0 42%,
+      #ACD39A 42%, #ACD39A 57%,
+      #93D2BC 57%, #93D2BC 71%,
+      #CCB0F0 71%, #CCB0F0 86%,
+      rgb(187 169 186 / 0%) 100%
+    );
+  background-size: 50px 100%, 100% 100%;
+  background-position: -50px 0, 0 0;
+
+  /* 7 段柔和间距遮罩 (6 个缝隙，严格对齐浅色模式) */
+  mask-image: linear-gradient(to right,
+    #000 0%, #000 12.5%,
+    transparent 13%, transparent 14%,
+    #000 14.5%, #000 27%,
+    transparent 27.5%, transparent 28.5%,
+    #000 29%, #000 41.5%,
+    transparent 42%, transparent 43%,
+    #000 43.5%, #000 56%,
+    transparent 56.5%, transparent 57.5%,
+    #000 58%, #000 70.5%,
+    transparent 71%, transparent 72%,
+    #000 72.5%, #000 85%,
+    transparent 85.5%, transparent 86.5%,
+    #000 87%, #000 100%
+  );
+  mask-image: linear-gradient(to right,
+    #000 0%, #000 12.5%,
+    transparent 13%, transparent 14%,
+    #000 14.5%, #000 27%,
+    transparent 27.5%, transparent 28.5%,
+    #000 29%, #000 41.5%,
+    transparent 42%, transparent 43%,
+    #000 43.5%, #000 56%,
+    transparent 56.5%, transparent 57.5%,
+    #000 58%, #000 70.5%,
+    transparent 71%, transparent 72%,
+    #000 72.5%, #000 85%,
+    transparent 85.5%, transparent 86.5%,
+    #000 87%, #000 100%
+  );
+  z-index: 10;
+  animation: codeblock-macaron-pulse 3.5s infinite ease-in-out;
+}
+
+/* 深色模式：代码块顶部半透明横条 */
+.theme-dark .markdown-rendered pre[class*="language-"]::after,
+.theme-dark .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: color-mix(in srgb, #342834 82%, transparent);
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1px solid rgb(240 181 206 / 12%);
+  z-index: 5;
+}
+
+/* --- 7.3 共享动效：脉冲扫光动画 --- */
+@keyframes codeblock-macaron-pulse {
+  0% {
+    background-position: -50px 0, 0 0;
+  }
+
+  40% {
+    background-position: 230px 0, 0 0;
+  }
+
+  100% {
+    background-position: 230px 0, 0 0;
+  }
+}
+
+/* -----------------------------------------------------------------
+   8. Language Capsule Tags - 代码胶囊严格隔离双配色
+   ----------------------------------------------------------------- */
+.markdown-rendered pre[class*="language-"] code::before,
+.markdown-source-view.mod-cm6 .code-block-flair {
+  position: absolute;
+  top: 8px;
+  right: 56px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-family: var(--font-monospace);
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Obsidian 1.13+ 的 Live Preview 不再暴露 .cm-language-*；语言名由原生 .code-block-flair 显示 */
+
+/* --- 8.1 Light: 马卡龙实底 + 极深同色系字 --- */
+
+/* C / C++ / C#: 晴空蓝 */
+.theme-light .markdown-rendered pre[class~="language-c"] code::before {
+  content: "C";
+  background-color: #CADAFA;
+  color: #15326B;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+.theme-light .markdown-rendered pre[class~="language-cpp"] code::before {
+  content: "C++";
+  background-color: #CADAFA;
+  color: #15326B;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+.theme-light .markdown-rendered pre[class~="language-csharp"] code::before,
+.theme-light .markdown-rendered pre[class~="language-cs"] code::before {
+  content: "C#";
+  background-color: #CADAFA;
+  color: #15326B;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+/* x86: 薄荷奶绿底 + 极深孔雀青字 */
+.theme-light .markdown-rendered pre[class~="language-x86"] code::before,
+.theme-light .markdown-rendered pre[class~="language-x86asm"] code::before {
+  content: "x86";
+  background-color: #BBEBE4;
+  color: #104F47;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+/* ASM: 钢蓝灰底 + 深靛青字 */
+.theme-light .markdown-rendered pre[class~="language-asm"] code::before,
+.theme-light .markdown-rendered pre[class~="language-assembly"] code::before,
+.theme-light .markdown-rendered pre[class~="language-nasm"] code::before {
+  content: "ASM";
+  background-color: #C9D3E2;
+  color: #24364B;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+/* Verilog: 薰衣草紫底 + 浓郁黑加仑字 */
+.theme-light .markdown-rendered pre[class~="language-verilog"] code::before,
+.theme-light .markdown-rendered pre[class~="language-v"] code::before {
+  content: "Verilog";
+  background-color: #E2CFF5;
+  color: #3E1666;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+/* Java: 甜橙马卡龙底 + 浓缩焦糖褐字 */
+.theme-light .markdown-rendered pre[class~="language-java"] code::before {
+  content: "Java";
+  background-color: #F8D1A1;
+  color: #733E0A;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+/* Python: 樱花软糖粉底 + 深邃勃艮第红字 */
+.theme-light .markdown-rendered pre[class~="language-python"] code::before,
+.theme-light .markdown-rendered pre[class~="language-py"] code::before {
+  content: "Python";
+  background-color: #F7C6DF;
+  color: #6E1A43;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+/* Rust: 暖橘铁锈底 + 深栗褐字 */
+.theme-light .markdown-rendered pre[class~="language-rust"] code::before,
+.theme-light .markdown-rendered pre[class~="language-rs"] code::before {
+  content: "Rust";
+  background-color: #F5C8A8;
+  color: #6B3A1F;
+  font-weight: bold;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 70%);
+}
+
+/* --- 8.2 Dark: 胶囊色相全部取自夜樱语法色板，最低对比 4.87:1 --- */
+
+/* C / C++ / C#: 海盐蓝 */
+.theme-dark .markdown-rendered pre[class~="language-c"] code::before {
+  content: "C";
+  background-color: #464C6B;
+  color: #CFD8F5;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 0 6px rgb(207 216 245 / 35%);
+}
+
+.theme-dark .markdown-rendered pre[class~="language-cpp"] code::before {
+  content: "C++";
+  background-color: #464C6B;
+  color: #CFD8F5;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 0 6px rgb(207 216 245 / 35%);
+}
+
+.theme-dark .markdown-rendered pre[class~="language-csharp"] code::before,
+.theme-dark .markdown-rendered pre[class~="language-cs"] code::before {
+  content: "C#";
+  background-color: #464C6B;
+  color: #CFD8F5;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 0 6px rgb(207 216 245 / 35%);
+}
+
+/* x86: 转义薄荷青 */
+.theme-dark .markdown-rendered pre[class~="language-x86"] code::before,
+.theme-dark .markdown-rendered pre[class~="language-x86asm"] code::before {
+  content: "x86";
+  background-color: #2A5A55;
+  color: #A9E5D9;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 50%), 0 0 6px rgb(169 229 217 / 30%);
+}
+
+/* ASM: 注释玫灰 */
+.theme-dark .markdown-rendered pre[class~="language-asm"] code::before,
+.theme-dark .markdown-rendered pre[class~="language-assembly"] code::before,
+.theme-dark .markdown-rendered pre[class~="language-nasm"] code::before {
+  content: "ASM";
+  background-color: #4B3B49;
+  color: #DECFDA;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 50%), 0 0 6px rgb(222 207 218 / 30%);
+}
+
+/* Verilog: 类型藤紫 */
+.theme-dark .markdown-rendered pre[class~="language-verilog"] code::before,
+.theme-dark .markdown-rendered pre[class~="language-v"] code::before {
+  content: "Verilog";
+  background-color: #6A4A8C;
+  color: #E4CDFF;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 0 6px rgb(228 205 255 / 45%);
+}
+
+/* Java: 函数杏橙 */
+.theme-dark .markdown-rendered pre[class~="language-java"] code::before {
+  content: "Java";
+  background-color: #7A5334;
+  color: #FFD4AC;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 0 6px rgb(255 212 172 / 40%);
+}
+
+/* Python: 关键字樱玫 */
+.theme-dark .markdown-rendered pre[class~="language-python"] code::before,
+.theme-dark .markdown-rendered pre[class~="language-py"] code::before {
+  content: "Python";
+  background-color: #6E3B53;
+  color: #FFC9DD;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 0 6px rgb(255 201 221 / 40%);
+}
+
+/* Rust: 数字奶油金 */
+.theme-dark .markdown-rendered pre[class~="language-rust"] code::before,
+.theme-dark .markdown-rendered pre[class~="language-rs"] code::before {
+  content: "Rust";
+  background-color: #6E5726;
+  color: #F6E2AC;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 40%), 0 0 6px rgb(246 226 172 / 40%);
+}
+
+/* -----------------------------------------------------------------
+   9. Patches - 补丁：Copy 按钮与代码区字重
+   ----------------------------------------------------------------- */
+
+/* 仅提升层级，保持原生位置不动 */
+.copy-code-button {
+  z-index: 20;
+}
+
+/* 悬停时的按钮颜色微调，契合双模式 */
+.theme-light .copy-code-button:hover {
+  color: #C45A6D;
+}
+
+.theme-dark .copy-code-button:hover {
+  color: #F0B5CE;
+}
+
+/* 代码区免疫全局加粗：行内代码/代码块/实时预览代码区退回正常字重 */
+.markdown-rendered :is(pre, code),
+.cm-s-obsidian span.cm-inline-code,
+.markdown-source-view.mod-cm6 .HyperMD-codeblock {
+  font-weight: var(--font-normal);
+}
+
+/* -----------------------------------------------------------------
+   10. Optional Toggles - 由 Style Settings 注入的 body 开关
+   ----------------------------------------------------------------- */
+
+/* 关闭代码块顶部七段光带与横条（保留留白给 Copy 按钮与语言胶囊） */
+body.smc-no-band .markdown-rendered pre[class*="language-"]::before,
+body.smc-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::before {
+  content: none;
+  animation: none;
+}
+
+body.smc-no-band .markdown-rendered pre[class*="language-"]::after,
+body.smc-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::after {
+  display: none;
+}
+
+/* -----------------------------------------------------------------
+   Style Settings 配置 - 需安装 Style Settings 插件后生效
+   ----------------------------------------------------------------- */
+
+/* @settings
+name: Sakura Macaron
+id: sakura-macaron
+settings:
+  -
+    id: wallpaper
+    title: 壁纸 Wallpaper
+    type: heading
+    level: 2
+  -
+    id: dv-light-bg
+    title: 浅色壁纸
+    description: '填入完整 background-image 值，例如 url("https://example.com/bg.jpg") 或 app:// 资源路径。保持 none 则使用樱花粉渐变。'
+    type: variable-text
+    default: none
+  -
+    id: dv-dark-bg
+    title: 深色壁纸
+    description: '填入完整 background-image 值，例如 url("https://example.com/night.jpg") 或 app:// 资源路径。保持 none 则使用夜樱渐变。'
+    type: variable-text
+    default: none
+  -
+    id: codeblock
+    title: 代码块 Code blocks
+    type: heading
+    level: 2
+  -
+    id: smc-no-band
+    title: 关闭代码块顶部光带
+    description: 隐藏代码块顶部的七段脉冲光带与半透明横条。
+    type: class-toggle
+    default: false
+  -
+    id: wallpaper-note
+    title: ''
+    description: '也可以用脚本（如主页 dataviewjs）在 body 上注入 --dv-light-bg / --dv-dark-bg；内联样式优先于本面板取值。'
+    type: info-text
+*/
