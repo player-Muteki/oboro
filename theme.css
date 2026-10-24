@@ -1842,6 +1842,23 @@ body {
   font-weight: 700;
 }
 
+/* 设置窗口并入玻璃体系：原生 .modal.mod-settings 用实色 --settings-background
+   （特异性 0,2,0）压掉了 .modal 的玻璃底，内部 .vertical-tab-content 与内容
+   大卡片又各自画实色。按递归透明链原则，玻璃底仍由 .modal 一层承担，
+   原生实色层转透明；内容卡片不给实色，改走轻染（与表格 tint 同思路） */
+.modal.mod-settings {
+  background-color: var(--smc-modal-bg);
+  background-color: color-mix(in srgb, var(--smc-modal-bg) var(--smc-glass-modal-opacity), transparent);
+
+  --setting-items-background: color-mix(in srgb, var(--smc-bg-primary) 55%, transparent);
+}
+
+.modal.mod-settings .modal-content,
+.modal.mod-settings .vertical-tab-header,
+.modal.mod-settings .vertical-tab-content {
+  background-color: transparent;
+}
+
 .modal-bg {
   background-color: rgb(40 20 35 / 40%);
 }
