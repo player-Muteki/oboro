@@ -2,6 +2,7 @@
   "extends": "stylelint-config-obsidianmd",
   "rules": {
     "selector-class-pattern": null,
+    "selector-id-pattern": null,
     "declaration-block-no-duplicate-custom-properties": null,
     "property-no-vendor-prefix": null,
     "no-descending-specificity": null,

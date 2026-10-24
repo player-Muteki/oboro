@@ -7,7 +7,8 @@
          5 标题与加粗 · 6 液态玻璃引擎 · 7 代码块光带 · 8 语言胶囊
          9 修补补丁 · 10 可选开关 · 11 链接与行内 · 12 列表与任务
          13 标注 callout · 14 引用块 · 15 图片与嵌入 · 16 属性面板
-         17 关系图 · 18 界面控件 · 19 入场动效 · 20 标志性细节 · 21 插件适配 · 末尾 Style Settings
+         17 关系图 · 18 界面控件 · 19 入场动效 · 20 标志性细节 · 21 插件适配
+         22 官方变量补全层 · 末尾 Style Settings 配置
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -253,7 +254,7 @@ body {
 
   /* 代码（夜樱语法色板；底色玻璃化，壁纸微透） */
   --code-background: #342834;
-  --code-background: color-mix(in srgb, #342834 92%, transparent);
+  --code-background: color-mix(in srgb, #342834 88%, transparent);
   --code-normal: #E9C7D8;
   --code-comment: #BBA9BA;
   --code-function: #F3B795;
@@ -383,7 +384,7 @@ body {
 
   /* 代码（樱粉语法色板：正文墨色 + 暖木彩语法；底色玻璃化） */
   --code-background: #F2DEE4;
-  --code-background: color-mix(in srgb, #F2DEE4 94%, transparent);
+  --code-background: color-mix(in srgb, #F2DEE4 90%, transparent);
   --code-normal: #5E3A46;
   --code-comment: #775874;
   --code-function: #99501F;
@@ -613,15 +614,15 @@ body {
 }
 
 .theme-dark {
-  --smc-glass-primary-opacity: 78%;
-  --smc-glass-secondary-opacity: 72%;
+  --smc-glass-primary-opacity: 74%;
+  --smc-glass-secondary-opacity: 68%;
   --smc-glass-rim: rgb(255 255 255 / 14%);
   --smc-glass-rim-soft: rgb(255 255 255 / 7%);
 }
 
 .theme-light {
-  --smc-glass-primary-opacity: 82%;
-  --smc-glass-secondary-opacity: 76%;
+  --smc-glass-primary-opacity: 78%;
+  --smc-glass-secondary-opacity: 72%;
   --smc-glass-rim: rgb(255 255 255 / 60%);
   --smc-glass-rim-soft: rgb(255 255 255 / 32%);
 }
@@ -1827,6 +1828,21 @@ body.is-mobile .mobile-toolbar {
   box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
 }
 
+/* --- 18.12 悬停预览卡片（Popover / 页面预览） --- */
+.hover-popover {
+  background-color: var(--smc-menu-bg);
+  background-color: color-mix(in srgb, var(--smc-menu-bg) 82%, transparent);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 14%),
+    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
+    inset 0 1px 0 var(--smc-glass-rim);
+  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+  animation: smc-fade-scale 0.16s var(--smc-ease-spring);
+}
+
 /* -----------------------------------------------------------------
    19. Motion - 入场动效：弹性绽放
    ----------------------------------------------------------------- */
@@ -2057,7 +2073,7 @@ body:not(.is-grabbing) .nav-file-title.is-active {
 /* --- 20.7 表格：液态玻璃 + 圆角外框 + 渐变表头 + 行悬停 --- */
 .markdown-rendered table {
   background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 84%, transparent);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 76%, transparent);
   backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
   -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
   border-collapse: separate;
@@ -2202,8 +2218,9 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   color: #E3B1C9;
 }
 
-/* --- 21.4 Editing Toolbar：浮动工具条玻璃 --- */
-.editing-toolbar {
+/* --- 21.4 Editing Toolbar：浮动工具条玻璃（真身 id/类来自插件 DOM） --- */
+#editingToolbarModalBar,
+.editingToolbarPopoverBar {
   background-color: var(--smc-menu-bg);
   background-color: color-mix(in srgb, var(--smc-menu-bg) 82%, transparent);
   border: 1px solid var(--background-modifier-border);
@@ -2216,9 +2233,23 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
 }
 
-/* --- 21.5 Table Editor：容器圆角衔接玻璃表格 --- */
-.table-editor {
+/* --- 21.5 Table Editor / 实时预览表格 widget：容器衔接玻璃表格 --- */
+.table-editor,
+.markdown-source-view.mod-cm6 .cm-table-widget {
   border-radius: 10px;
+}
+
+.markdown-source-view.mod-cm6 .cm-table-widget table,
+.markdown-source-view.mod-cm6 .table-editor table {
+  background-color: var(--smc-bg-primary);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 76%, transparent);
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--table-border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
 }
 
 /* --- 21.6 Kanban：看板/列表/卡片玻璃（未安装亦可安全存在） --- */
@@ -2250,6 +2281,284 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 
 .kanban-plugin__item-button-wrapper button {
   border-radius: 8px;
+}
+
+/* -----------------------------------------------------------------
+   22. Official Variable Completion - 官方变量补全层
+      对照官方 CSS 变量参考（651 项）补齐遗漏的原生组件杠杆；
+      布局基元（间距/图层/尺寸阶梯）保持官方默认
+   ----------------------------------------------------------------- */
+
+/* --- 22.0 双模式共享：基础几何与通用 --- */
+body {
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 14px;
+  --radius-xl: 18px;
+  --button-radius: 8px;
+  --input-radius: 8px;
+  --input-border-width: 1px;
+  --swatch-radius: 8px;
+  --clickable-icon-radius: 8px;
+  --modal-radius: 16px;
+  --modal-border-width: 1px;
+  --prompt-border-width: 1px;
+  --tab-radius: 8px;
+  --tab-font-weight: 500;
+  --tab-outline-width: 1px;
+  --checkbox-radius: 5px;
+  --checkbox-marker-color: #FFF;
+  --slider-thumb-radius: 50%;
+  --pill-radius: 999px;
+  --blockquote-border-thickness: 3px;
+  --blockquote-font-style: italic;
+  --callout-radius: 12px;
+  --callout-border-width: 1px;
+  --hr-thickness: 1px;
+  --footnote-size: 0.85em;
+  --inline-title-font: var(--smc-markdown-editor-font);
+  --inline-title-weight: 700;
+  --h1-weight: 700;
+  --h2-weight: 600;
+  --h3-weight: 600;
+  --h4-weight: 600;
+  --h5-weight: 600;
+  --h6-weight: 600;
+  --list-bullet-radius: 50%;
+  --nav-heading-weight: 600;
+  --nav-item-weight-active: 600;
+  --table-header-weight: 600;
+  --table-border-width: 1px;
+  --status-bar-border-width: 1px;
+  --titlebar-text-weight: 500;
+  --titlebar-border-width: 1px;
+  --divider-width: 1px;
+}
+
+/* --- 22.1 深色：底层灰阶 / 图标 / 语义色 --- */
+.theme-dark {
+  /* 樱李中性灰阶（全应用表面底座） */
+  --color-base-00: #281F2B;
+  --color-base-05: #2A212D;
+  --color-base-10: #2E2430;
+  --color-base-20: #342834;
+  --color-base-25: #372C38;
+  --color-base-30: #3E303D;
+  --color-base-35: #453343;
+  --color-base-40: #513D50;
+  --color-base-50: #6B5468;
+  --color-base-60: #7E6577;
+  --color-base-70: #AD98A7;
+  --color-base-100: #EBC4D7;
+
+  /* 强调色衍生 */
+  --color-accent-1: #F0B5CE;
+  --color-accent-2: #E3B1C9;
+  --color-accent-hsl: hsl(331deg 47% 79%);
+  --interactive-accent-hsl: hsl(331deg 47% 79%);
+
+  /* 等宽文本双极 */
+  --mono-0: #281F2B;
+  --mono-100: #EBC4D7;
+  --mono-rgb-0: 40, 31, 43;
+  --mono-rgb-100: 235, 196, 215;
+
+  /* 语义色 */
+  --text-success: #BCCDB7;
+  --text-warning: #DCC5A9;
+  --text-on-accent-inverted: #EBC4D7;
+  --text-highlight-bg-rgb: 227, 177, 201;
+  --background-modifier-error: rgb(244 154 166 / 15%);
+  --background-modifier-error-hover: rgb(244 154 166 / 25%);
+  --background-modifier-error-rgb: 244, 154, 166;
+  --background-modifier-success: rgb(188 205 183 / 15%);
+  --background-modifier-success-rgb: 188, 205, 183;
+
+  /* 图标 */
+  --icon-color: #C3AFBB;
+  --icon-color-hover: #F0B5CE;
+  --icon-color-active: #F5CFE1;
+  --icon-color-focused: #E3B1C9;
+
+  /* 行内强调 */
+  --bold-color: #E9C7D8;
+  --italic-color: #DCC8D3;
+  --code-punctuation: #C9B3C6;
+
+  /* 列表与引用 */
+  --list-marker-color-hover: #F0B5CE;
+  --list-marker-color-collapsed: #7E6577;
+  --blockquote-color: #DCC8D3;
+
+  /* 表格编辑态 */
+  --table-selection: rgb(227 177 201 / 18%);
+  --table-selection-border-color: #E3B1C9;
+  --table-row-background-hover: rgb(227 177 201 / 7%);
+  --table-header-background-hover: #453343;
+  --table-add-button-background: rgb(227 177 201 / 12%);
+  --table-drag-handle-background: rgb(227 177 201 / 25%);
+  --table-drag-handle-background-active: rgb(227 177 201 / 45%);
+  --table-drag-handle-color: #F0B5CE;
+  --table-drag-handle-color-active: #F5CFE1;
+
+  /* 导航 */
+  --nav-heading-color: #F5CFE1;
+  --nav-item-color-highlighted: #F0B5CE;
+  --nav-item-background-selected: rgb(227 177 201 / 14%);
+  --nav-item-color-selected: #F5CFE1;
+  --nav-indentation-guide-color: rgb(227 177 201 / 10%);
+
+  /* 弹层与控件 */
+  --modal-background: #342834;
+  --modal-border-color: #27202A;
+  --prompt-border-color: #27202A;
+  --dropdown-background-hover: #473446;
+  --checkbox-border-color-hover: #F0B5CE;
+  --checklist-done-color: #7E6577;
+  --checklist-done-decoration: line-through;
+  --slider-track-background: #453343;
+  --slider-thumb-border-color: #E3B1C9;
+  --pill-background: #453343;
+  --pill-background-hover: #513D50;
+  --pill-color: #EBC4D7;
+  --pill-color-hover: #F5CFE1;
+  --pill-border-color: transparent;
+  --drag-ghost-background: #3E303D;
+  --drag-ghost-text-color: #EBC4D7;
+
+  /* 缩进参考线 / 分隔 / 框架 */
+  --indentation-guide-color: rgb(227 177 201 / 10%);
+  --indentation-guide-color-active: rgb(227 177 201 / 28%);
+  --divider-color-hover: #513D50;
+  --titlebar-border-color: #27202A;
+  --vault-profile-color: #DCC8D3;
+  --vault-profile-color-hover: #F5CFE1;
+  --workspace-background-translucent: #281F2B;
+  --tab-divider-color: #27202A;
+  --tab-stacked-shadow: 0 8px 24px rgb(0 0 0 / 35%);
+  --embed-block-shadow-hover: 0 4px 16px rgb(227 177 201 / 20%);
+
+  /* Bases 核心视图 */
+  --bases-table-container-border-radius: 10px;
+  --bases-cards-background: color-mix(in srgb, #3C2D3C 88%, transparent);
+  --bases-cards-shadow: 0 2px 10px rgb(0 0 0 / 15%);
+  --bases-cards-shadow-hover: 0 6px 20px rgb(0 0 0 / 25%);
+  --bases-table-header-background: #3E303D;
+  --bases-table-header-color: #F5CFE1;
+  --bases-table-row-background-hover: rgb(227 177 201 / 7%);
+}
+
+/* --- 22.2 浅色：樱粉中性灰阶 / 图标 / 语义色 --- */
+.theme-light {
+  /* 樱粉中性灰阶 */
+  --color-base-00: #FFF;
+  --color-base-05: #FFFAFC;
+  --color-base-10: #FFF5F7;
+  --color-base-20: #FDE4EC;
+  --color-base-25: #FAD9E5;
+  --color-base-30: #F5C4D3;
+  --color-base-35: #EDB7CA;
+  --color-base-40: #E6BAC5;
+  --color-base-50: #C9A3B1;
+  --color-base-60: #BFA4AE;
+  --color-base-70: #8E6F7A;
+  --color-base-100: #5E3A46;
+
+  /* 强调色衍生 */
+  --color-accent-1: #C45A6D;
+  --color-accent-2: #9E4253;
+  --color-accent-hsl: hsl(349deg 47% 56%);
+  --interactive-accent-hsl: hsl(349deg 47% 56%);
+
+  /* 等宽文本双极 */
+  --mono-0: #FFF;
+  --mono-100: #5E3A46;
+  --mono-rgb-0: 255, 255, 255;
+  --mono-rgb-100: 94, 58, 70;
+
+  /* 语义色 */
+  --text-success: #5F8A55;
+  --text-warning: #A98A32;
+  --text-on-accent-inverted: #5E3A46;
+  --text-highlight-bg-rgb: 240, 177, 194;
+  --background-modifier-error: rgb(176 58 78 / 12%);
+  --background-modifier-error-hover: rgb(176 58 78 / 20%);
+  --background-modifier-error-rgb: 176, 58, 78;
+  --background-modifier-success: rgb(95 138 85 / 12%);
+  --background-modifier-success-rgb: 95, 138, 85;
+
+  /* 图标 */
+  --icon-color: #9C7781;
+  --icon-color-hover: #C45A6D;
+  --icon-color-active: #9E4253;
+  --icon-color-focused: #A23B4E;
+
+  /* 行内强调 */
+  --bold-color: #C45A6D;
+  --italic-color: #76515C;
+  --code-punctuation: #755A72;
+
+  /* 列表与引用 */
+  --list-marker-color-hover: #C45A6D;
+  --list-marker-color-collapsed: #BFA4AE;
+  --blockquote-color: #76515C;
+
+  /* 表格编辑态 */
+  --table-selection: rgb(196 90 109 / 14%);
+  --table-selection-border-color: #C45A6D;
+  --table-row-background-hover: rgb(196 90 109 / 6%);
+  --table-header-background-hover: #F5C4D3;
+  --table-add-button-background: rgb(196 90 109 / 10%);
+  --table-drag-handle-background: rgb(196 90 109 / 25%);
+  --table-drag-handle-background-active: rgb(196 90 109 / 45%);
+  --table-drag-handle-color: #C45A6D;
+  --table-drag-handle-color-active: #9E4253;
+
+  /* 导航 */
+  --nav-heading-color: #A23B4E;
+  --nav-item-color-highlighted: #C45A6D;
+  --nav-item-background-selected: rgb(196 90 109 / 14%);
+  --nav-item-color-selected: #A23B4E;
+  --nav-indentation-guide-color: rgb(196 90 109 / 12%);
+
+  /* 弹层与控件 */
+  --modal-background: #FFF;
+  --modal-border-color: #E6BAC5;
+  --prompt-border-color: #E6BAC5;
+  --dropdown-background-hover: #FAD6E2;
+  --checkbox-border-color-hover: #C45A6D;
+  --checklist-done-color: #BFA4AE;
+  --checklist-done-decoration: line-through;
+  --slider-track-background: #F5C4D3;
+  --slider-thumb-border-color: #C45A6D;
+  --pill-background: #FDE4EC;
+  --pill-background-hover: #FAD6E2;
+  --pill-color: #76515C;
+  --pill-color-hover: #5E3A46;
+  --pill-border-color: transparent;
+  --drag-ghost-background: #FFF5F7;
+  --drag-ghost-text-color: #5E3A46;
+
+  /* 缩进参考线 / 分隔 / 框架 */
+  --indentation-guide-color: rgb(196 90 109 / 12%);
+  --indentation-guide-color-active: rgb(196 90 109 / 30%);
+  --divider-color-hover: #D89CAB;
+  --titlebar-border-color: #E6BAC5;
+  --vault-profile-color: #76515C;
+  --vault-profile-color-hover: #A23B4E;
+  --workspace-background-translucent: #FFF;
+  --tab-divider-color: #E6BAC5;
+  --tab-stacked-shadow: 0 8px 24px rgb(120 77 91 / 20%);
+  --embed-block-shadow-hover: 0 4px 16px rgb(120 77 91 / 18%);
+
+  /* Bases 核心视图 */
+  --bases-table-container-border-radius: 10px;
+  --bases-cards-background: color-mix(in srgb, #FFF0F5 90%, transparent);
+  --bases-cards-shadow: 0 2px 10px rgb(120 77 91 / 12%);
+  --bases-cards-shadow-hover: 0 6px 20px rgb(120 77 91 / 20%);
+  --bases-table-header-background: #FDE4EC;
+  --bases-table-header-color: #5E3A46;
+  --bases-table-row-background-hover: rgb(196 90 109 / 6%);
 }
 
 /* -----------------------------------------------------------------
@@ -2285,9 +2594,9 @@ settings:
   -
     id: smc-glass-primary-opacity
     title: 编辑器面板实度
-    description: '数值越低越透、壁纸越明显；78 为液态玻璃默认，100 为不透明。'
+    description: '数值越低越透、壁纸越明显；74 为液态玻璃默认，100 为不透明。'
     type: variable-number-slider
-    default: 78
+    default: 74
     min: 50
     max: 100
     step: 2
@@ -2295,9 +2604,9 @@ settings:
   -
     id: smc-glass-secondary-opacity
     title: 侧栏面板实度
-    description: '数值越低越透；72 为液态玻璃默认。'
+    description: '数值越低越透；68 为液态玻璃默认。'
     type: variable-number-slider
-    default: 72
+    default: 68
     min: 50
     max: 100
     step: 2
