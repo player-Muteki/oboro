@@ -608,6 +608,17 @@ body {
    6. Liquid Glass - 液态玻璃引擎
    配方：高模糊 + 饱和度提升 + 镜面高光缘 + 细颗粒噪点
    实度/模糊/饱和度全部变量化，可在 Style Settings 调节
+
+   各层手法来源：
+   - blur + saturate（web glassmorphism / Apple 面板底）
+   - 缘光 = 0.5px 环 + 硬高光线 + 「曲率晕」（Apple Liquid Glass 的 bezel
+     曲面反射：真折射靠 SVG feDisplacementMap，但它要求同文档 SVG 节点，
+     纯 CSS 主题无法注入，故以带 blur 的 inset 阴影近似渐变缘）
+   - 色散 fringe = 高光侧暖、阴影侧冷的两条极淡彩晕（Apple 玻璃边缘的
+     RGB 分离观感，Fluent 无此层）
+   - sheen = 顶部对角镜面反射（Flutter FakeGlass highlight 层思路，
+     z-index:-1 落在内容之下，是玻璃体内的光而非表面覆盖）
+   - 噪点 = Fluent Acrylic / Isinglass 的 LDR 纹理层
    ----------------------------------------------------------------- */
 body {
   --smc-glass-blur: 24px;
@@ -615,17 +626,34 @@ body {
   --smc-glass-grain-opacity: 0.035;
   --smc-glass-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
   --smc-glass-soft-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  --smc-glass-mild-filter: blur(calc(var(--smc-glass-blur) * 0.6)) saturate(var(--smc-glass-saturation));
+  --smc-glass-chip-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
   --smc-glass-overlay-opacity: 82%;
   --smc-glass-modal-opacity: 88%;
   --smc-glass-notice-opacity: 86%;
+  --smc-glass-sheen: linear-gradient(
+    165deg,
+    rgb(255 255 255 / 55%) 0%,
+    rgb(255 255 255 / 20%) 18%,
+    transparent 42%
+  );
 
-  /* 镜面缘：光自左上入射 —— 上/左为高光，下/右为阴影（Flutter FakeGlass 的
-     highlight + bevel 分层思路）；0.5px 环描边保证任何壁纸上都有一道清晰的轮廓 */
+  /* 完整镜面缘（面板/弹层级）：光自左上入射 —— 上/左为高光，下/右为阴影
+     （Flutter FakeGlass 的 highlight + bevel 分层思路）；0.5px 环描边保证
+     任何壁纸上都有一道清晰的轮廓；两条模糊晕模拟 bezel 曲率 */
   --smc-glass-edge: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
     inset 0 1px 0 var(--smc-glass-rim),
     inset 1px 0 0 var(--smc-glass-rim-soft),
     inset 0 -1px 0 var(--smc-glass-shade),
-    inset -1px 0 0 var(--smc-glass-shade);
+    inset -1px 0 0 var(--smc-glass-shade),
+    inset 0 3px 4px -2px var(--smc-glass-rim-blur),
+    inset 0 -3px 6px -3px var(--smc-glass-shade-blur),
+    inset 0 1px 1px -0.5px var(--smc-glass-fringe-warm),
+    inset 0 -1px 1px -0.5px var(--smc-glass-fringe-cool);
+
+  /* 控件级缘：只要轮廓 + 顶部高光，不含曲率晕与下缘阴影 */
+  --smc-glass-edge-soft: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
+    inset 0 1px 0 var(--smc-glass-rim);
   --smc-table-tint: 18%;
 }
 
@@ -635,6 +663,11 @@ body {
   --smc-glass-rim: rgb(255 255 255 / 14%);
   --smc-glass-rim-soft: rgb(255 255 255 / 7%);
   --smc-glass-shade: rgb(0 0 0 / 22%);
+  --smc-glass-rim-blur: rgb(255 255 255 / 5%);
+  --smc-glass-shade-blur: rgb(0 0 0 / 12%);
+  --smc-glass-fringe-warm: rgb(255 200 150 / 5%);
+  --smc-glass-fringe-cool: rgb(150 200 255 / 5%);
+  --smc-glass-sheen-opacity: 0.07;
 }
 
 .theme-light {
@@ -643,6 +676,13 @@ body {
   --smc-glass-rim: rgb(255 255 255 / 60%);
   --smc-glass-rim-soft: rgb(255 255 255 / 32%);
   --smc-glass-shade: rgb(82 40 60 / 8%);
+  --smc-glass-rim-blur: rgb(255 255 255 / 28%);
+  --smc-glass-shade-blur: rgb(82 40 60 / 5%);
+
+  /* 浅色底已亮，色散不可辨则关；sheen 略强于深色以压过纸底 */
+  --smc-glass-fringe-warm: transparent;
+  --smc-glass-fringe-cool: transparent;
+  --smc-glass-sheen-opacity: 0.1;
 }
 
 /* 侧栏：全剂量玻璃 + 镜面上缘 */
@@ -655,16 +695,16 @@ body {
 
 /* 编辑器：减剂量模糊保文字可读性，仍保留饱和度与高光缘 */
 .workspace-split.mod-root .workspace-leaf-content {
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.6)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.6)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-mild-filter);
+  -webkit-backdrop-filter: var(--smc-glass-mild-filter);
   box-shadow: var(--smc-glass-edge);
 }
 
 /* 标签页栏：次剂量 */
 .workspace-tab-header-container {
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
-  box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
+  backdrop-filter: var(--smc-glass-soft-filter);
+  -webkit-backdrop-filter: var(--smc-glass-soft-filter);
+  box-shadow: var(--smc-glass-edge-soft);
 }
 
 /* -----------------------------------------------------------------
@@ -754,6 +794,23 @@ body {
   opacity: var(--smc-glass-grain-opacity);
 }
 
+/* 镜面 sheen：顶部对角反射光。z-index:-1 落在背景之上、内容之下 ——
+   元素自身的 backdrop-filter 建立 stacking context，光在玻璃体内而非表面浮层 */
+.modal::before,
+.menu::before,
+.suggestion-container::before,
+.prompt::before,
+.hover-popover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: var(--smc-glass-sheen);
+  opacity: var(--smc-glass-sheen-opacity);
+}
+
 /* 无障碍：系统开启「减少透明度」时退回实色面板 */
 @media (prefers-reduced-transparency: reduce) {
   body {
@@ -761,9 +818,16 @@ body {
 
     --smc-glass-filter: none;
     --smc-glass-soft-filter: none;
+    --smc-glass-mild-filter: none;
+    --smc-glass-chip-filter: none;
     --smc-glass-overlay-opacity: 100%;
     --smc-glass-modal-opacity: 100%;
     --smc-glass-notice-opacity: 100%;
+
+    /* 缘光/sheen/色散属于玻璃装饰，退实色时一并退场 */
+    --smc-glass-edge: none;
+    --smc-glass-edge-soft: none;
+    --smc-glass-sheen-opacity: 0;
   }
 
   .theme-dark {
@@ -794,7 +858,12 @@ body {
   .modal::after,
   .suggestion-container::after,
   .prompt::after,
-  .hover-popover::after {
+  .hover-popover::after,
+  .menu::before,
+  .modal::before,
+  .suggestion-container::before,
+  .prompt::before,
+  .hover-popover::before {
     content: none;
   }
 
@@ -1364,8 +1433,8 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   border: 1px solid rgb(var(--callout-color), 0.25);
   background-color: rgb(var(--callout-color), 0.1);
   box-shadow: 0 2px 10px rgb(0 0 0 / 6%);
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-chip-filter);
+  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
 }
 
 .callout-title {
@@ -1650,8 +1719,8 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   border-top: 3px solid var(--smc-interactive-accent);
   border-radius: 10px;
   padding: 0.75em 1em;
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-chip-filter);
+  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
 }
 
 .markdown-rendered .markdown-embed-title {
@@ -1828,7 +1897,7 @@ body {
   border-radius: 10px;
   box-shadow:
     0 8px 24px rgb(0 0 0 / 16%),
-    inset 0 1px 0 var(--smc-glass-rim);
+    var(--smc-glass-edge);
   backdrop-filter: var(--smc-glass-soft-filter);
   -webkit-backdrop-filter: var(--smc-glass-soft-filter);
 }
@@ -1930,8 +1999,8 @@ progress {
   background-color: #F8BBD0;
   background-color: color-mix(in srgb, #F8BBD0 55%, transparent);
   color: #5E3A46;
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-soft-filter);
+  -webkit-backdrop-filter: var(--smc-glass-soft-filter);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 40%);
 }
 
@@ -1939,8 +2008,8 @@ progress {
   background-color: #AD7F96;
   background-color: color-mix(in srgb, #AD7F96 45%, transparent);
   color: #F5CFE1;
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-soft-filter);
+  -webkit-backdrop-filter: var(--smc-glass-soft-filter);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
 }
 
@@ -1955,7 +2024,7 @@ body.is-mobile .mobile-toolbar {
   background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-notice-opacity), transparent);
   backdrop-filter: var(--smc-glass-filter);
   -webkit-backdrop-filter: var(--smc-glass-filter);
-  box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
+  box-shadow: var(--smc-glass-edge-soft);
 }
 
 /* --- 18.12 悬停预览卡片（Popover / 页面预览） --- */
@@ -2206,8 +2275,8 @@ body:not(.is-grabbing) .nav-file-title.is-active {
   background-color: var(--smc-bg-primary);
   background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 18%), transparent);
   box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.65)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-chip-filter);
+  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--table-border-color);
@@ -2381,8 +2450,8 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   border: 1px solid var(--table-border-color);
   border-radius: 10px;
   overflow: hidden;
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-chip-filter);
+  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
 }
 
 /* --- 21.6 Real Claudian（AI 助手 zen 抽屉）：玻璃化 --- */
@@ -2393,10 +2462,9 @@ body .claudian-zen-drawer {
   border-radius: 14px;
   box-shadow:
     0 8px 32px rgb(0 0 0 / 14%),
-    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim);
-  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+    var(--smc-glass-edge);
+  backdrop-filter: var(--smc-glass-filter);
+  -webkit-backdrop-filter: var(--smc-glass-filter);
 }
 
 /* --- 21.7 Kanban：看板/列表/卡片玻璃（未安装亦可安全存在） --- */
@@ -2409,8 +2477,8 @@ body .claudian-zen-drawer {
   background-color: color-mix(in srgb, var(--smc-bg-secondary) var(--smc-glass-secondary-opacity, 80%), transparent);
   border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-chip-filter);
+  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
 }
 
 .kanban-plugin__item {
@@ -2797,8 +2865,7 @@ body:not(.is-mobile) .sidebar-toggle-button.mod-left {
   background-color: color-mix(in srgb, var(--smc-bg-primary) 88%, transparent);
   box-shadow:
     0 4px 16px rgb(0 0 0 / 10%),
-    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim);
+    var(--smc-glass-edge-soft);
 }
 
 body:not(.is-mobile) .sidebar-toggle-button.mod-left .clickable-icon {
