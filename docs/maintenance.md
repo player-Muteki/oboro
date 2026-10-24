@@ -51,6 +51,21 @@
 
 ## 已知事项
 
+- **展开按钮悬停归属**：`.sidebar-toggle-button` 内部还有 `.clickable-icon`，后者原生
+  `:hover` 会另画底色并改变图标颜色、SVG 透明度。仅给外层加 hover 会造成边缘与图标中心
+  两级反馈。桌面端由外层 hover 同步控制背景与图标反馈，内部背景固定透明；不要清除
+  `.clickable-icon:focus-visible` 的原生焦点提示。复核左右按钮边缘与中心的计算样式应一致。
+  右侧原生布局包含不对称内边距；将悬停底色放在外层后须改为对称内边距并垂直居中，
+  检查 SVG 与外层背景中心重合，同时保持外层按钮位置和尺寸不变。
+- **左上角方形背板的真实来源**：Obsidian 1.14.5 的
+  `.workspace-ribbon.mod-primary::before` 是独立的标题拖动占位层，原生尺寸取
+  `--ribbon-width` × `--header-height`，底色取 `--titlebar-background`，并绘制底边线。
+  Ribbon 卡和按钮的圆角不会裁切该层；此前将它归因于壁纸或 Ribbon 卡片方角的判断不成立。
+  桌面端只将该伪元素底色、底边线设为透明，保留 `content`、尺寸和 `app-region: drag`，
+  不用隐藏工具栏或调整按钮定位来规避。排查时须同时检查元素及 `::before` / `::after`；
+  更新样式后等待重绘再截图，且移除临时诊断样式后复核安装版本。
+  参考 Minimal 的 Ribbon 变体对 `::before` 的独立处理，以及 AnuPpuccin 卡片布局对
+  Ribbon 伪元素背景和底边线的显式控制；本主题只按自身布局清除绘制，不移植它们的布局规则。
 - **对比度**：浅色 h6 `#E59EB1`（1.93:1）与次要文字 `#8E6F7A`（4.05:1）低于 WCAG AA 的 4.5:1，
   为「樱花木彩墨」标题阶梯与次要信息的既有设计取向；如需收紧，压深 h6 至 `#C96A83` 一档即可。
 - **stylelint 豁免**（见 `.stylelintrc.json`）：`selector-class-pattern` 置空（Obsidian 内部类如
@@ -71,4 +86,3 @@
   Ribbon 加模糊导致按钮被"搬位"到标签栏下方。因此：**Ribbon 永远不加 backdrop-filter**；
   给含原生浮件（absolute 定位 UI）的容器加模糊前，务必 A/B 实测按钮位置
   （摘除主题 style 标签前后对比 `getBoundingClientRect()`）。
-

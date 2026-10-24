@@ -2708,7 +2708,12 @@ body:not(.is-mobile) .side-dock-ribbon {
   border-radius: var(--smc-card-radius);
 }
 
-/* 顶部为 FAB 圆钮让位——避免圆钮叠在卡片方角上形成"方形背板" */
+body:not(.is-mobile) .workspace-ribbon.mod-primary::before {
+  background-color: transparent;
+  border-bottom-color: transparent;
+}
+
+/* 顶部为 FAB 圆钮让位 */
 body:not(.is-mobile) .side-dock-ribbon.mod-primary {
   margin-top: calc(38px + var(--smc-card-gap));
 }
@@ -2723,13 +2728,23 @@ body:not(.is-mobile) .sidebar-toggle-button {
   border-radius: 10px;
 }
 
-/* 左开关：与所有卡片同律 —— 离窗角 8px 缝隙 + 圆角玻璃小浮卡，尺寸贴合图标 */
+body:not(.is-mobile) .sidebar-toggle-button.mod-right {
+  padding: 0 calc(var(--size-4-2) / 2);
+  align-items: center;
+}
+
+/* 左开关：圆钮对齐工具栏中线和顶部标签栏中线 */
 body:not(.is-mobile) .sidebar-toggle-button.mod-left {
-  top: var(--smc-card-gap);
-  left: var(--smc-card-gap);
-  width: auto;
-  height: auto;
-  padding: 7px;
+  --smc-sidebar-toggle-size: 36px;
+
+  top: calc(var(--smc-card-gap) + (var(--header-height) - var(--smc-sidebar-toggle-size)) / 2);
+  left: calc(var(--smc-card-gap) + (var(--ribbon-width) - var(--smc-sidebar-toggle-size)) / 2);
+  width: var(--smc-sidebar-toggle-size);
+  height: var(--smc-sidebar-toggle-size);
+  padding: 0;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   background-color: var(--smc-bg-primary);
   background-color: color-mix(in srgb, var(--smc-bg-primary) 88%, transparent);
@@ -2745,10 +2760,19 @@ body:not(.is-mobile) .sidebar-toggle-button.mod-left .clickable-icon {
 
 body:not(.is-mobile) .sidebar-toggle-button .clickable-icon {
   border-radius: 10px;
+  background-color: transparent;
 }
 
 body:not(.is-mobile) .sidebar-toggle-button:hover {
   background-color: color-mix(in srgb, var(--smc-interactive-accent) 16%, transparent);
+}
+
+body:not(.is-mobile) .sidebar-toggle-button:hover .clickable-icon {
+  color: var(--icon-color-hover);
+}
+
+body:not(.is-mobile) .sidebar-toggle-button:hover .clickable-icon svg {
+  opacity: var(--icon-opacity-hover);
 }
 
 /* 侧栏底部 vault 档案条圆角收底（防方角穿孔） */
