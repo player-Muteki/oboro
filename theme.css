@@ -81,7 +81,7 @@ body {
   --smc-bg-secondary-alt: #F8BBD0;
   --smc-bg-paper: #FFF8FA;
   --smc-txt-accent: #5E3A46;
-  --smc-txt-accent-mute: #8E6F7A;
+  --smc-txt-accent-mute: #82636F;
   --smc-txt-accent-faint: #BFA4AE;
   --smc-interactive-accent: #C45A6D;
   --interactive-accent: var(--smc-interactive-accent);
@@ -116,8 +116,8 @@ body {
   --smc-markdown-editor-bg: var(--smc-bg-primary);
   --smc-markdown-editor-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
   --smc-view-content-bg: var(--smc-markdown-editor-bg);
-  --smc-modal-bg: var(--smc-bg-primary-alt);
-  --smc-menu-bg: var(--smc-bg-primary-alt);
+  --smc-modal-bg: var(--smc-bg-paper);
+  --smc-menu-bg: var(--smc-bg-paper);
   --smc-scrollbar-thumb-bg: #E89FB0;
   --smc-titlebar-bg-focus: #FCE8EE;
   --smc-titlebar-bg: #FFF5F7;
@@ -371,7 +371,7 @@ body {
 
   /* 文字 */
   --text-normal: #5E3A46;
-  --text-muted: #8E6F7A;
+  --text-muted: var(--smc-txt-accent-mute);
   --text-faint: #BFA4AE;
   --text-accent: #C45A6D;
   --text-accent-hover: #9E4253;
@@ -613,6 +613,19 @@ body {
   --smc-glass-blur: 24px;
   --smc-glass-saturation: 170%;
   --smc-glass-grain-opacity: 0.035;
+  --smc-glass-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+  --smc-glass-soft-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  --smc-glass-overlay-opacity: 82%;
+  --smc-glass-modal-opacity: 88%;
+  --smc-glass-notice-opacity: 86%;
+
+  /* 镜面缘：光自左上入射 —— 上/左为高光，下/右为阴影（Flutter FakeGlass 的
+     highlight + bevel 分层思路）；0.5px 环描边保证任何壁纸上都有一道清晰的轮廓 */
+  --smc-glass-edge: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
+    inset 0 1px 0 var(--smc-glass-rim),
+    inset 1px 0 0 var(--smc-glass-rim-soft),
+    inset 0 -1px 0 var(--smc-glass-shade),
+    inset -1px 0 0 var(--smc-glass-shade);
   --smc-table-tint: 18%;
 }
 
@@ -621,6 +634,7 @@ body {
   --smc-glass-secondary-opacity: 68%;
   --smc-glass-rim: rgb(255 255 255 / 14%);
   --smc-glass-rim-soft: rgb(255 255 255 / 7%);
+  --smc-glass-shade: rgb(0 0 0 / 22%);
 }
 
 .theme-light {
@@ -628,21 +642,22 @@ body {
   --smc-glass-secondary-opacity: 72%;
   --smc-glass-rim: rgb(255 255 255 / 60%);
   --smc-glass-rim-soft: rgb(255 255 255 / 32%);
+  --smc-glass-shade: rgb(82 40 60 / 8%);
 }
 
 /* 侧栏：全剂量玻璃 + 镜面上缘 */
 .workspace-split.mod-horizontal.mod-left-split,
 .workspace-split.mod-horizontal.mod-right-split {
-  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  box-shadow: inset 0 0 0 0.5px var(--smc-glass-rim-soft), inset 0 1px 0 var(--smc-glass-rim);
+  backdrop-filter: var(--smc-glass-filter);
+  -webkit-backdrop-filter: var(--smc-glass-filter);
+  box-shadow: var(--smc-glass-edge);
 }
 
 /* 编辑器：减剂量模糊保文字可读性，仍保留饱和度与高光缘 */
 .workspace-split.mod-root .workspace-leaf-content {
   backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.6)) saturate(var(--smc-glass-saturation));
   -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.6)) saturate(var(--smc-glass-saturation));
-  box-shadow: inset 0 0 0 0.5px var(--smc-glass-rim-soft), inset 0 1px 0 var(--smc-glass-rim);
+  box-shadow: var(--smc-glass-edge);
 }
 
 /* 标签页栏：次剂量 */
@@ -727,7 +742,9 @@ body {
 /* 细颗粒噪点：给弹层叠加一层玻璃质感颗粒（Isinglass 手法） */
 .modal::after,
 .menu::after,
-.suggestion-container::after {
+.suggestion-container::after,
+.prompt::after,
+.hover-popover::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -741,6 +758,12 @@ body {
 @media (prefers-reduced-transparency: reduce) {
   body {
     background-image: none;
+
+    --smc-glass-filter: none;
+    --smc-glass-soft-filter: none;
+    --smc-glass-overlay-opacity: 100%;
+    --smc-glass-modal-opacity: 100%;
+    --smc-glass-notice-opacity: 100%;
   }
 
   .theme-dark {
@@ -769,7 +792,9 @@ body {
 
   .menu::after,
   .modal::after,
-  .suggestion-container::after {
+  .suggestion-container::after,
+  .prompt::after,
+  .hover-popover::after {
     content: none;
   }
 
@@ -822,6 +847,14 @@ body {
   padding-top: 40px;
   position: relative;
   border-radius: var(--smc-code-radius);
+}
+
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin {
+  border-radius: var(--smc-code-radius) var(--smc-code-radius) 0 0;
+}
+
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-end {
+  border-radius: 0 0 var(--smc-code-radius) var(--smc-code-radius);
 }
 
 /* 顶部半透明底座鼠标穿透，不再阻挡原生 Copy 按钮 */
@@ -1699,15 +1732,14 @@ body {
 /* --- 18.2 菜单（右键菜单/下拉菜单） --- */
 .menu {
   background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) 82%, transparent);
+  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
   border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
-    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim);
-  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+    var(--smc-glass-edge);
+  backdrop-filter: var(--smc-glass-filter);
+  -webkit-backdrop-filter: var(--smc-glass-filter);
 }
 
 .menu-item {
@@ -1726,15 +1758,14 @@ body {
 /* --- 18.3 弹窗 Modal --- */
 .modal {
   background-color: var(--smc-modal-bg);
-  background-color: color-mix(in srgb, var(--smc-modal-bg) 88%, transparent);
+  background-color: color-mix(in srgb, var(--smc-modal-bg) var(--smc-glass-modal-opacity), transparent);
   border: 1px solid var(--background-modifier-border);
   border-radius: 16px;
   box-shadow:
     0 16px 48px rgb(0 0 0 / 18%),
-    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim);
-  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+    var(--smc-glass-edge);
+  backdrop-filter: var(--smc-glass-filter);
+  -webkit-backdrop-filter: var(--smc-glass-filter);
 }
 
 .modal-title {
@@ -1747,25 +1778,38 @@ body {
 }
 
 /* --- 18.4 命令面板 / 快速切换 / 建议列表 --- */
+
+/* 建议列表 */
 .suggestion-container {
   background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) 82%, transparent);
+  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
   border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
-    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim);
-  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+    var(--smc-glass-edge);
+  backdrop-filter: var(--smc-glass-filter);
+  -webkit-backdrop-filter: var(--smc-glass-filter);
+}
+
+/* 命令面板：底色 / 模糊 / 描边交给原生 --prompt-* 变量（成熟主题的通行做法，
+   避免和官方 .prompt 规则抢特异性），这里只补圆角与镜面缘阴影 */
+.prompt {
+  border-radius: var(--modal-radius);
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 14%),
+    var(--smc-glass-edge);
 }
 
 .suggestion-item.is-selected {
+  --hotkey-background: color-mix(in srgb, var(--text-on-accent) 16%, transparent);
+
   background-color: var(--smc-interactive-accent);
   color: var(--text-on-accent);
 }
 
-.suggestion-item.is-selected .suggestion-flair {
+.suggestion-item.is-selected .suggestion-flair,
+.suggestion-item.is-selected .suggestion-hotkey {
   color: var(--text-on-accent);
 }
 
@@ -1778,15 +1822,15 @@ body {
 /* --- 18.5 通知 Notice --- */
 .notice {
   background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) 86%, transparent);
+  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-notice-opacity), transparent);
   color: var(--text-normal);
   border: 1px solid var(--smc-interactive-accent);
   border-radius: 10px;
   box-shadow:
     0 8px 24px rgb(0 0 0 / 16%),
     inset 0 1px 0 var(--smc-glass-rim);
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  backdrop-filter: var(--smc-glass-soft-filter);
+  -webkit-backdrop-filter: var(--smc-glass-soft-filter);
 }
 
 /* --- 18.6 按钮：主按钮走马卡龙渐变 --- */
@@ -1908,24 +1952,23 @@ progress {
 body.is-mobile .mobile-navbar,
 body.is-mobile .mobile-toolbar {
   background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) 86%, transparent);
-  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-notice-opacity), transparent);
+  backdrop-filter: var(--smc-glass-filter);
+  -webkit-backdrop-filter: var(--smc-glass-filter);
   box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
 }
 
 /* --- 18.12 悬停预览卡片（Popover / 页面预览） --- */
 .hover-popover {
   background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) 82%, transparent);
+  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
   border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
-    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim);
-  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+    var(--smc-glass-edge);
+  backdrop-filter: var(--smc-glass-filter);
+  -webkit-backdrop-filter: var(--smc-glass-filter);
   animation: smc-fade-scale 0.16s var(--smc-ease-spring);
 }
 
@@ -2309,17 +2352,17 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 
 /* --- 21.4 Editing Toolbar：浮动工具条玻璃（真身 id/类来自插件 DOM） --- */
 #editingToolbarModalBar,
+#editingToolbarPopoverBar,
 .editingToolbarPopoverBar {
   background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) 82%, transparent);
+  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
   border: 1px solid var(--background-modifier-border);
   border-radius: 14px;
   box-shadow:
     0 8px 24px rgb(0 0 0 / 14%),
-    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim);
-  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+    var(--smc-glass-edge);
+  backdrop-filter: var(--smc-glass-filter);
+  -webkit-backdrop-filter: var(--smc-glass-filter);
 }
 
 /* --- 21.5 Table Editor / 实时预览表格 widget：容器衔接玻璃表格 --- */
@@ -2515,6 +2558,8 @@ body {
   /* 弹层与控件 */
   --modal-background: #342834;
   --modal-border-color: #27202A;
+  --prompt-background: color-mix(in srgb, #3E303D var(--smc-glass-overlay-opacity), transparent);
+  --prompt-backdrop-filter: var(--smc-glass-filter);
   --prompt-border-color: #27202A;
   --dropdown-background-hover: #473446;
   --checkbox-border-color-hover: #F0B5CE;
@@ -2628,6 +2673,8 @@ body {
   /* 弹层与控件 */
   --modal-background: #FFF;
   --modal-border-color: #E6BAC5;
+  --prompt-background: color-mix(in srgb, #FFF8FA var(--smc-glass-overlay-opacity), transparent);
+  --prompt-backdrop-filter: var(--smc-glass-filter);
   --prompt-border-color: #E6BAC5;
   --dropdown-background-hover: #FAD6E2;
   --checkbox-border-color-hover: #C45A6D;
@@ -2673,7 +2720,7 @@ body {
 body {
   --smc-card-radius: 14px;
   --smc-card-gap: 8px;
-  --smc-card-shadow: 0 12px 40px rgb(0 0 0 / 14%), inset 0 0 0 0.5px var(--smc-glass-rim-soft), inset 0 1px 0 var(--smc-glass-rim);
+  --smc-card-shadow: 0 12px 40px rgb(0 0 0 / 14%), var(--smc-glass-edge);
 }
 
 /* 工作区外衬与卡间距：四边 + 卡间均留出透壁纸的缝隙（flex gap） */
