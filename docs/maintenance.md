@@ -63,4 +63,9 @@
   `text-decoration*` 的 partial-support warning 来自插件的 caniuse 数据，可忽略。
 - **callout 类型色**：浅色侧 8 组标题色全部压至对比度 ≥4.5:1（青 `#3E7168` 绿 `#4C7343`
   金 `#8A6E1F` 橙 `#A85F2D` 玫 `#A94658` 蓝 `#4A6FA5` 红 `#B03A4E` 紫 `#8A5F9E`）。
+- **backdrop-filter 包含块陷阱**：带 `backdrop-filter` 的元素会成为其**绝对定位后代**的
+  包含块。侧栏开关按钮（`.sidebar-toggle-button`）在 DOM 里是 Ribbon 的后代——曾因给
+  Ribbon 加模糊导致按钮被"搬位"到标签栏下方。因此：**Ribbon 永远不加 backdrop-filter**；
+  给含原生浮件（absolute 定位 UI）的容器加模糊前，务必 A/B 实测按钮位置
+  （摘除主题 style 标签前后对比 `getBoundingClientRect()`）。
 

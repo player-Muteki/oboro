@@ -2338,7 +2338,21 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
 }
 
-/* --- 21.6 Kanban：看板/列表/卡片玻璃（未安装亦可安全存在） --- */
+/* --- 21.6 Real Claudian（AI 助手 zen 抽屉）：玻璃化 --- */
+body .claudian-zen-drawer {
+  background-color: var(--smc-bg-primary);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-glass-primary-opacity, 88%), transparent);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 14px;
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 14%),
+    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
+    inset 0 1px 0 var(--smc-glass-rim);
+  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+}
+
+/* --- 21.7 Kanban：看板/列表/卡片玻璃（未安装亦可安全存在） --- */
 .kanban-plugin {
   background-color: transparent;
 }
