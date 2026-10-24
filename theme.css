@@ -613,7 +613,7 @@ body {
   --smc-glass-blur: 24px;
   --smc-glass-saturation: 170%;
   --smc-glass-grain-opacity: 0.035;
-  --smc-table-tint: 30%;
+  --smc-table-tint: 18%;
 }
 
 .theme-dark {
@@ -717,10 +717,9 @@ body {
   background-color: transparent;
 }
 
-/* 活动栏 Ribbon：玻璃 + 镜面缘 */
+/* 活动栏 Ribbon：半透明底 + 镜面缘（不带 backdrop-filter——
+   侧栏开关按钮是 ribbon 的绝对定位后代，模糊会把 ribbon 变成其包含块，按钮会被搬位） */
 .side-dock-ribbon {
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
-  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
   box-shadow: inset 0 0 0 0.5px var(--smc-glass-rim-soft), inset -1px 0 0 var(--smc-glass-rim-soft);
 }
 
@@ -1987,8 +1986,8 @@ body {
    20. Signature Details - 标志性细节：一眼可辨的形状级定制
    ----------------------------------------------------------------- */
 .theme-light {
-  --smc-warn: #C0723F;
-  --smc-warn-fill: #E6A100;
+  --smc-warn: #B96A52;
+  --smc-warn-fill: #D99A6C;
   --smc-danger: #B03A4E;
   --smc-info: #4A6FA5;
   --smc-defer: #8A5F9E;
@@ -1996,8 +1995,8 @@ body {
 }
 
 .theme-dark {
-  --smc-warn: #E2B48D;
-  --smc-warn-fill: #F3B795;
+  --smc-warn: #DFAF9B;
+  --smc-warn-fill: #EFC3A8;
   --smc-danger: #F49AA6;
   --smc-info: #B6C1E0;
   --smc-defer: #CCB0F0;
@@ -2158,8 +2157,9 @@ body:not(.is-grabbing) .nav-file-title.is-active {
        而非又一块面板；壁纸透过率 ≈ (1-30%)×(1-面板实度)，肉眼可辨 --- */
 .markdown-rendered table {
   background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 30%), transparent);
-  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 18%), transparent);
+  box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.65)) saturate(var(--smc-glass-saturation));
   -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
   border-collapse: separate;
   border-spacing: 0;
@@ -2327,7 +2327,8 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 .markdown-source-view.mod-cm6 .cm-table-widget table,
 .markdown-source-view.mod-cm6 .table-editor table {
   background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 30%), transparent);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 18%), transparent);
+  box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--table-border-color);
