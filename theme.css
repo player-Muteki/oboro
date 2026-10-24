@@ -2835,6 +2835,18 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf-content {
   border-radius: 0 0 var(--smc-card-radius) var(--smc-card-radius);
 }
 
+/* 分屏：窗格即小卡 —— 组间留缝（窗格为 flex-grow 布局，加 gap 不会溢出），
+   缝隙透出底层玻璃与壁纸；每个窗格的标签头圆顶、内容区圆底（上一条规则
+   按 leaf-content 生效，天然覆盖每一格），上下/左右分屏同构 */
+body:not(.is-mobile) .workspace-split.mod-root,
+body:not(.is-mobile) .workspace-split.mod-root .workspace-split {
+  gap: var(--smc-card-gap);
+}
+
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container {
+  border-radius: var(--smc-card-radius) var(--smc-card-radius) 0 0;
+}
+
 /* Ribbon：独立浮动轨（圆角 + 镜面缘，无模糊保按钮定位；间距由 flex gap 提供） */
 body:not(.is-mobile) .side-dock-ribbon {
   border-radius: var(--smc-card-radius);
