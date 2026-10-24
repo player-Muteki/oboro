@@ -530,11 +530,9 @@ body {
 
 .theme-light .markdown-rendered :is(strong, b),
 .theme-light .cm-strong {
-  background:
-    linear-gradient(135deg, #D6284F 0%, #E6A100 100%),
-    linear-gradient(rgb(214 40 79 / 5%), rgb(214 40 79 / 5%));
-  -webkit-background-clip: text, padding-box;
-  background-clip: text, padding-box;
+  background: linear-gradient(135deg, #D6284F 0%, #E6A100 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -550,11 +548,9 @@ body {
 
 .theme-dark .markdown-rendered :is(strong, b),
 .theme-dark .cm-strong {
-  background:
-    linear-gradient(135deg, #F3A4B8 0%, #EAD3A0 100%),
-    linear-gradient(rgb(243 164 184 / 12%), rgb(243 164 184 / 12%));
-  -webkit-background-clip: text, padding-box;
-  background-clip: text, padding-box;
+  background: linear-gradient(135deg, #F3A4B8 0%, #EAD3A0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
