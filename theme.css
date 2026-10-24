@@ -646,6 +646,39 @@ body {
   box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
 }
 
+/* -----------------------------------------------------------------
+   6.1 递归透明链 - 多层半透明叠加会趋近不透明（0.82³ ≈ 0.99），
+       因此中间层一律透明，玻璃底只由挂 backdrop-filter 的单一层承担
+   ----------------------------------------------------------------- */
+
+/* 编辑器：root split 与 leaf/view-content 不画背景 */
+.workspace-split.mod-root,
+.workspace-split.mod-root .workspace-leaf,
+.workspace-split.mod-root .view-content {
+  background-color: transparent;
+}
+
+/* 编辑器：玻璃底与模糊统一落在 leaf-content 一层 */
+.workspace-split.mod-root .workspace-leaf-content {
+  background-color: var(--background-primary);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-glass-primary-opacity, 88%), transparent);
+}
+
+/* 侧栏：内部 leaf/view-content 不画背景 */
+.workspace-split.mod-horizontal.mod-left-split .workspace-leaf,
+.workspace-split.mod-horizontal.mod-left-split .view-content,
+.workspace-split.mod-horizontal.mod-right-split .workspace-leaf,
+.workspace-split.mod-horizontal.mod-right-split .view-content {
+  background-color: transparent;
+}
+
+/* 侧栏：玻璃底统一落在 split 一层 */
+.workspace-split.mod-horizontal.mod-left-split,
+.workspace-split.mod-horizontal.mod-right-split {
+  background-color: var(--background-secondary);
+  background-color: color-mix(in srgb, var(--smc-bg-secondary) var(--smc-glass-secondary-opacity, 80%), transparent);
+}
+
 /* 细颗粒噪点：给弹层叠加一层玻璃质感颗粒（Isinglass 手法） */
 .modal::after,
 .menu::after,

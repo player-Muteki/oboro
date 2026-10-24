@@ -53,6 +53,13 @@
 - 恢复 `stylelint --fix` 误删的 `-webkit-` 前缀声明（backdrop-filter ×6、mask-image ×2、
   background-clip ×4），并在 `.stylelintrc.json` 豁免前缀属性的重复检查，防止复发。
 
+### Fixed
+
+- **主面板不透明**：Obsidian 的 root split / leaf / view-content 会各自画一遍半透明背景，
+  三层 82% 叠加后有效不透明度 ≈99.4%，液态玻璃完全失效。新增「递归透明链」——中间层
+  一律透明，玻璃底只由挂 `backdrop-filter` 的单一层承担（编辑器落在 leaf-content，
+  侧栏落在 split 层）；实探验证透过率从 <1% 恢复到 18%（82% 单层）。
+
 ## [0.1.0] - 2026-10-24
 
 ### Added
