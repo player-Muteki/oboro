@@ -2707,6 +2707,30 @@ body:not(.is-mobile) .side-dock-ribbon {
   border-radius: var(--smc-card-radius);
 }
 
+/* 右侧辅助轨仅承载开栏按钮：透明轨收敛，按钮成浮动玻璃药丸（去孤立感） */
+body:not(.is-mobile) .side-dock-ribbon.mod-secondary {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+body:not(.is-mobile) .sidebar-toggle-button {
+  border-radius: 10px;
+  background-color: var(--smc-bg-primary);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 60%, transparent);
+  box-shadow:
+    0 4px 16px rgb(0 0 0 / 10%),
+    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
+    inset 0 1px 0 var(--smc-glass-rim);
+}
+
+body:not(.is-mobile) .sidebar-toggle-button .clickable-icon {
+  border-radius: 10px;
+}
+
+body:not(.is-mobile) .sidebar-toggle-button:hover {
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 16%, transparent);
+}
+
 /* 侧栏底部 vault 档案条圆角收底（防方角穿孔） */
 body:not(.is-mobile) .mod-sidedock .workspace-sidedock-vault-profile {
   border-radius: 0 0 var(--smc-card-radius) var(--smc-card-radius);
