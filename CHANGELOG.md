@@ -9,6 +9,17 @@
 
 ### Added
 
+- **入场动效（第 19 节）**：弹窗 / 菜单 / 命令面板建议列表弹性绽放（scale+fade，弹性曲线），
+  通知淡入；跟随系统 `prefers-reduced-motion` 偏好自动停用全部主题动画（含代码块光带）。
+- **Callout 别名**：`seealso`→蓝、`add`/`added`→绿、`change`/`updated`→橙、
+  `remove`/`removed`/`deleted`→红。
+
+### Changed
+
+- **私有变量前缀 `--rtm-` → `--smc-`**（42 个变量）：`rtm` 前缀属于 Retroma 主题的命名空间
+  （其主题内含 3300+ 个 `--rtm-*` 变量），独立主题改用自有前缀，彻底切断命名混淆。
+### Added
+
 - **组件个性化设计**（调研 Minimal / Things / AnuPpuccin / Catppuccin 后补齐）：
   - 链接悬停着色、高亮圆角荧光笔胶囊（换行断片克隆）、标签胶囊圆角。
   - 列表三级圆点（实心樱点 → 空心圆 → 方点）；任务框重绘为马卡龙圆角方块 + 对勾 SVG，

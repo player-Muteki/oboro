@@ -7,7 +7,7 @@
          5 标题与加粗 · 6 毛玻璃 · 7 代码块光带 · 8 语言胶囊
          9 修补补丁 · 10 可选开关 · 11 链接与行内 · 12 列表与任务
          13 标注 callout · 14 引用块 · 15 图片与嵌入 · 16 属性面板
-         17 关系图 · 18 界面控件 · 末尾 Style Settings 配置
+         17 关系图 · 18 界面控件 · 19 入场动效 · 末尾 Style Settings
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -15,34 +15,34 @@
    ----------------------------------------------------------------- */
 body {
   /* 字体：主题级排版入口，可在 设置 → 外观 → 字体 中覆盖 */
-  --rtm-markdown-editor-font: 'Lora', 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
-  --rtm-code-font: 'Cascadia Code', 'JetBrains Mono', ui-monospace, sfmono-regular, menlo, consolas, monospace;
-  --font-text-theme: var(--rtm-markdown-editor-font);
-  --font-monospace-theme: var(--rtm-code-font);
+  --smc-markdown-editor-font: 'Lora', 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+  --smc-code-font: 'Cascadia Code', 'JetBrains Mono', ui-monospace, sfmono-regular, menlo, consolas, monospace;
+  --font-text-theme: var(--smc-markdown-editor-font);
+  --font-monospace-theme: var(--smc-code-font);
 
   /* 标题字号与字重（--h*-size 为官方变量入口） */
-  --rtm-h1-size: 1.6em;
-  --rtm-h2-size: 1.4em;
-  --rtm-h3-size: 1.2em;
-  --rtm-h4-size: 1.1em;
-  --rtm-h5-size: 1em;
-  --rtm-h6-size: 0.9em;
-  --rtm-h1-weight: 700;
-  --rtm-h2-weight: 600;
-  --rtm-h3-weight: 600;
-  --rtm-h4-weight: 600;
-  --rtm-h5-weight: 600;
-  --rtm-h6-weight: 600;
-  --h1-size: var(--rtm-h1-size);
-  --h2-size: var(--rtm-h2-size);
-  --h3-size: var(--rtm-h3-size);
-  --h4-size: var(--rtm-h4-size);
-  --h5-size: var(--rtm-h5-size);
-  --h6-size: var(--rtm-h6-size);
+  --smc-h1-size: 1.6em;
+  --smc-h2-size: 1.4em;
+  --smc-h3-size: 1.2em;
+  --smc-h4-size: 1.1em;
+  --smc-h5-size: 1em;
+  --smc-h6-size: 0.9em;
+  --smc-h1-weight: 700;
+  --smc-h2-weight: 600;
+  --smc-h3-weight: 600;
+  --smc-h4-weight: 600;
+  --smc-h5-weight: 600;
+  --smc-h6-weight: 600;
+  --h1-size: var(--smc-h1-size);
+  --h2-size: var(--smc-h2-size);
+  --h3-size: var(--smc-h3-size);
+  --h4-size: var(--smc-h4-size);
+  --h5-size: var(--smc-h5-size);
+  --h6-size: var(--smc-h6-size);
 
   /* 代码块圆角 */
-  --rtm-code-radius: 12px;
-  --rtm-code-inline-radius: 4px;
+  --smc-code-radius: 12px;
+  --smc-code-inline-radius: 4px;
   --line-height-normal: 1.75;
 
   -webkit-font-smoothing: antialiased;
@@ -63,9 +63,9 @@ body {
   }
 }
 
-/* 行内代码圆角（接驳调色板里的 --rtm-code-inline-radius） */
+/* 行内代码圆角（接驳调色板里的 --smc-code-inline-radius） */
 .markdown-rendered :not(pre) > code {
-  border-radius: var(--rtm-code-inline-radius);
+  border-radius: var(--smc-code-inline-radius);
 }
 
 /* -----------------------------------------------------------------
@@ -74,54 +74,54 @@ body {
 .theme-light {
   --app-bg-image: var(--dv-light-bg, none);
   --app-background-gradient: linear-gradient(135deg, #FFF0F5 0%, #FDE4EC 50%, #F8BBD0 100%);
-  --rtm-bg-primary: #FFF0F5;
-  --rtm-bg-primary-alt: #FFF;
-  --rtm-bg-secondary: #FDE4EC;
-  --rtm-bg-secondary-alt: #F8BBD0;
-  --rtm-bg-paper: #FFF8FA;
-  --rtm-txt-accent: #5E3A46;
-  --rtm-txt-accent-mute: #8E6F7A;
-  --rtm-txt-accent-faint: #BFA4AE;
-  --rtm-interactive-accent: #C45A6D;
-  --interactive-accent: var(--rtm-interactive-accent);
+  --smc-bg-primary: #FFF0F5;
+  --smc-bg-primary-alt: #FFF;
+  --smc-bg-secondary: #FDE4EC;
+  --smc-bg-secondary-alt: #F8BBD0;
+  --smc-bg-paper: #FFF8FA;
+  --smc-txt-accent: #5E3A46;
+  --smc-txt-accent-mute: #8E6F7A;
+  --smc-txt-accent-faint: #BFA4AE;
+  --smc-interactive-accent: #C45A6D;
+  --interactive-accent: var(--smc-interactive-accent);
   --interactive-accent-hover: #9E4253;
-  --rtm-code-bg: #F2DEE4;
-  --rtm-code-border-color: #D89CAB;
-  --code-normal: var(--rtm-txt-accent);
+  --smc-code-bg: #F2DEE4;
+  --smc-code-border-color: #D89CAB;
+  --code-normal: var(--smc-txt-accent);
   --code-comment: #775874;
-  --rtm-blockquote-bg: transparent;
-  --rtm-blockquote-border-color: var(--rtm-interactive-accent);
-  --rtm-bold-color: #C45A6D;
-  --rtm-tab-bg-active: var(--rtm-bg-primary);
-  --rtm-tab-bg-active: color-mix(in srgb, var(--rtm-bg-primary) 90%, transparent);
-  --rtm-tab-inactive-bg: var(--rtm-bg-secondary);
-  --rtm-tab-inactive-bg: color-mix(in srgb, var(--rtm-bg-secondary) 75%, transparent);
-  --rtm-tab-inactive-bg-hover: var(--rtm-bg-primary);
-  --rtm-tab-outline-color: var(--rtm-interactive-accent);
-  --rtm-tab-radius: 6px;
-  --rtm-table-header-bg: var(--rtm-bg-secondary);
-  --rtm-table-data-bg: var(--rtm-bg-primary);
-  --rtm-table-data-bg: color-mix(in srgb, var(--rtm-bg-primary) 86%, transparent);
-  --rtm-table-border-color: #E6BAC5;
-  --rtm-tag-bg: var(--rtm-bg-secondary);
-  --rtm-tag-bg: color-mix(in srgb, var(--rtm-bg-secondary) 88%, transparent);
-  --rtm-tag-bg-hover: var(--rtm-interactive-accent);
-  --rtm-tag-color: var(--rtm-txt-accent-mute);
-  --rtm-tag-border-color: transparent;
-  --rtm-workspace-root-bg: var(--rtm-bg-secondary);
-  --rtm-workspace-root-bg: color-mix(in srgb, var(--rtm-bg-secondary) 70%, transparent);
-  --rtm-workspace-leaf-bg: var(--rtm-bg-primary);
-  --rtm-workspace-leaf-bg: color-mix(in srgb, var(--rtm-bg-primary) 85%, transparent);
-  --rtm-markdown-editor-bg: var(--rtm-bg-primary);
-  --rtm-markdown-editor-bg: color-mix(in srgb, var(--rtm-bg-primary) 85%, transparent);
-  --rtm-view-content-bg: var(--rtm-markdown-editor-bg);
-  --rtm-modal-bg: var(--rtm-bg-primary-alt);
-  --rtm-menu-bg: var(--rtm-bg-primary-alt);
-  --rtm-scrollbar-thumb-bg: #E89FB0;
-  --rtm-titlebar-bg-focus: #FCE8EE;
-  --rtm-titlebar-bg: #FFF5F7;
-  --rtm-titlebar-txt-color-focus: #76515C;
-  --rtm-titlebar-txt-color: #9C7781;
+  --smc-blockquote-bg: transparent;
+  --smc-blockquote-border-color: var(--smc-interactive-accent);
+  --smc-bold-color: #C45A6D;
+  --smc-tab-bg-active: var(--smc-bg-primary);
+  --smc-tab-bg-active: color-mix(in srgb, var(--smc-bg-primary) 90%, transparent);
+  --smc-tab-inactive-bg: var(--smc-bg-secondary);
+  --smc-tab-inactive-bg: color-mix(in srgb, var(--smc-bg-secondary) 75%, transparent);
+  --smc-tab-inactive-bg-hover: var(--smc-bg-primary);
+  --smc-tab-outline-color: var(--smc-interactive-accent);
+  --smc-tab-radius: 6px;
+  --smc-table-header-bg: var(--smc-bg-secondary);
+  --smc-table-data-bg: var(--smc-bg-primary);
+  --smc-table-data-bg: color-mix(in srgb, var(--smc-bg-primary) 86%, transparent);
+  --smc-table-border-color: #E6BAC5;
+  --smc-tag-bg: var(--smc-bg-secondary);
+  --smc-tag-bg: color-mix(in srgb, var(--smc-bg-secondary) 88%, transparent);
+  --smc-tag-bg-hover: var(--smc-interactive-accent);
+  --smc-tag-color: var(--smc-txt-accent-mute);
+  --smc-tag-border-color: transparent;
+  --smc-workspace-root-bg: var(--smc-bg-secondary);
+  --smc-workspace-root-bg: color-mix(in srgb, var(--smc-bg-secondary) 70%, transparent);
+  --smc-workspace-leaf-bg: var(--smc-bg-primary);
+  --smc-workspace-leaf-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
+  --smc-markdown-editor-bg: var(--smc-bg-primary);
+  --smc-markdown-editor-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
+  --smc-view-content-bg: var(--smc-markdown-editor-bg);
+  --smc-modal-bg: var(--smc-bg-primary-alt);
+  --smc-menu-bg: var(--smc-bg-primary-alt);
+  --smc-scrollbar-thumb-bg: #E89FB0;
+  --smc-titlebar-bg-focus: #FCE8EE;
+  --smc-titlebar-bg: #FFF5F7;
+  --smc-titlebar-txt-color-focus: #76515C;
+  --smc-titlebar-txt-color: #9C7781;
 }
 
 /* -----------------------------------------------------------------
@@ -135,54 +135,54 @@ body {
     radial-gradient(120% 90% at 18% 0%, rgb(240 181 206 / 10%) 0%, transparent 62%),
     radial-gradient(100% 80% at 82% 100%, rgb(204 176 240 / 9%) 0%, transparent 60%),
     linear-gradient(160deg, #3C2D3C 0%, #33252F 52%, #281F2B 100%);
-  --rtm-bg-primary: #3C2D3C;
-  --rtm-bg-primary-alt: #413240;
-  --rtm-bg-secondary: #352737;
-  --rtm-bg-secondary-alt: #281F2B;
-  --rtm-bg-paper: #3A2E3A;
-  --rtm-txt-accent: #EBC4D7;
-  --rtm-txt-accent-mute: #BC9DB0;
-  --rtm-txt-accent-faint: #7E6577;
-  --rtm-interactive-accent: #E3B1C9;
-  --interactive-accent: var(--rtm-interactive-accent);
+  --smc-bg-primary: #3C2D3C;
+  --smc-bg-primary-alt: #413240;
+  --smc-bg-secondary: #352737;
+  --smc-bg-secondary-alt: #281F2B;
+  --smc-bg-paper: #3A2E3A;
+  --smc-txt-accent: #EBC4D7;
+  --smc-txt-accent-mute: #BC9DB0;
+  --smc-txt-accent-faint: #7E6577;
+  --smc-interactive-accent: #E3B1C9;
+  --interactive-accent: var(--smc-interactive-accent);
   --interactive-accent-hover: #F0B5CE;
-  --rtm-code-bg: #342834;
-  --rtm-code-border-color: #27202A;
+  --smc-code-bg: #342834;
+  --smc-code-border-color: #27202A;
   --code-normal: #E9C7D8;
   --code-comment: #BBA9BA;
-  --rtm-blockquote-bg: transparent;
-  --rtm-blockquote-border-color: var(--rtm-interactive-accent);
-  --rtm-bold-color: #E9C7D8;
-  --rtm-tab-bg-active: var(--rtm-bg-primary);
-  --rtm-tab-bg-active: color-mix(in srgb, var(--rtm-bg-primary) 90%, transparent);
-  --rtm-tab-inactive-bg: var(--rtm-bg-secondary);
-  --rtm-tab-inactive-bg: color-mix(in srgb, var(--rtm-bg-secondary) 75%, transparent);
-  --rtm-tab-inactive-bg-hover: var(--rtm-bg-primary);
-  --rtm-tab-outline-color: var(--rtm-interactive-accent);
-  --rtm-tab-radius: 6px;
-  --rtm-table-header-bg: #3E303D;
-  --rtm-table-data-bg: var(--rtm-bg-primary);
-  --rtm-table-data-bg: color-mix(in srgb, var(--rtm-bg-primary) 86%, transparent);
-  --rtm-table-border-color: #27202A;
-  --rtm-tag-bg: #533F50;
-  --rtm-tag-bg: color-mix(in srgb, var(--rtm-interactive-accent) 14%, transparent);
-  --rtm-tag-bg-hover: var(--rtm-interactive-accent);
-  --rtm-tag-color: #F3A4B8;
-  --rtm-tag-border-color: transparent;
-  --rtm-workspace-root-bg: var(--rtm-bg-secondary);
-  --rtm-workspace-root-bg: color-mix(in srgb, var(--rtm-bg-secondary) 70%, transparent);
-  --rtm-workspace-leaf-bg: var(--rtm-bg-primary);
-  --rtm-workspace-leaf-bg: color-mix(in srgb, var(--rtm-bg-primary) 85%, transparent);
-  --rtm-markdown-editor-bg: var(--rtm-bg-primary);
-  --rtm-markdown-editor-bg: color-mix(in srgb, var(--rtm-bg-primary) 85%, transparent);
-  --rtm-view-content-bg: var(--rtm-markdown-editor-bg);
-  --rtm-modal-bg: #342834;
-  --rtm-menu-bg: #3E303D;
-  --rtm-scrollbar-thumb-bg: #7E6577;
-  --rtm-titlebar-bg-focus: #2F2130;
-  --rtm-titlebar-bg: #2F2130;
-  --rtm-titlebar-txt-color-focus: #DCC8D3;
-  --rtm-titlebar-txt-color: #AD98A7;
+  --smc-blockquote-bg: transparent;
+  --smc-blockquote-border-color: var(--smc-interactive-accent);
+  --smc-bold-color: #E9C7D8;
+  --smc-tab-bg-active: var(--smc-bg-primary);
+  --smc-tab-bg-active: color-mix(in srgb, var(--smc-bg-primary) 90%, transparent);
+  --smc-tab-inactive-bg: var(--smc-bg-secondary);
+  --smc-tab-inactive-bg: color-mix(in srgb, var(--smc-bg-secondary) 75%, transparent);
+  --smc-tab-inactive-bg-hover: var(--smc-bg-primary);
+  --smc-tab-outline-color: var(--smc-interactive-accent);
+  --smc-tab-radius: 6px;
+  --smc-table-header-bg: #3E303D;
+  --smc-table-data-bg: var(--smc-bg-primary);
+  --smc-table-data-bg: color-mix(in srgb, var(--smc-bg-primary) 86%, transparent);
+  --smc-table-border-color: #27202A;
+  --smc-tag-bg: #533F50;
+  --smc-tag-bg: color-mix(in srgb, var(--smc-interactive-accent) 14%, transparent);
+  --smc-tag-bg-hover: var(--smc-interactive-accent);
+  --smc-tag-color: #F3A4B8;
+  --smc-tag-border-color: transparent;
+  --smc-workspace-root-bg: var(--smc-bg-secondary);
+  --smc-workspace-root-bg: color-mix(in srgb, var(--smc-bg-secondary) 70%, transparent);
+  --smc-workspace-leaf-bg: var(--smc-bg-primary);
+  --smc-workspace-leaf-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
+  --smc-markdown-editor-bg: var(--smc-bg-primary);
+  --smc-markdown-editor-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
+  --smc-view-content-bg: var(--smc-markdown-editor-bg);
+  --smc-modal-bg: #342834;
+  --smc-menu-bg: #3E303D;
+  --smc-scrollbar-thumb-bg: #7E6577;
+  --smc-titlebar-bg-focus: #2F2130;
+  --smc-titlebar-bg: #2F2130;
+  --smc-titlebar-txt-color-focus: #DCC8D3;
+  --smc-titlebar-txt-color: #AD98A7;
 }
 
 /* -----------------------------------------------------------------
@@ -460,7 +460,7 @@ body {
    ----------------------------------------------------------------- */
 .markdown-rendered :is(h1, h2, h3, h4, h5, h6),
 .cm-header {
-  font-family: var(--rtm-markdown-editor-font);
+  font-family: var(--smc-markdown-editor-font);
   letter-spacing: 0.02em;
 }
 
@@ -471,38 +471,38 @@ body {
 
 .markdown-rendered h1,
 .cm-header-1 {
-  font-size: var(--rtm-h1-size);
-  font-weight: var(--rtm-h1-weight);
+  font-size: var(--smc-h1-size);
+  font-weight: var(--smc-h1-weight);
 }
 
 .markdown-rendered h2,
 .cm-header-2 {
-  font-size: var(--rtm-h2-size);
-  font-weight: var(--rtm-h2-weight);
+  font-size: var(--smc-h2-size);
+  font-weight: var(--smc-h2-weight);
 }
 
 .markdown-rendered h3,
 .cm-header-3 {
-  font-size: var(--rtm-h3-size);
-  font-weight: var(--rtm-h3-weight);
+  font-size: var(--smc-h3-size);
+  font-weight: var(--smc-h3-weight);
 }
 
 .markdown-rendered h4,
 .cm-header-4 {
-  font-size: var(--rtm-h4-size);
-  font-weight: var(--rtm-h4-weight);
+  font-size: var(--smc-h4-size);
+  font-weight: var(--smc-h4-weight);
 }
 
 .markdown-rendered h5,
 .cm-header-5 {
-  font-size: var(--rtm-h5-size);
-  font-weight: var(--rtm-h5-weight);
+  font-size: var(--smc-h5-size);
+  font-weight: var(--smc-h5-weight);
 }
 
 .markdown-rendered h6,
 .cm-header-6 {
-  font-size: var(--rtm-h6-size);
-  font-weight: var(--rtm-h6-weight);
+  font-size: var(--smc-h6-size);
+  font-weight: var(--smc-h6-weight);
 }
 
 .markdown-rendered :is(strong, b),
@@ -625,7 +625,7 @@ body {
 .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin {
   padding-top: 40px;
   position: relative;
-  border-radius: var(--rtm-code-radius);
+  border-radius: var(--smc-code-radius);
 }
 
 /* 顶部半透明底座鼠标穿透，不再阻挡原生 Copy 按钮 */
@@ -1018,7 +1018,7 @@ body.smc-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin:
    ----------------------------------------------------------------- */
 body {
   --tag-radius: 12px;
-  --link-decoration-color: var(--rtm-interactive-accent);
+  --link-decoration-color: var(--smc-interactive-accent);
 }
 
 .markdown-rendered a {
@@ -1089,13 +1089,13 @@ input[type='checkbox'].task-list-item-checkbox {
 }
 
 input[type='checkbox'].task-list-item-checkbox:hover {
-  border-color: var(--rtm-interactive-accent);
+  border-color: var(--smc-interactive-accent);
   box-shadow: 0 0 0 3px rgb(196 90 109 / 15%);
 }
 
 input[type='checkbox'].task-list-item-checkbox:checked {
-  border-color: var(--rtm-interactive-accent);
-  background-color: var(--rtm-interactive-accent);
+  border-color: var(--smc-interactive-accent);
+  background-color: var(--smc-interactive-accent);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
   background-size: 68%;
   background-position: center;
@@ -1278,6 +1278,63 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   --callout-color: 227, 177, 201;
 }
 
+/* 常用别名：seealso → 蓝，add/added → 绿，change/updated → 橙，remove/deleted → 红 */
+.theme-light :is(
+  .callout[data-callout='seealso']
+) {
+  --callout-color: 74, 111, 165;
+}
+
+.theme-dark :is(
+  .callout[data-callout='seealso']
+) {
+  --callout-color: 182, 193, 224;
+}
+
+.theme-light :is(
+  .callout[data-callout='add'],
+  .callout[data-callout='added']
+) {
+  --callout-color: 76, 115, 67;
+}
+
+.theme-dark :is(
+  .callout[data-callout='add'],
+  .callout[data-callout='added']
+) {
+  --callout-color: 188, 205, 183;
+}
+
+.theme-light :is(
+  .callout[data-callout='change'],
+  .callout[data-callout='updated']
+) {
+  --callout-color: 168, 95, 45;
+}
+
+.theme-dark :is(
+  .callout[data-callout='change'],
+  .callout[data-callout='updated']
+) {
+  --callout-color: 226, 180, 141;
+}
+
+.theme-light :is(
+  .callout[data-callout='remove'],
+  .callout[data-callout='removed'],
+  .callout[data-callout='deleted']
+) {
+  --callout-color: 176, 58, 78;
+}
+
+.theme-dark :is(
+  .callout[data-callout='remove'],
+  .callout[data-callout='removed'],
+  .callout[data-callout='deleted']
+) {
+  --callout-color: 244, 154, 166;
+}
+
 /* -----------------------------------------------------------------
    14. Blockquotes - 引用块：左缎带 + 玻璃底
    ----------------------------------------------------------------- */
@@ -1285,7 +1342,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   position: relative;
   margin-inline-start: 0;
   padding: 0.4em 1em;
-  border-left: 3px solid var(--rtm-interactive-accent);
+  border-left: 3px solid var(--smc-interactive-accent);
   border-radius: 0 10px 10px 0;
   background-color: rgb(196 90 109 / 5%);
 }
@@ -1295,7 +1352,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
 }
 
 .markdown-source-view.mod-cm6 .HyperMD-quote {
-  border-left: 3px solid var(--rtm-interactive-accent);
+  border-left: 3px solid var(--smc-interactive-accent);
   background-color: rgb(196 90 109 / 5%);
 }
 
@@ -1324,7 +1381,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   top: 50%;
   transform: translate(-50%, -50%);
   padding-inline: 10px;
-  color: var(--rtm-interactive-accent);
+  color: var(--smc-interactive-accent);
   font-size: 0.85em;
   line-height: 1;
   text-shadow: 0 0 8px rgb(240 181 206 / 40%);
@@ -1355,15 +1412,15 @@ input[type='checkbox'].task-list-item-checkbox:checked {
 
 /* 笔记嵌入：玻璃卡片 + 强调色顶边 */
 .markdown-rendered .markdown-embed {
-  background-color: var(--rtm-workspace-leaf-bg);
+  background-color: var(--smc-workspace-leaf-bg);
   border: 1px solid var(--background-modifier-border);
-  border-top: 3px solid var(--rtm-interactive-accent);
+  border-top: 3px solid var(--smc-interactive-accent);
   border-radius: 10px;
   padding: 0.75em 1em;
 }
 
 .markdown-rendered .markdown-embed-title {
-  font-family: var(--rtm-markdown-editor-font);
+  font-family: var(--smc-markdown-editor-font);
   color: var(--h2-color);
 }
 
@@ -1382,7 +1439,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
 }
 
 .metadata-property-icon {
-  color: var(--rtm-interactive-accent);
+  color: var(--smc-interactive-accent);
 }
 
 /* -----------------------------------------------------------------
@@ -1423,7 +1480,7 @@ body {
 
 /* --- 18.1 Tooltip --- */
 .tooltip {
-  background-color: var(--rtm-modal-bg);
+  background-color: var(--smc-modal-bg);
   color: var(--text-normal);
   border: 1px solid var(--background-modifier-border);
   border-radius: 8px;
@@ -1432,14 +1489,14 @@ body {
 }
 
 .tooltip.mod-primary {
-  background-color: var(--rtm-interactive-accent);
+  background-color: var(--smc-interactive-accent);
   color: var(--text-on-accent);
   border-color: transparent;
 }
 
 /* --- 18.2 菜单（右键菜单/下拉菜单） --- */
 .menu {
-  background-color: var(--rtm-menu-bg);
+  background-color: var(--smc-menu-bg);
   border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
   box-shadow: 0 8px 28px rgb(0 0 0 / 20%);
@@ -1457,7 +1514,7 @@ body {
 }
 
 .menu-item.selected .menu-item-icon {
-  color: var(--rtm-interactive-accent);
+  color: var(--smc-interactive-accent);
 }
 
 /* --- 18.3 弹窗 Modal --- */
@@ -1468,7 +1525,7 @@ body {
 }
 
 .modal-title {
-  font-family: var(--rtm-markdown-editor-font);
+  font-family: var(--smc-markdown-editor-font);
   font-weight: 700;
 }
 
@@ -1486,7 +1543,7 @@ body {
 }
 
 .suggestion-item.is-selected {
-  background-color: var(--rtm-interactive-accent);
+  background-color: var(--smc-interactive-accent);
   color: var(--text-on-accent);
 }
 
@@ -1502,9 +1559,9 @@ body {
 
 /* --- 18.5 通知 Notice --- */
 .notice {
-  background-color: var(--rtm-menu-bg);
+  background-color: var(--smc-menu-bg);
   color: var(--text-normal);
-  border: 1px solid var(--rtm-interactive-accent);
+  border: 1px solid var(--smc-interactive-accent);
   border-radius: 10px;
   box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
 }
@@ -1516,7 +1573,7 @@ button {
 
 button.mod-cta {
   background-image: linear-gradient(135deg,
-    var(--rtm-interactive-accent) 0%,
+    var(--smc-interactive-accent) 0%,
     var(--interactive-accent-hover) 100%
   );
   color: var(--text-on-accent);
@@ -1549,7 +1606,7 @@ input[type='password']:focus,
 input[type='tel']:focus,
 input[type='url']:focus,
 textarea:focus {
-  border-color: var(--rtm-interactive-accent);
+  border-color: var(--smc-interactive-accent);
   box-shadow: 0 0 0 2px rgb(196 90 109 / 20%);
 }
 
@@ -1570,14 +1627,14 @@ textarea:focus {
 }
 
 .checkbox-container.is-enabled {
-  background-color: var(--rtm-interactive-accent);
+  background-color: var(--smc-interactive-accent);
 }
 
 /* 滑条 / 进度条 / 设置页原生复选框 */
 input[type='range'],
 input[type='checkbox']:not(.task-list-item-checkbox),
 progress {
-  accent-color: var(--rtm-interactive-accent);
+  accent-color: var(--smc-interactive-accent);
 }
 
 /* --- 18.8 滚动条圆角 --- */
@@ -1608,12 +1665,66 @@ progress {
 /* --- 18.11 移动端底栏玻璃 --- */
 body.is-mobile .mobile-navbar,
 body.is-mobile .mobile-toolbar {
-  background-color: var(--rtm-menu-bg);
+  background-color: var(--smc-menu-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* -----------------------------------------------------------------
+   19. Motion - 入场动效：弹性绽放
+   ----------------------------------------------------------------- */
+body {
+  --smc-ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
+  --smc-anim-moderate: 0.18s;
+}
 
+@keyframes smc-fade-scale {
+  0% {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes smc-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* 弹窗：绽放式弹出 */
+.modal {
+  animation: smc-fade-scale var(--smc-anim-moderate) var(--smc-ease-spring);
+}
+
+/* 菜单 / 命令面板建议列表：快速淡入缩放 */
+.menu,
+.suggestion-container {
+  animation: smc-fade-scale 0.16s var(--smc-ease-spring);
+}
+
+/* 通知：滑入淡入 */
+.notice {
+  animation: smc-fade 0.25s ease-out;
+}
+
+/* 无障碍：跟随系统减少动态效果偏好，停用全部主题动画 */
+@media (prefers-reduced-motion: reduce) {
+  .theme-light .markdown-rendered pre[class*='language-']::before,
+  .theme-dark .markdown-rendered pre[class*='language-']::before,
+  .theme-light .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::before,
+  .theme-dark .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::before,
+  .modal,
+  .menu,
+  .suggestion-container,
+  .notice {
+    animation: none;
+  }
+}
 
 /* -----------------------------------------------------------------
    Style Settings 配置 - 需安装 Style Settings 插件后生效
