@@ -2717,6 +2717,26 @@ body:not(.is-mobile) .sidebar-toggle-button {
   border-radius: 10px;
 }
 
+/* 左开关：与所有卡片同律 —— 离窗角 8px 缝隙 + 圆角玻璃小浮卡，尺寸贴合图标 */
+body:not(.is-mobile) .sidebar-toggle-button.mod-left {
+  top: var(--smc-card-gap);
+  left: var(--smc-card-gap);
+  width: auto;
+  height: auto;
+  padding: 7px;
+  border-radius: 10px;
+  background-color: var(--smc-bg-primary);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 72%, transparent);
+  box-shadow:
+    0 4px 16px rgb(0 0 0 / 10%),
+    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
+    inset 0 1px 0 var(--smc-glass-rim);
+}
+
+body:not(.is-mobile) .sidebar-toggle-button.mod-left .clickable-icon {
+  padding: 0;
+}
+
 body:not(.is-mobile) .sidebar-toggle-button .clickable-icon {
   border-radius: 10px;
 }
