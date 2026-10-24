@@ -8,7 +8,7 @@
          9 修补补丁 · 10 可选开关 · 11 链接与行内 · 12 列表与任务
          13 标注 callout · 14 引用块 · 15 图片与嵌入 · 16 属性面板
          17 关系图 · 18 界面控件 · 19 入场动效 · 20 标志性细节 · 21 插件适配
-         22 官方变量补全层 · 末尾 Style Settings 配置
+         22 官方变量补全层 · 23 浮动圆角玻璃卡 · 末尾 Style Settings 配置
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -1325,8 +1325,10 @@ input[type='checkbox'].task-list-item-checkbox:checked {
    ----------------------------------------------------------------- */
 .callout {
   border-radius: 12px;
-  border: 1px solid rgb(var(--callout-color) / 25%);
-  background-color: rgb(var(--callout-color) / 10%);
+
+  /* --callout-color 是逗号三元组，必须用逗号记法（斜杠+逗号混合在 Chromium 非法） */
+  border: 1px solid rgb(var(--callout-color), 0.25);
+  background-color: rgb(var(--callout-color), 0.1);
   box-shadow: 0 2px 10px rgb(0 0 0 / 6%);
   backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
   -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
@@ -2133,7 +2135,8 @@ body {
 .callout-icon {
   padding: 3px;
   border-radius: 999px;
-  background-color: rgb(var(--callout-color) / 18%);
+  /* stylelint-disable-next-line color-function-notation */
+  background-color: rgb(var(--callout-color), 0.18);
 }
 
 /* --- 20.6 文件导航：药丸条目 + 活动竖标 --- */
@@ -2659,6 +2662,55 @@ body {
   --bases-table-header-background: #FDE4EC;
   --bases-table-header-color: #5E3A46;
   --bases-table-row-background-hover: rgb(196 90 109 / 6%);
+}
+
+/* -----------------------------------------------------------------
+   23. Floating Glass Cards - 浮动圆角玻璃卡：组件交界以圆角与缝隙呈现，
+       壁纸从缝隙透出（macOS 浮动面板语言）；
+       注意：Ribbon 不加 backdrop-filter/overflow（包含块陷阱见维护文档）
+   ----------------------------------------------------------------- */
+body {
+  --smc-card-radius: 14px;
+  --smc-card-gap: 8px;
+  --smc-card-shadow: 0 12px 40px rgb(0 0 0 / 14%), inset 0 0 0 0.5px var(--smc-glass-rim-soft), inset 0 1px 0 var(--smc-glass-rim);
+}
+
+/* 工作区外衬：四边留出透壁纸的缝隙 */
+body:not(.is-mobile) .workspace {
+  padding: var(--smc-card-gap);
+}
+
+/* 侧栏与编辑器主区：浮动卡片（圆角 + 悬浮投影 + 镜面缘），卡间留缝 */
+body:not(.is-mobile) .workspace-split.mod-horizontal.mod-left-split,
+body:not(.is-mobile) .workspace-split.mod-horizontal.mod-right-split,
+body:not(.is-mobile) .workspace-split.mod-root {
+  margin-inline: calc(var(--smc-card-gap) / 2);
+  border-radius: var(--smc-card-radius);
+  box-shadow: var(--smc-card-shadow);
+}
+
+/* 卡片顶部：标签区圆角衔接（防方角穿孔） */
+body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs.mod-top,
+body:not(.is-mobile) .workspace-split.mod-horizontal .workspace-tab-header-container {
+  border-radius: var(--smc-card-radius) var(--smc-card-radius) 0 0;
+}
+
+/* 卡片底部：编辑器内容区圆角收底 */
+body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf-content {
+  border-radius: 0 0 var(--smc-card-radius) var(--smc-card-radius);
+}
+
+/* Ribbon：独立浮动轨（半透明底 + 圆角 + 镜面缘，无模糊保按钮定位） */
+body:not(.is-mobile) .side-dock-ribbon {
+  margin: var(--smc-card-gap);
+  border-radius: var(--smc-card-radius);
+}
+
+/* 状态栏：浮动玻璃药丸条 */
+body:not(.is-mobile) .status-bar {
+  margin: 0 var(--smc-card-gap) var(--smc-card-gap);
+  border-radius: 10px;
+  border: 1px solid var(--status-bar-border-color);
 }
 
 /* -----------------------------------------------------------------
