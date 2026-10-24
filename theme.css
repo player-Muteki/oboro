@@ -2707,13 +2707,6 @@ body:not(.is-mobile) .side-dock-ribbon {
   border-radius: var(--smc-card-radius);
 }
 
-/* 左侧开关：原生锚定窗口原点，浮动卡布局下会孤悬缝隙区——显式对位到主卡顶行左端，
-   与右侧开关对称（右侧由原生布局自然落在卡顶右端） */
-body:not(.is-mobile) .sidebar-toggle-button.mod-left {
-  top: var(--smc-card-gap);
-  left: calc(44px + var(--smc-card-gap) * 2);
-}
-
 /* 右侧辅助轨仅承载开栏按钮：透明轨收敛，按钮成浮动玻璃药丸（去孤立感） */
 body:not(.is-mobile) .side-dock-ribbon.mod-secondary {
   background-color: transparent;
