@@ -690,9 +690,10 @@ body {
        活动态由渐变指示条与轻染底标识；视图头透明交由 leaf 玻璃承担
    ----------------------------------------------------------------- */
 
-/* 标签本体透明（容器已是唯一玻璃底） */
+/* 标签本体透明（容器已是唯一玻璃底）；圆角走 --tab-radius（Minimal/Tahoe 同款） */
 .workspace-tab-header {
   background-color: transparent;
+  border-radius: var(--tab-radius, 8px) var(--tab-radius, 8px) 0 0;
 }
 
 /* 活动标签：轻染底 + 渐变指示条（20 节）标识，不再实底 */
@@ -2702,9 +2703,14 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf-content {
   border-radius: 0 0 var(--smc-card-radius) var(--smc-card-radius);
 }
 
-/* Ribbon：独立浮动轨（半透明底 + 圆角 + 镜面缘，无模糊保按钮定位；间距由 flex gap 提供） */
+/* Ribbon：独立浮动轨（圆角 + 镜面缘，无模糊保按钮定位；间距由 flex gap 提供） */
 body:not(.is-mobile) .side-dock-ribbon {
   border-radius: var(--smc-card-radius);
+}
+
+/* 顶部为 FAB 圆钮让位——避免圆钮叠在卡片方角上形成"方形背板" */
+body:not(.is-mobile) .side-dock-ribbon.mod-primary {
+  margin-top: calc(38px + var(--smc-card-gap));
 }
 
 /* 右侧辅助轨仅承载开栏按钮：透明轨收敛，按钮成浮动玻璃药丸（去孤立感） */
@@ -2726,7 +2732,7 @@ body:not(.is-mobile) .sidebar-toggle-button.mod-left {
   padding: 7px;
   border-radius: 999px;
   background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 72%, transparent);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 88%, transparent);
   box-shadow:
     0 4px 16px rgb(0 0 0 / 10%),
     inset 0 0 0 0.5px var(--smc-glass-rim-soft),
