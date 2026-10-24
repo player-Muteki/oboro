@@ -12,7 +12,8 @@
           "/^-(?:webkit|moz|ms|o)-/",
           "background-clip",
           "backdrop-filter",
-          "mask-image"
+          "mask-image",
+          "background-color"
         ]
       }
     ]

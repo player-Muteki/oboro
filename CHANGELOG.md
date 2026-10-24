@@ -9,6 +9,21 @@
 
 ### Added
 
+- **液态玻璃引擎（第 6 节重制）**：调研 Glass Scholar / Isinglass / AbsolutelyGlass / macOS Tahoe
+  四个成熟实现后，把毛玻璃升级为 Apple Liquid Glass 质感——
+  - `backdrop-filter: blur(24px) saturate(170%)`：饱和度提升是「液体感」的关键（编辑器 0.6 剂量保可读性）；
+  - 镜面高光缘：`inset 0 1px 0` 上缘高光 + 0.5px 内描边（深浅分别调校）；
+  - 细颗粒噪点：弹层叠加 feTurbulence SVG 颗粒（3.5% 不透明度）；
+  - 弹层全玻璃化：菜单 / 弹窗 / 命令面板 / 通知 / 移动端底栏（实底 82–88% + 多层镜面阴影）；
+  - **面板实度 / 模糊 / 饱和度全部变量化**，Style Settings 新增 4 个滑条实时调节；
+  - 无障碍：系统「减少透明度」（`prefers-reduced-transparency`）时自动退回实色面板并停用壁纸。
+
+### Changed
+
+- 面板默认实度下调（深色 88/80 → 78/72，浅色 90/84 → 82/76），液态玻璃通透感立现；
+  壁纸与玻璃滑条联动说明写入 Style Settings 面板。
+### Added
+
 - **入场动效（第 19 节）**：弹窗 / 菜单 / 命令面板建议列表弹性绽放（scale+fade，弹性曲线），
   通知淡入；跟随系统 `prefers-reduced-motion` 偏好自动停用全部主题动画（含代码块光带）。
 - **Callout 别名**：`seealso`→蓝、`add`/`added`→绿、`change`/`updated`→橙、
