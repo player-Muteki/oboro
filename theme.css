@@ -280,12 +280,14 @@ body {
   --table-header-background: #3E303D;
   --table-header-color: #F5CFE1;
   --table-row-background: transparent;
-  --table-row-alt-background: rgb(60 45 60 / 35%);
+  --table-row-alt-background: rgb(60 45 60 / 16%);
   --table-border-color: #27202A;
 
   /* 侧栏与导航 */
   --ribbon-background: #281F2B;
+  --ribbon-background: color-mix(in srgb, #281F2B 62%, transparent);
   --ribbon-background-collapsed: #281F2B;
+  --ribbon-background-collapsed: color-mix(in srgb, #281F2B 62%, transparent);
   --nav-item-color: #DCC8D3;
   --nav-item-color-hover: #F5CFE1;
   --nav-item-color-active: #F5CFE1;
@@ -299,6 +301,7 @@ body {
   --titlebar-text-color: #AD98A7;
   --titlebar-text-color-focused: #DCC8D3;
   --tab-container-background: #3A2E3A;
+  --tab-container-background: color-mix(in srgb, #3A2E3A var(--smc-glass-secondary-opacity, 80%), transparent);
   --tab-background-active: #3C2D3C;
   --tab-text-color: #C3AFBB;
   --tab-text-color-active: #F5CFE1;
@@ -410,14 +413,14 @@ body {
   --table-header-background: #FDE4EC;
   --table-header-color: #5E3A46;
   --table-row-background: transparent;
-  --table-row-alt-background: rgb(255 240 245 / 55%);
+  --table-row-alt-background: rgb(255 240 245 / 18%);
   --table-border-color: #E6BAC5;
 
   /* 侧栏与导航 */
   --ribbon-background: #F8BBD0;
-  --ribbon-background: color-mix(in srgb, #F8BBD0 88%, transparent);
+  --ribbon-background: color-mix(in srgb, #F8BBD0 62%, transparent);
   --ribbon-background-collapsed: #F8BBD0;
-  --ribbon-background-collapsed: color-mix(in srgb, #F8BBD0 88%, transparent);
+  --ribbon-background-collapsed: color-mix(in srgb, #F8BBD0 62%, transparent);
   --nav-item-color: #76515C;
   --nav-item-color-hover: #5E3A46;
   --nav-item-color-active: #A23B4E;
@@ -433,7 +436,7 @@ body {
   --titlebar-text-color: #9C7781;
   --titlebar-text-color-focused: #76515C;
   --tab-container-background: #FDE4EC;
-  --tab-container-background: color-mix(in srgb, #FDE4EC 88%, transparent);
+  --tab-container-background: color-mix(in srgb, #FDE4EC var(--smc-glass-secondary-opacity, 84%), transparent);
   --tab-background-active: #FFF0F5;
   --tab-background-active: color-mix(in srgb, #FFF0F5 92%, transparent);
   --tab-text-color: #9C7781;
@@ -611,6 +614,7 @@ body {
   --smc-glass-blur: 24px;
   --smc-glass-saturation: 170%;
   --smc-glass-grain-opacity: 0.035;
+  --smc-table-tint: 30%;
 }
 
 .theme-dark {
@@ -682,6 +686,39 @@ body {
   background-color: color-mix(in srgb, var(--smc-bg-secondary) var(--smc-glass-secondary-opacity, 80%), transparent);
 }
 
+/* -----------------------------------------------------------------
+   6.2 标签与框架玻璃统一 - 标签本体透明化，消除「标签叠标签栏」的实心叠加；
+       活动态由渐变指示条与轻染底标识；视图头透明交由 leaf 玻璃承担
+   ----------------------------------------------------------------- */
+
+/* 标签本体透明（容器已是唯一玻璃底） */
+.workspace-tab-header {
+  background-color: transparent;
+}
+
+/* 活动标签：轻染底 + 渐变指示条（20 节）标识，不再实底 */
+.workspace-tab-header.is-active {
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 26%, transparent);
+  border-radius: var(--tab-radius, 8px) var(--tab-radius, 8px) 0 0;
+}
+
+/* 悬停标签：更轻的一染 */
+.workspace-tab-header:hover:not(.is-active) {
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 12%, transparent);
+}
+
+/* 视图标题栏（文件名条）：透明，玻璃由 leaf-content 承担 */
+.view-header {
+  background-color: transparent;
+}
+
+/* 活动栏 Ribbon：玻璃 + 镜面缘 */
+.side-dock-ribbon {
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  box-shadow: inset 0 0 0 0.5px var(--smc-glass-rim-soft), inset -1px 0 0 var(--smc-glass-rim-soft);
+}
+
 /* 细颗粒噪点：给弹层叠加一层玻璃质感颗粒（Isinglass 手法） */
 .modal::after,
 .menu::after,
@@ -731,12 +768,20 @@ body {
     content: none;
   }
 
-  /* 内容物玻璃同步退实色 */
+  /* 内容物玻璃同步退实色：实度变量 100% 使所有 color-mix 自动变实 */
   .theme-dark {
+    --smc-glass-primary-opacity: 100%;
+    --smc-glass-secondary-opacity: 100%;
+    --ribbon-background: #281F2B;
+    --ribbon-background-collapsed: #281F2B;
     --code-background: #342834;
   }
 
   .theme-light {
+    --smc-glass-primary-opacity: 100%;
+    --smc-glass-secondary-opacity: 100%;
+    --ribbon-background: #F8BBD0;
+    --ribbon-background-collapsed: #F8BBD0;
     --code-background: #F2DEE4;
   }
 
@@ -2104,10 +2149,11 @@ body:not(.is-grabbing) .nav-file-title.is-active {
   box-shadow: inset 2px 0 0 var(--smc-interactive-accent);
 }
 
-/* --- 20.7 表格：液态玻璃 + 圆角外框 + 渐变表头 + 行悬停 --- */
+/* --- 20.7 表格：轻染玻璃（tint）——表格是"染在玻璃上的一层色"，
+       而非又一块面板；壁纸透过率 ≈ (1-30%)×(1-面板实度)，肉眼可辨 --- */
 .markdown-rendered table {
   background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 76%, transparent);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 30%), transparent);
   backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
   -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
   border-collapse: separate;
@@ -2119,8 +2165,8 @@ body:not(.is-grabbing) .nav-file-title.is-active {
 
 .markdown-rendered thead th {
   background: linear-gradient(180deg,
-    color-mix(in srgb, var(--table-header-background) 92%, transparent) 0%,
-    color-mix(in srgb, var(--table-header-background) 52%, transparent) 100%
+    color-mix(in srgb, var(--table-header-background) 48%, transparent) 0%,
+    color-mix(in srgb, var(--table-header-background) 12%, transparent) 100%
   );
 }
 
@@ -2276,7 +2322,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 .markdown-source-view.mod-cm6 .cm-table-widget table,
 .markdown-source-view.mod-cm6 .table-editor table {
   background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 76%, transparent);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 30%), transparent);
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--table-border-color);
