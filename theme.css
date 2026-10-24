@@ -7,7 +7,7 @@
          5 标题与加粗 · 6 液态玻璃引擎 · 7 代码块光带 · 8 语言胶囊
          9 修补补丁 · 10 可选开关 · 11 链接与行内 · 12 列表与任务
          13 标注 callout · 14 引用块 · 15 图片与嵌入 · 16 属性面板
-         17 关系图 · 18 界面控件 · 19 入场动效 · 末尾 Style Settings
+         17 关系图 · 18 界面控件 · 19 入场动效 · 20 标志性细节 · 末尾 Style Settings
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -1858,6 +1858,263 @@ body {
   .notice {
     animation: none;
   }
+}
+
+/* -----------------------------------------------------------------
+   20. Signature Details - 标志性细节：一眼可辨的形状级定制
+   ----------------------------------------------------------------- */
+.theme-light {
+  --smc-warn: #C0723F;
+  --smc-warn-fill: #E6A100;
+  --smc-danger: #B03A4E;
+  --smc-info: #4A6FA5;
+  --smc-defer: #8A5F9E;
+  --inline-title-color: #A23B4E;
+}
+
+.theme-dark {
+  --smc-warn: #E2B48D;
+  --smc-warn-fill: #F3B795;
+  --smc-danger: #F49AA6;
+  --smc-info: #B6C1E0;
+  --smc-defer: #CCB0F0;
+  --inline-title-color: #EAD3A0;
+}
+
+/* --- 20.1 标题装饰：h1 渐变底线，h2 渐变左缎带 --- */
+.markdown-rendered h1 {
+  position: relative;
+  padding-block-end: 0.3em;
+}
+
+.markdown-rendered h1::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--h1-color) 0%, color-mix(in srgb, var(--h1-color) 30%, transparent) 70%, transparent 100%);
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-header-1 {
+  padding-block-end: 4px;
+  border-block-end: 2px solid color-mix(in srgb, var(--h1-color) 35%, transparent);
+}
+
+.markdown-rendered h2 {
+  position: relative;
+  padding-inline-start: 0.55em;
+}
+
+.markdown-rendered h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.18em;
+  bottom: 0.18em;
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--h2-color) 0%, color-mix(in srgb, var(--h2-color) 25%, transparent) 100%);
+}
+
+/* --- 20.2 活动标签页：渐变指示条 --- */
+.workspace-tab-header.is-active::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  height: 2.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--smc-interactive-accent) 0%, var(--interactive-accent-hover) 100%);
+}
+
+/* --- 20.3 任务方块变体：/ 进行中 · ! 重要 · ? 疑问 · > 延期 --- */
+.markdown-preview-view li.task-list-item[data-task='/'] input[type='checkbox'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='/'] input[type='checkbox'] {
+  border-color: var(--smc-warn);
+  background-color: transparent;
+  background-image: linear-gradient(to top, var(--smc-warn-fill) 0 48%, transparent 52% 100%);
+}
+
+.markdown-preview-view li.task-list-item[data-task='-'] input[type='checkbox'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='-'] input[type='checkbox'] {
+  border-color: var(--text-faint);
+  background-color: transparent;
+  background-image: linear-gradient(to top,
+    transparent calc(50% - 1px),
+    var(--text-faint) calc(50% - 1px),
+    var(--text-faint) calc(50% + 1px),
+    transparent calc(50% + 1px)
+  );
+}
+
+.markdown-preview-view li.task-list-item[data-task='!'] input[type='checkbox'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='!'] input[type='checkbox'] {
+  border-color: var(--smc-danger);
+  background-color: var(--smc-danger);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 3L9.4 14h5.2L12 3zm-.7 13.2a1.9 1.9 0 101.4 0z'/%3E%3C/svg%3E");
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.markdown-preview-view li.task-list-item[data-task='?'] input[type='checkbox'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='?'] input[type='checkbox'] {
+  border-color: var(--smc-info);
+  border-style: dashed;
+  background-color: color-mix(in srgb, var(--smc-info) 15%, transparent);
+}
+
+.markdown-preview-view li.task-list-item[data-task='>'] input[type='checkbox'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='>'] input[type='checkbox'] {
+  border-color: var(--smc-defer);
+  background-color: color-mix(in srgb, var(--smc-defer) 25%, transparent);
+}
+
+/* 变体任务文字配色 */
+.markdown-preview-view li.task-list-item[data-task='/'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='/'] {
+  color: var(--smc-warn);
+}
+
+.markdown-preview-view li.task-list-item[data-task='!'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='!'] {
+  color: var(--smc-danger);
+}
+
+.markdown-preview-view li.task-list-item[data-task='?'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='?'] {
+  color: var(--smc-info);
+}
+
+.markdown-preview-view li.task-list-item[data-task='>'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='>'] {
+  color: var(--smc-defer);
+}
+
+/* --- 20.4 引用块：❝ 装饰符 --- */
+.markdown-rendered blockquote::before {
+  content: '❝';
+  position: absolute;
+  top: -0.45em;
+  left: 12px;
+  color: var(--smc-interactive-accent);
+  font-size: 1.5em;
+  line-height: 1;
+  opacity: 0.55;
+}
+
+/* --- 20.5 Callout 图标：类型色圆芯片 --- */
+.callout-icon {
+  padding: 3px;
+  border-radius: 999px;
+  background-color: rgb(var(--callout-color) / 18%);
+}
+
+/* --- 20.6 文件导航：药丸条目 + 活动竖标 --- */
+.nav-file-title,
+.nav-folder-title,
+.tree-item-self {
+  border-radius: 8px;
+}
+
+.nav-file-title,
+.nav-folder-title {
+  transition: background-color 0.15s ease;
+}
+
+body:not(.is-grabbing) .nav-file-title.is-active {
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 16%, transparent);
+  box-shadow: inset 2px 0 0 var(--smc-interactive-accent);
+}
+
+/* --- 20.7 表格：圆角外框 + 渐变表头 + 行悬停 --- */
+.markdown-rendered table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--table-border-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.markdown-rendered thead th {
+  background: linear-gradient(180deg,
+    var(--table-header-background) 0%,
+    color-mix(in srgb, var(--table-header-background) 70%, transparent) 100%
+  );
+}
+
+.markdown-rendered tbody tr:hover td {
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 7%, transparent);
+}
+
+/* --- 20.8 Ribbon：弹性图标 --- */
+body:not(.is-mobile) .side-dock-ribbon-action {
+  transition: transform 0.18s var(--smc-ease-spring);
+}
+
+body:not(.is-mobile) .side-dock-ribbon-action:hover {
+  transform: scale(1.15) rotate(-8deg);
+}
+
+/* --- 20.9 视图标题栏：樱粉底边光 --- */
+.view-header {
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--smc-interactive-accent) 30%, transparent);
+}
+
+/* --- 20.10 状态栏：条目药丸 --- */
+.status-bar-item {
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.theme-light .status-bar-item:hover {
+  background-color: rgb(94 58 70 / 10%);
+}
+
+.theme-dark .status-bar-item:hover {
+  background-color: rgb(255 255 255 / 22%);
+}
+
+/* --- 20.11 滚动条：纤细渐变 --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(180deg,
+    color-mix(in srgb, var(--smc-interactive-accent) 90%, transparent),
+    color-mix(in srgb, var(--smc-interactive-accent) 45%, transparent)
+  );
+}
+
+/* --- 20.12 空状态：樱花前缀 --- */
+.empty-state-title::before {
+  content: '❀';
+  margin-inline-end: 0.4em;
+  color: var(--smc-interactive-accent);
+}
+
+/* --- 20.13 行内链接：点状下划线 --- */
+.markdown-rendered .internal-link {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: rgb(196 90 109 / 45%);
+}
+
+.theme-dark .markdown-rendered .internal-link {
+  text-decoration-color: rgb(227 177 201 / 45%);
+}
+
+/* --- 20.14 属性值药丸 --- */
+.metadata-property-value {
+  background-color: color-mix(in srgb, var(--background-modifier-hover) 55%, transparent);
+  border-radius: 6px;
+  padding: 2px 8px;
 }
 
 /* -----------------------------------------------------------------
