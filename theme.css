@@ -2724,7 +2724,7 @@ body:not(.is-mobile) .sidebar-toggle-button.mod-left {
   width: auto;
   height: auto;
   padding: 7px;
-  border-radius: 10px;
+  border-radius: 999px;
   background-color: var(--smc-bg-primary);
   background-color: color-mix(in srgb, var(--smc-bg-primary) 72%, transparent);
   box-shadow:
