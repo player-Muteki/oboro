@@ -2708,10 +2708,7 @@ body:not(.is-mobile) .side-dock-ribbon {
   border-radius: var(--smc-card-radius);
 }
 
-/* 顶部为 FAB 圆钮让位——避免圆钮叠在卡片方角上形成"方形背板" */
-body:not(.is-mobile) .side-dock-ribbon.mod-primary {
-  margin-top: calc(38px + var(--smc-card-gap));
-}
+/* 按钮已并入工具栏卡内顶部，无需让位 */
 
 /* 右侧辅助轨仅承载开栏按钮：透明轨收敛，按钮成浮动玻璃药丸（去孤立感） */
 body:not(.is-mobile) .side-dock-ribbon.mod-secondary {
@@ -2723,10 +2720,11 @@ body:not(.is-mobile) .sidebar-toggle-button {
   border-radius: 10px;
 }
 
-/* 左开关：与所有卡片同律 —— 离窗角 8px 缝隙 + 圆角玻璃小浮卡，尺寸贴合图标 */
+/* 左开关：并入工具栏 —— 栏卡内顶部居中
+   （原生无边框把工具栏推到 --header-height(40px) 之下，栏卡顶 = 40+8 = 48px，再留 7px 内边距） */
 body:not(.is-mobile) .sidebar-toggle-button.mod-left {
-  top: var(--smc-card-gap);
-  left: var(--smc-card-gap);
+  top: calc(var(--header-height, 40px) + var(--smc-card-gap) + 7px);
+  left: 15px;
   width: auto;
   height: auto;
   padding: 7px;
