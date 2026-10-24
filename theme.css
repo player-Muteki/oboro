@@ -7,7 +7,7 @@
          5 标题与加粗 · 6 液态玻璃引擎 · 7 代码块光带 · 8 语言胶囊
          9 修补补丁 · 10 可选开关 · 11 链接与行内 · 12 列表与任务
          13 标注 callout · 14 引用块 · 15 图片与嵌入 · 16 属性面板
-         17 关系图 · 18 界面控件 · 19 入场动效 · 20 标志性细节 · 末尾 Style Settings
+         17 关系图 · 18 界面控件 · 19 入场动效 · 20 标志性细节 · 21 插件适配 · 末尾 Style Settings
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -251,8 +251,9 @@ body {
   --interactive-normal: #3E303D;
   --interactive-hover: #473446;
 
-  /* 代码（夜樱语法色板） */
+  /* 代码（夜樱语法色板；底色玻璃化，壁纸微透） */
   --code-background: #342834;
+  --code-background: color-mix(in srgb, #342834 92%, transparent);
   --code-normal: #E9C7D8;
   --code-comment: #BBA9BA;
   --code-function: #F3B795;
@@ -380,8 +381,9 @@ body {
   --interactive-normal: #FFF6F8;
   --interactive-hover: #FAD6E2;
 
-  /* 代码（樱粉语法色板：正文墨色 + 暖木彩语法） */
+  /* 代码（樱粉语法色板：正文墨色 + 暖木彩语法；底色玻璃化） */
   --code-background: #F2DEE4;
+  --code-background: color-mix(in srgb, #F2DEE4 94%, transparent);
   --code-normal: #5E3A46;
   --code-comment: #775874;
   --code-function: #99501F;
@@ -726,6 +728,23 @@ body {
   .modal::after,
   .suggestion-container::after {
     content: none;
+  }
+
+  /* 内容物玻璃同步退实色 */
+  .theme-dark {
+    --code-background: #342834;
+  }
+
+  .theme-light {
+    --code-background: #F2DEE4;
+  }
+
+  .markdown-rendered table,
+  .markdown-rendered .callout,
+  .markdown-rendered .markdown-embed {
+    background-color: var(--smc-bg-primary);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
@@ -1242,8 +1261,10 @@ input[type='checkbox'].task-list-item-checkbox:checked {
 .callout {
   border-radius: 12px;
   border: 1px solid rgb(var(--callout-color) / 25%);
-  background-color: rgb(var(--callout-color) / 8%);
+  background-color: rgb(var(--callout-color) / 10%);
   box-shadow: 0 2px 10px rgb(0 0 0 / 6%);
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
 }
 
 .callout-title {
@@ -1528,6 +1549,8 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   border-top: 3px solid var(--smc-interactive-accent);
   border-radius: 10px;
   padding: 0.75em 1em;
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
 }
 
 .markdown-rendered .markdown-embed-title {
@@ -2031,8 +2054,12 @@ body:not(.is-grabbing) .nav-file-title.is-active {
   box-shadow: inset 2px 0 0 var(--smc-interactive-accent);
 }
 
-/* --- 20.7 表格：圆角外框 + 渐变表头 + 行悬停 --- */
+/* --- 20.7 表格：液态玻璃 + 圆角外框 + 渐变表头 + 行悬停 --- */
 .markdown-rendered table {
+  background-color: var(--smc-bg-primary);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 84%, transparent);
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--table-border-color);
@@ -2042,8 +2069,8 @@ body:not(.is-grabbing) .nav-file-title.is-active {
 
 .markdown-rendered thead th {
   background: linear-gradient(180deg,
-    var(--table-header-background) 0%,
-    color-mix(in srgb, var(--table-header-background) 70%, transparent) 100%
+    color-mix(in srgb, var(--table-header-background) 92%, transparent) 0%,
+    color-mix(in srgb, var(--table-header-background) 52%, transparent) 100%
   );
 }
 
@@ -2115,6 +2142,114 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   background-color: color-mix(in srgb, var(--background-modifier-hover) 55%, transparent);
   border-radius: 6px;
   padding: 2px 8px;
+}
+
+/* -----------------------------------------------------------------
+   21. Plugin Harmony - 插件适配
+      Dataview / Tasks / Calendar / Editing Toolbar / Table Editor / Kanban
+   ----------------------------------------------------------------- */
+
+/* --- 21.1 Dataview：表格自动继承玻璃表格；内联查询结果药丸 --- */
+.dataview.dataview-inline-query-result {
+  border-radius: 6px;
+  padding: 0 4px;
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 12%, transparent);
+}
+
+/* dv 表格首列对齐微调 */
+.dataview.table-view-table th {
+  color: var(--table-header-color);
+}
+
+/* --- 21.2 Tasks：计数药丸 --- */
+.tasks-count {
+  border-radius: 999px;
+  padding: 1px 8px;
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 16%, transparent);
+  color: var(--text-muted);
+}
+
+/* --- 21.3 Calendar：今日强调圆点、选中描边、周末色 --- */
+#calendar-container {
+  background-color: transparent;
+
+  --color-accent: var(--smc-interactive-accent);
+}
+
+.calendar .day.today {
+  background-color: var(--smc-interactive-accent);
+  color: var(--text-on-accent);
+  border-radius: 999px;
+}
+
+.calendar .day.active {
+  box-shadow: inset 0 0 0 2px var(--smc-interactive-accent);
+  border-radius: 999px;
+}
+
+.calendar .day:hover {
+  background-color: var(--background-modifier-hover);
+  border-radius: 999px;
+}
+
+.theme-light .calendar th.weekend,
+.theme-light .calendar .day.weekend {
+  color: #C45A6D;
+}
+
+.theme-dark .calendar th.weekend,
+.theme-dark .calendar .day.weekend {
+  color: #E3B1C9;
+}
+
+/* --- 21.4 Editing Toolbar：浮动工具条玻璃 --- */
+.editing-toolbar {
+  background-color: var(--smc-menu-bg);
+  background-color: color-mix(in srgb, var(--smc-menu-bg) 82%, transparent);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 14px;
+  box-shadow:
+    0 8px 24px rgb(0 0 0 / 14%),
+    inset 0 0 0 0.5px var(--smc-glass-rim-soft),
+    inset 0 1px 0 var(--smc-glass-rim);
+  backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
+}
+
+/* --- 21.5 Table Editor：容器圆角衔接玻璃表格 --- */
+.table-editor {
+  border-radius: 10px;
+}
+
+/* --- 21.6 Kanban：看板/列表/卡片玻璃（未安装亦可安全存在） --- */
+.kanban-plugin {
+  background-color: transparent;
+}
+
+.kanban-plugin__lane {
+  background-color: var(--smc-bg-secondary);
+  background-color: color-mix(in srgb, var(--smc-bg-secondary) var(--smc-glass-secondary-opacity, 80%), transparent);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+}
+
+.kanban-plugin__item {
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--smc-bg-primary);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 88%, transparent);
+  box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
+}
+
+.kanban-plugin__item.is-dragging {
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--smc-interactive-accent) 35%, transparent);
+  border-color: var(--smc-interactive-accent);
+}
+
+.kanban-plugin__item-button-wrapper button {
+  border-radius: 8px;
 }
 
 /* -----------------------------------------------------------------
