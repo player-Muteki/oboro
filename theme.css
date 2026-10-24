@@ -654,6 +654,15 @@ body {
   /* 控件级缘：只要轮廓 + 顶部高光，不含曲率晕与下缘阴影 */
   --smc-glass-edge-soft: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
     inset 0 1px 0 var(--smc-glass-rim);
+
+  /* 面板内容区缘光：完整缘去掉顶部硬高光线/顶部曲率/顶部色散 ——
+     顶栏去线方向，标签条下方的硬线突兀 */
+  --smc-glass-edge-leaf: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
+    inset 1px 0 0 var(--smc-glass-rim-soft),
+    inset -1px 0 0 var(--smc-glass-shade),
+    inset 0 -1px 0 var(--smc-glass-shade),
+    inset 0 -3px 6px -3px var(--smc-glass-shade-blur),
+    inset 0 -1px 1px -0.5px var(--smc-glass-fringe-cool);
   --smc-table-tint: 18%;
 }
 
@@ -693,18 +702,22 @@ body {
   box-shadow: var(--smc-glass-edge);
 }
 
-/* 编辑器：减剂量模糊保文字可读性，仍保留饱和度与高光缘 */
+/* 编辑器：减剂量模糊保文字可读性；缘光用无顶缘变体（顶栏去线） */
 .workspace-split.mod-root .workspace-leaf-content {
   backdrop-filter: var(--smc-glass-mild-filter);
   -webkit-backdrop-filter: var(--smc-glass-mild-filter);
-  box-shadow: var(--smc-glass-edge);
+  box-shadow: var(--smc-glass-edge-leaf);
 }
 
 /* 标签页栏：次剂量 */
 .workspace-tab-header-container {
   backdrop-filter: var(--smc-glass-soft-filter);
   -webkit-backdrop-filter: var(--smc-glass-soft-filter);
-  box-shadow: var(--smc-glass-edge-soft);
+
+  /* 顶栏去线：原生 border-bottom 分隔线与缘光环全部退场，
+     标签条与内容区只靠玻璃色调差和 chip 粒分隔 */
+  border-bottom: none;
+  box-shadow: none;
 }
 
 /* -----------------------------------------------------------------
@@ -745,31 +758,38 @@ body {
        活动态由渐变指示条与轻染底标识；视图头透明交由 leaf 玻璃承担
    ----------------------------------------------------------------- */
 
-/* 标签本体透明（容器已是唯一玻璃底）；圆角走 --tab-radius（Minimal/Tahoe 同款） */
+/* 标签 = 玻璃 chip：全圆角 + 间距成粒，从「连体页签」改为「悬浮胶囊粒」；
+   激活态玫瑰轻染，文字层级 muted/normal 拉开；
+   颈部填充、原生描边与分隔线由 22 节变量清零。
+   备查：AbsolutelyGlass 用 clip-path: shape() 在 ::before 上一次画贴合
+   轮廓（顶圆角 + 反圆角肩）并自带 backdrop-filter（Chromium 135+），
+   若将来重启「贴合式」激活标签，优先用该手法而非径向渐变拼肩 */
 .workspace-tab-header {
   background-color: transparent;
-  border-radius: var(--tab-radius, 8px) var(--tab-radius, 8px) 0 0;
+  border-radius: 10px;
+  margin-inline: 3px;
+  color: var(--text-muted);
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
 }
 
-/* 活动标签：轻染底 + 渐变指示条（20 节）标识，不再实底 */
+/* 活动标签：玫瑰轻染气泡 chip（无描边，靠染色 + 指示条标识）；未激活透明 */
 .workspace-tabs .workspace-tab-header.is-active {
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 26%, transparent);
-  border-radius: var(--tab-radius, 8px) var(--tab-radius, 8px) 0 0;
-
-  /* 去掉原生 1px --tab-outline-color 描边：它在分屏接缝处与标签头
-     border-bottom 叠成双线，也违背「轻染 + 渐变指示条」的意图 */
-  box-shadow: none;
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 14%, transparent);
+  border-radius: 10px;
+  color: var(--text-normal);
 }
 
-/* 侧栏（文件库/搜索等）活动标签：同样的轻染处理 */
+/* 侧栏（文件库/搜索等）活动标签：同款气泡 */
 .workspace-split.mod-horizontal.mod-left-split .workspace-tab-header.is-active,
 .workspace-split.mod-horizontal.mod-right-split .workspace-tab-header.is-active {
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 26%, transparent);
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 14%, transparent);
+  color: var(--text-normal);
 }
 
-/* 悬停标签：更轻的一染 */
+/* 悬停标签：轻染 + 文字提亮 */
 .workspace-tabs .workspace-tab-header:hover:not(.is-active) {
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 12%, transparent);
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 16%, transparent);
+  color: var(--text-normal);
 }
 
 /* 视图标题栏（文件名条）：透明，玻璃由 leaf-content 承担 */
@@ -831,6 +851,7 @@ body {
     /* 缘光/sheen/色散属于玻璃装饰，退实色时一并退场 */
     --smc-glass-edge: none;
     --smc-glass-edge-soft: none;
+    --smc-glass-edge-leaf: none;
     --smc-glass-sheen-opacity: 0;
   }
 
@@ -871,8 +892,10 @@ body {
     content: none;
   }
 
-  /* 内容物玻璃同步退实色：实度变量 100% 使所有 color-mix 自动变实 */
-  .theme-dark {
+  /* 内容物玻璃同步退实色：实度变量 100% 使所有 color-mix 自动变实。
+     html 前缀提特异性 —— Style Settings 以同特异性晚序写入实度滑杆值，
+     否则这两个 100% 会被它压回（对装了 Style Settings 的用户退化失效） */
+  html body.theme-dark {
     --smc-glass-primary-opacity: 100%;
     --smc-glass-secondary-opacity: 100%;
     --ribbon-background: #281F2B;
@@ -880,7 +903,7 @@ body {
     --code-background: #342834;
   }
 
-  .theme-light {
+  html body.theme-light {
     --smc-glass-primary-opacity: 100%;
     --smc-glass-secondary-opacity: 100%;
     --ribbon-background: #F8BBD0;
@@ -909,6 +932,62 @@ body {
   .theme-dark .status-bar {
     background-color: #AD7F96;
     color: #241522;
+  }
+}
+
+/* 高可读性 · 不透明模式：Style Settings 手动开关（body.smc-solid），效果与
+   系统减少透明度一致 —— 实度全部归 100%、模糊/缘光/噪声/光晕退场。
+   参考 AbsolutelyGlass 的 ca-solid 思路（实色面板不等于放弃玻璃变量体系） */
+body.smc-solid,
+html body.smc-solid {
+  background-image: none;
+
+  --smc-glass-filter: none;
+  --smc-glass-soft-filter: none;
+  --smc-glass-mild-filter: none;
+  --smc-glass-chip-filter: none;
+  --smc-glass-overlay-opacity: 100%;
+  --smc-glass-modal-opacity: 100%;
+  --smc-glass-notice-opacity: 100%;
+  --smc-glass-primary-opacity: 100%;
+  --smc-glass-secondary-opacity: 100%;
+  --smc-glass-edge: none;
+  --smc-glass-edge-soft: none;
+  --smc-glass-edge-leaf: none;
+  --smc-glass-sheen-opacity: 0;
+  --smc-glass-grain-opacity: 0;
+  --ribbon-background: var(--smc-bg-secondary);
+  --ribbon-background-collapsed: var(--smc-bg-secondary);
+}
+
+body.smc-solid :is(.menu, .modal, .suggestion-container, .prompt, .hover-popover, .notice, .tooltip) {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+body.smc-solid
+  :is(.workspace-tab-header-container, .workspace-split.mod-horizontal.mod-left-split, .workspace-split.mod-horizontal.mod-right-split, .workspace-split.mod-root .workspace-leaf-content, .theme-light .status-bar, .theme-dark .status-bar) {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+body.smc-solid :is(.menu, .modal, .suggestion-container, .prompt, .hover-popover)::after {
+  content: none;
+}
+
+body.smc-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markdown-rendered .markdown-embed) {
+  background-color: var(--smc-bg-primary);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* 不支持 backdrop-filter 的老 webview：玻璃变量直接退实色（框架兜底） */
+@supports not (backdrop-filter: blur(1px)) {
+  body {
+    --smc-glass-filter: none;
+    --smc-glass-soft-filter: none;
+    --smc-glass-mild-filter: none;
+    --smc-glass-chip-filter: none;
   }
 }
 
@@ -1790,7 +1869,6 @@ body {
 .tooltip {
   background-color: var(--smc-modal-bg);
   color: var(--text-normal);
-  border: 1px solid var(--background-modifier-border);
   border-radius: 8px;
   box-shadow: 0 4px 16px rgb(0 0 0 / 18%);
   font-size: var(--font-ui-smaller);
@@ -1806,7 +1884,9 @@ body {
 .menu {
   background-color: var(--smc-menu-bg);
   background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
-  border: 1px solid var(--background-modifier-border);
+
+  /* 去线：轮廓交给缘光环（原生 --border-width 描边会叠加成双线） */
+  border: none;
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
@@ -1832,7 +1912,7 @@ body {
 .modal {
   background-color: var(--smc-modal-bg);
   background-color: color-mix(in srgb, var(--smc-modal-bg) var(--smc-glass-modal-opacity), transparent);
-  border: 1px solid var(--background-modifier-border);
+  border: none;
   border-radius: 16px;
   box-shadow:
     0 16px 48px rgb(0 0 0 / 18%),
@@ -1873,7 +1953,7 @@ body {
 .suggestion-container {
   background-color: var(--smc-menu-bg);
   background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
-  border: 1px solid var(--background-modifier-border);
+  border: none;
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
@@ -2013,7 +2093,6 @@ progress {
 /* --- 18.10 状态栏与空状态：粉调液态玻璃（保留樱粉签名，融入玻璃体系） --- */
 .status-bar {
   font-size: var(--font-ui-smaller);
-  border-top: 1px solid var(--status-bar-border-color);
 }
 
 .theme-light .status-bar {
@@ -2052,7 +2131,6 @@ body.is-mobile .mobile-toolbar {
 .hover-popover {
   background-color: var(--smc-menu-bg);
   background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
-  border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
@@ -2177,16 +2255,28 @@ body {
   background: linear-gradient(180deg, var(--h2-color) 0%, color-mix(in srgb, var(--h2-color) 25%, transparent) 100%);
 }
 
-/* --- 20.2 活动标签页：渐变指示条 --- */
+/* --- 20.2 活动标签页：无指示条 ---
+   渐变指示条是旧签名，但实际观感是「选中标签下多了条红线」；
+   激活态由气泡染色 + 文字提亮承担，去线方向不保留任何下划线。
+   原生 inner::after 的分隔线机制由 --tab-divider-color: transparent 关闭 */
+
+/* 原生用 ::before/::after 的巨型扩散 box-shadow（--tab-curve 颈部几何）画
+   「标签-内容」连接填充，chip 化后必须清掉，否则会在 chip 周围晕出斑块；
+   mod-root 路径那条原生规则特异性更高，需同特异性压制 */
+.workspace-split.mod-root .workspace-tab-header-container .workspace-tab-header.is-active::after,
+.workspace-tab-header.is-active::before,
 .workspace-tab-header.is-active::after {
-  content: '';
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 0;
-  height: 2.5px;
-  border-radius: 2px;
-  background: linear-gradient(90deg, var(--smc-interactive-accent) 0%, var(--interactive-accent-hover) 100%);
+  box-shadow: none;
+}
+
+/* 关闭钮：弱化为 faint，悬停玫瑰轻染 */
+.workspace-tab-header-inner-close-button {
+  color: var(--text-faint);
+}
+
+.workspace-tab-header-inner-close-button:hover {
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 18%, transparent);
+  color: var(--text-normal);
 }
 
 /* --- 20.3 任务方块变体：/ 进行中 · ! 重要 · ? 疑问 · > 延期 --- */
@@ -2325,11 +2415,6 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   transform: scale(1.15) rotate(-8deg);
 }
 
-/* --- 20.9 视图标题栏：樱粉底边光 --- */
-.view-header {
-  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--smc-interactive-accent) 30%, transparent);
-}
-
 /* --- 20.10 状态栏：条目药丸 --- */
 .status-bar-item {
   border-radius: 6px;
@@ -2446,7 +2531,6 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 .editingToolbarPopoverBar {
   background-color: var(--smc-menu-bg);
   background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
-  border: 1px solid var(--background-modifier-border);
   border-radius: 14px;
   box-shadow:
     0 8px 24px rgb(0 0 0 / 14%),
@@ -2479,7 +2563,6 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 body .claudian-zen-drawer {
   background-color: var(--smc-bg-primary);
   background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-glass-primary-opacity, 88%), transparent);
-  border: 1px solid var(--background-modifier-border);
   border-radius: 14px;
   box-shadow:
     0 8px 32px rgb(0 0 0 / 14%),
@@ -2541,7 +2624,12 @@ body {
   --prompt-border-width: 1px;
   --tab-radius: 8px;
   --tab-font-weight: 500;
-  --tab-outline-width: 1px;
+  --tab-outline-width: 0px;
+  --tab-curve: 0px;
+  --tab-background-active: transparent;
+  --tab-divider-color: transparent;
+  --tab-text-color: var(--text-muted);
+  --tab-text-color-active: var(--text-normal);
   --checkbox-radius: 5px;
   --checkbox-marker-color: #FFF;
   --slider-thumb-radius: 50%;
@@ -3031,6 +3119,12 @@ settings:
     max: 220
     step: 10
     format: '%'
+  -
+    id: smc-solid
+    title: 高可读性 · 不透明模式
+    description: '一键退掉全部玻璃：面板实色、无模糊、无缘光/噪点，适合演示、截图或低性能设备。与系统「减少透明度」效果一致。'
+    type: class-toggle
+    default: false
   -
     id: codeblock
     title: 代码块 Code blocks
