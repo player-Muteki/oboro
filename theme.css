@@ -2987,6 +2987,8 @@ body:not(.is-mobile) .side-dock-ribbon.mod-secondary {
   box-shadow: none;
 }
 
+/* 左右开关：右钮保持原生标签条内的圆角方形结构（透明静置、原生图标
+   尺寸），hover 用统一的玫瑰叠加；左 FAB 浮在壁纸上，保留玻璃底与投影 */
 body:not(.is-mobile) .sidebar-toggle-button {
   border-radius: 10px;
 }
@@ -2994,6 +2996,13 @@ body:not(.is-mobile) .sidebar-toggle-button {
 body:not(.is-mobile) .sidebar-toggle-button.mod-right {
   padding: 0 calc(var(--size-4-2) / 2);
   align-items: center;
+  align-self: center;
+  height: 28px;
+}
+
+/* 右开关圆角方形缩小一号：收紧图标衬距（笔画大小不变） */
+body:not(.is-mobile) .sidebar-toggle-button.mod-right .clickable-icon {
+  padding: 2px;
 }
 
 /* 左开关：圆钮对齐工具栏中线和顶部标签栏中线 */
@@ -3025,8 +3034,13 @@ body:not(.is-mobile) .sidebar-toggle-button .clickable-icon {
   background-color: transparent;
 }
 
+/* hover 染色走 background-image 叠加而非 background-color 替换 ——
+   左 FAB 的 88% 玻璃底若被替换，悬停时会整个透明露出壁纸 */
 body:not(.is-mobile) .sidebar-toggle-button:hover {
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 16%, transparent);
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--smc-interactive-accent) 30%, transparent),
+    color-mix(in srgb, var(--smc-interactive-accent) 30%, transparent)
+  );
 }
 
 body:not(.is-mobile) .sidebar-toggle-button:hover .clickable-icon {
