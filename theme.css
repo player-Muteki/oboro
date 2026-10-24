@@ -297,12 +297,15 @@ body {
 
   /* 标题栏与标签页 */
   --titlebar-background: #2F2130;
+  --titlebar-background: color-mix(in srgb, #2F2130 var(--smc-glass-secondary-opacity, 80%), transparent);
   --titlebar-background-focused: #2F2130;
+  --titlebar-background-focused: color-mix(in srgb, #2F2130 var(--smc-glass-secondary-opacity, 80%), transparent);
   --titlebar-text-color: #AD98A7;
   --titlebar-text-color-focused: #DCC8D3;
   --tab-container-background: #3A2E3A;
   --tab-container-background: color-mix(in srgb, #3A2E3A var(--smc-glass-secondary-opacity, 80%), transparent);
   --tab-background-active: #3C2D3C;
+  --tab-background-active: color-mix(in srgb, #3C2D3C 30%, transparent);
   --tab-text-color: #C3AFBB;
   --tab-text-color-active: #F5CFE1;
   --tab-text-color-focused: #C3AFBB;
@@ -430,15 +433,15 @@ body {
 
   /* 标题栏与标签页 */
   --titlebar-background: #FCE8EE;
-  --titlebar-background: color-mix(in srgb, #FCE8EE 90%, transparent);
+  --titlebar-background: color-mix(in srgb, #FCE8EE var(--smc-glass-secondary-opacity, 84%), transparent);
   --titlebar-background-focused: #FCE8EE;
-  --titlebar-background-focused: color-mix(in srgb, #FCE8EE 90%, transparent);
+  --titlebar-background-focused: color-mix(in srgb, #FCE8EE var(--smc-glass-secondary-opacity, 84%), transparent);
   --titlebar-text-color: #9C7781;
   --titlebar-text-color-focused: #76515C;
   --tab-container-background: #FDE4EC;
   --tab-container-background: color-mix(in srgb, #FDE4EC var(--smc-glass-secondary-opacity, 84%), transparent);
   --tab-background-active: #FFF0F5;
-  --tab-background-active: color-mix(in srgb, #FFF0F5 92%, transparent);
+  --tab-background-active: color-mix(in srgb, #FFF0F5 30%, transparent);
   --tab-text-color: #9C7781;
   --tab-text-color-active: #5E3A46;
   --tab-text-color-focused: #9C7781;
@@ -693,18 +696,24 @@ body {
 }
 
 /* 活动标签：轻染底 + 渐变指示条（20 节）标识，不再实底 */
-.workspace-tab-header.is-active {
+.workspace-tabs .workspace-tab-header.is-active {
   background-color: color-mix(in srgb, var(--smc-bg-primary) 26%, transparent);
   border-radius: var(--tab-radius, 8px) var(--tab-radius, 8px) 0 0;
 }
 
+/* 侧栏（文件库/搜索等）活动标签：同样的轻染处理 */
+.workspace-split.mod-horizontal.mod-left-split .workspace-tab-header.is-active,
+.workspace-split.mod-horizontal.mod-right-split .workspace-tab-header.is-active {
+  background-color: color-mix(in srgb, var(--smc-bg-primary) 26%, transparent);
+}
+
 /* 悬停标签：更轻的一染 */
-.workspace-tab-header:hover:not(.is-active) {
+.workspace-tabs .workspace-tab-header:hover:not(.is-active) {
   background-color: color-mix(in srgb, var(--smc-bg-primary) 12%, transparent);
 }
 
 /* 视图标题栏（文件名条）：透明，玻璃由 leaf-content 承担 */
-.view-header {
+.workspace-leaf-content .view-header {
   background-color: transparent;
 }
 
