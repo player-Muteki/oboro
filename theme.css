@@ -308,7 +308,7 @@ body {
 
   /* 状态栏、滚动条与杂项 */
   --status-bar-background: #AD7F96;
-  --status-bar-text-color: #241522;
+  --status-bar-text-color: #F5CFE1;
   --status-bar-border-color: #794B65;
   --scrollbar-thumb-bg: rgb(126 101 119 / 50%);
   --scrollbar-active-thumb-bg: rgb(126 101 119 / 60%);
@@ -746,6 +746,21 @@ body {
     background-color: var(--smc-bg-primary);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  .theme-light .status-bar,
+  .theme-dark .status-bar {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .theme-light .status-bar {
+    background-color: #F8BBD0;
+  }
+
+  .theme-dark .status-bar {
+    background-color: #AD7F96;
+    color: #241522;
   }
 }
 
@@ -1810,8 +1825,28 @@ progress {
 }
 
 /* --- 18.10 状态栏与空状态 --- */
+/* 状态栏：粉调液态玻璃（保留樱粉签名，融入玻璃体系） */
 .status-bar {
   font-size: var(--font-ui-smaller);
+  border-top: 1px solid var(--status-bar-border-color);
+}
+
+.theme-light .status-bar {
+  background-color: #F8BBD0;
+  background-color: color-mix(in srgb, #F8BBD0 55%, transparent);
+  color: #5E3A46;
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 40%);
+}
+
+.theme-dark .status-bar {
+  background-color: #AD7F96;
+  background-color: color-mix(in srgb, #AD7F96 45%, transparent);
+  color: #F5CFE1;
+  backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
 }
 
 .empty-state-title {
