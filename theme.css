@@ -285,9 +285,9 @@ body {
 
   /* 侧栏与导航 */
   --ribbon-background: #281F2B;
-  --ribbon-background: color-mix(in srgb, #281F2B 62%, transparent);
+  --ribbon-background: color-mix(in srgb, #281F2B 76%, transparent);
   --ribbon-background-collapsed: #281F2B;
-  --ribbon-background-collapsed: color-mix(in srgb, #281F2B 62%, transparent);
+  --ribbon-background-collapsed: color-mix(in srgb, #281F2B 76%, transparent);
   --nav-item-color: #DCC8D3;
   --nav-item-color-hover: #F5CFE1;
   --nav-item-color-active: #F5CFE1;
@@ -421,9 +421,9 @@ body {
 
   /* 侧栏与导航 */
   --ribbon-background: #F8BBD0;
-  --ribbon-background: color-mix(in srgb, #F8BBD0 62%, transparent);
+  --ribbon-background: color-mix(in srgb, #F8BBD0 76%, transparent);
   --ribbon-background-collapsed: #F8BBD0;
-  --ribbon-background-collapsed: color-mix(in srgb, #F8BBD0 62%, transparent);
+  --ribbon-background-collapsed: color-mix(in srgb, #F8BBD0 76%, transparent);
   --nav-item-color: #76515C;
   --nav-item-color-hover: #5E3A46;
   --nav-item-color-active: #A23B4E;
