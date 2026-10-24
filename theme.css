@@ -755,6 +755,10 @@ body {
 .workspace-tabs .workspace-tab-header.is-active {
   background-color: color-mix(in srgb, var(--smc-bg-primary) 26%, transparent);
   border-radius: var(--tab-radius, 8px) var(--tab-radius, 8px) 0 0;
+
+  /* 去掉原生 1px --tab-outline-color 描边：它在分屏接缝处与标签头
+     border-bottom 叠成双线，也违背「轻染 + 渐变指示条」的意图 */
+  box-shadow: none;
 }
 
 /* 侧栏（文件库/搜索等）活动标签：同样的轻染处理 */
@@ -2805,7 +2809,8 @@ body {
 body {
   --smc-card-radius: 14px;
   --smc-card-gap: 8px;
-  --smc-card-shadow: 0 12px 40px rgb(0 0 0 / 14%), var(--smc-glass-edge);
+  --smc-card-drop-shadow: 0 12px 40px rgb(0 0 0 / 14%);
+  --smc-card-shadow: var(--smc-card-drop-shadow), var(--smc-glass-edge);
 }
 
 /* 工作区外衬与卡间距：四边 + 卡间均留出透壁纸的缝隙（flex gap） */
@@ -2845,6 +2850,32 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-split {
 
 body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container {
   border-radius: var(--smc-card-radius) var(--smc-card-radius) 0 0;
+}
+
+/* 分屏把手：原生描边（--divider-color 0.8px）是旧「贴边分隔线」设计，
+   缝隙成为分隔后它多余地贴在每格边缘（左右不对称的单侧线）；
+   默认透明，悬停/拖拽只保留原生背景着色，border 不再复现（原生
+   :hover/.is-active 会重设 border-color，需一并压住） */
+.workspace-leaf-resize-handle {
+  border-color: transparent;
+}
+
+.workspace-leaf-resize-handle:hover,
+.workspace-leaf-resize-handle.is-active {
+  border-color: transparent;
+}
+
+/* 悬停反馈：原生把 3px 把手条涂成实色 divider-hover，读起来就是一条贴边
+   粉线；改成半透明玫瑰光晕，保留「此处可拖」的暗示 */
+.workspace-leaf-resize-handle:hover {
+  background-color: color-mix(in srgb, var(--smc-interactive-accent) 35%, transparent);
+}
+
+/* 编辑区卡片不再自带镜面缘：窗格缝隙里会裸露出卡片的白顶缘/暗底缘，
+   像横跨两格的杂线；外缘的缘光已由每格标签头（edge-soft）与内容区
+   （完整 edge）承担，这里只留投影 */
+body:not(.is-mobile) .workspace-split.mod-root {
+  box-shadow: var(--smc-card-drop-shadow);
 }
 
 /* Ribbon：独立浮动轨（圆角 + 镜面缘，无模糊保按钮定位；间距由 flex gap 提供） */
