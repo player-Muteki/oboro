@@ -63,6 +63,9 @@
   `text-decoration*` 的 partial-support warning 来自插件的 caniuse 数据，可忽略。
 - **callout 类型色**：浅色侧 8 组标题色全部压至对比度 ≥4.5:1（青 `#3E7168` 绿 `#4C7343`
   金 `#8A6E1F` 橙 `#A85F2D` 玫 `#A94658` 蓝 `#4A6FA5` 红 `#B03A4E` 紫 `#8A5F9E`）。
+- **逗号三元组颜色变量**：`--callout-color` 的值是 `"r, g, b"` 逗号三元组，
+  `rgb(var(--callout-color) / 25%)`（斜杠+逗号混合）在 Chromium **非法会被整条丢弃**；
+  必须写 `rgb(var(--callout-color), 0.25)`（逗号记法，实测有效）。
 - **backdrop-filter 包含块陷阱**：带 `backdrop-filter` 的元素会成为其**绝对定位后代**的
   包含块。侧栏开关按钮（`.sidebar-toggle-button`）在 DOM 里是 Ribbon 的后代——曾因给
   Ribbon 加模糊导致按钮被"搬位"到标签栏下方。因此：**Ribbon 永远不加 backdrop-filter**；
