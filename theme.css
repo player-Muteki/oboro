@@ -5,7 +5,9 @@
    兼容：Obsidian 1.13+（CodeMirror 6 HyperMD 代码块）
    章节：1 排版与全局背景 · 2/3 双模式调色板 · 4 原生变量接驳层
          5 标题与加粗 · 6 毛玻璃 · 7 代码块光带 · 8 语言胶囊
-         9 修补补丁 · 10 可选开关 · 末尾 Style Settings 配置
+         9 修补补丁 · 10 可选开关 · 11 链接与行内 · 12 列表与任务
+         13 标注 callout · 14 引用块 · 15 图片与嵌入 · 16 属性面板
+         17 关系图 · 18 界面控件 · 末尾 Style Settings 配置
    ================================================================= */
 
 /* -----------------------------------------------------------------
@@ -525,7 +527,7 @@ body {
   background:
     linear-gradient(135deg, #D6284F 0%, #E6A100 100%),
     linear-gradient(rgb(214 40 79 / 5%), rgb(214 40 79 / 5%));
-  background-clip: text, padding-box;
+  -webkit-background-clip: text, padding-box;
   background-clip: text, padding-box;
   -webkit-text-fill-color: transparent;
 }
@@ -545,7 +547,7 @@ body {
   background:
     linear-gradient(135deg, #F3A4B8 0%, #EAD3A0 100%),
     linear-gradient(rgb(243 164 184 / 12%), rgb(243 164 184 / 12%));
-  background-clip: text, padding-box;
+  -webkit-background-clip: text, padding-box;
   background-clip: text, padding-box;
   -webkit-text-fill-color: transparent;
 }
@@ -555,7 +557,7 @@ body {
 .cm-strong span.cm-inline-code {
   background-image: none;
   background-color: var(--code-background);
-  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
   background-clip: padding-box;
   -webkit-text-fill-color: var(--code-normal);
   color: var(--code-normal);
@@ -568,7 +570,7 @@ body {
   .theme-light .markdown-rendered :is(strong, b),
   .theme-dark .markdown-rendered :is(strong, b) {
     background: none;
-    background-clip: border-box;
+    -webkit-background-clip: border-box;
     background-clip: border-box;
     -webkit-text-fill-color: currentcolor;
     color: var(--bold-color);
@@ -603,17 +605,17 @@ body {
 .workspace-split.mod-horizontal.mod-left-split,
 .workspace-split.mod-horizontal.mod-right-split {
   backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
 .workspace-split.mod-root .workspace-leaf-content {
   backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .workspace-tab-header-container {
   backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
 /* -----------------------------------------------------------------
@@ -661,22 +663,7 @@ body {
   background-position: -50px 0, 0 0;
 
   /* 7 段柔和间距遮罩 (6 个缝隙) */
-  mask-image: linear-gradient(to right,
-    #000 0%, #000 12.5%,
-    transparent 13%, transparent 14%,
-    #000 14.5%, #000 27%,
-    transparent 27.5%, transparent 28.5%,
-    #000 29%, #000 41.5%,
-    transparent 42%, transparent 43%,
-    #000 43.5%, #000 56%,
-    transparent 56.5%, transparent 57.5%,
-    #000 58%, #000 70.5%,
-    transparent 71%, transparent 72%,
-    #000 72.5%, #000 85%,
-    transparent 85.5%, transparent 86.5%,
-    #000 87%, #000 100%
-  );
-  mask-image: linear-gradient(to right,
+  -webkit-mask-image: linear-gradient(to right,
     #000 0%, #000 12.5%,
     transparent 13%, transparent 14%,
     #000 14.5%, #000 27%,
@@ -739,22 +726,7 @@ body {
   background-position: -50px 0, 0 0;
 
   /* 7 段柔和间距遮罩 (6 个缝隙，严格对齐浅色模式) */
-  mask-image: linear-gradient(to right,
-    #000 0%, #000 12.5%,
-    transparent 13%, transparent 14%,
-    #000 14.5%, #000 27%,
-    transparent 27.5%, transparent 28.5%,
-    #000 29%, #000 41.5%,
-    transparent 42%, transparent 43%,
-    #000 43.5%, #000 56%,
-    transparent 56.5%, transparent 57.5%,
-    #000 58%, #000 70.5%,
-    transparent 71%, transparent 72%,
-    #000 72.5%, #000 85%,
-    transparent 85.5%, transparent 86.5%,
-    #000 87%, #000 100%
-  );
-  mask-image: linear-gradient(to right,
+  -webkit-mask-image: linear-gradient(to right,
     #000 0%, #000 12.5%,
     transparent 13%, transparent 14%,
     #000 14.5%, #000 27%,
@@ -1040,6 +1012,608 @@ body.smc-no-band .markdown-rendered pre[class*="language-"]::after,
 body.smc-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::after {
   display: none;
 }
+
+/* -----------------------------------------------------------------
+   11. Links & Inline - 链接、高亮与行内元素
+   ----------------------------------------------------------------- */
+body {
+  --tag-radius: 12px;
+  --link-decoration-color: var(--rtm-interactive-accent);
+}
+
+.markdown-rendered a {
+  text-underline-offset: 3px;
+}
+
+.markdown-rendered .internal-link:hover {
+  background-color: rgb(196 90 109 / 12%);
+  border-radius: 3px;
+}
+
+.theme-dark .markdown-rendered .internal-link:hover {
+  background-color: rgb(227 177 201 / 14%);
+}
+
+/* 高亮：圆角荧光笔胶囊（换行断片各自成胶囊） */
+.markdown-rendered mark {
+  border-radius: 4px;
+  padding: 0.1em 0.3em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.cm-highlight {
+  border-radius: 3px;
+}
+
+/* -----------------------------------------------------------------
+   12. Lists & Tasks - 列表圆点与任务框
+   ----------------------------------------------------------------- */
+.theme-light {
+  --list-marker-color: #C45A6D;
+}
+
+.theme-dark {
+  --list-marker-color: #F3A4B8;
+}
+
+/* 一级实心樱点 */
+.list-bullet::after {
+  background-color: var(--list-marker-color);
+}
+
+/* 二级空心圆 */
+ul ul .list-bullet::after {
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--list-marker-color);
+}
+
+/* 三级及以下小方点 */
+ul ul ul .list-bullet::after {
+  border-radius: 1px;
+}
+
+/* 任务框：圆角马卡龙方块 + 渐变对勾 */
+input[type='checkbox'].task-list-item-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1em;
+  height: 1em;
+  box-sizing: border-box;
+  border: 1.5px solid var(--checkbox-border-color);
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+  vertical-align: -0.125em;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type='checkbox'].task-list-item-checkbox:hover {
+  border-color: var(--rtm-interactive-accent);
+  box-shadow: 0 0 0 3px rgb(196 90 109 / 15%);
+}
+
+input[type='checkbox'].task-list-item-checkbox:checked {
+  border-color: var(--rtm-interactive-accent);
+  background-color: var(--rtm-interactive-accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+  background-size: 68%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.theme-dark input[type='checkbox'].task-list-item-checkbox:hover {
+  box-shadow: 0 0 0 3px rgb(227 177 201 / 15%);
+}
+
+/* 已完成任务：文字退隐 */
+.markdown-preview-view ul > li.task-list-item.is-checked,
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='x'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='X'] {
+  color: var(--text-faint);
+}
+
+/* 已取消任务：删除线 + 退隐 */
+.markdown-preview-view ul > li.task-list-item[data-task='-'],
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='-'] {
+  color: var(--text-faint);
+  text-decoration: line-through;
+}
+
+/* 延期/待办转发任务：强调色提示 */
+.markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='>'] {
+  color: var(--text-accent);
+}
+
+/* -----------------------------------------------------------------
+   13. Callouts - 玻璃标注：按类型映射八色基板
+   ----------------------------------------------------------------- */
+.callout {
+  border-radius: 12px;
+  border: 1px solid rgb(var(--callout-color) / 25%);
+  background-color: rgb(var(--callout-color) / 8%);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 6%);
+}
+
+.callout-title {
+  align-items: center;
+  padding-block: var(--size-4-2);
+}
+
+/* 蓝：note / info / todo / abstract 摘要族 */
+.theme-light :is(
+  .callout[data-callout='note'],
+  .callout[data-callout='info'],
+  .callout[data-callout='todo'],
+  .callout[data-callout='abstract'],
+  .callout[data-callout='summary'],
+  .callout[data-callout='tldr']
+) {
+  --callout-color: 74, 111, 165;
+}
+
+.theme-dark :is(
+  .callout[data-callout='note'],
+  .callout[data-callout='info'],
+  .callout[data-callout='todo'],
+  .callout[data-callout='abstract'],
+  .callout[data-callout='summary'],
+  .callout[data-callout='tldr']
+) {
+  --callout-color: 182, 193, 224;
+}
+
+/* 青：tip / hint / important */
+.theme-light :is(
+  .callout[data-callout='tip'],
+  .callout[data-callout='hint'],
+  .callout[data-callout='important']
+) {
+  --callout-color: 62, 113, 104;
+}
+
+.theme-dark :is(
+  .callout[data-callout='tip'],
+  .callout[data-callout='hint'],
+  .callout[data-callout='important']
+) {
+  --callout-color: 180, 208, 203;
+}
+
+/* 绿：success / check / done */
+.theme-light :is(
+  .callout[data-callout='success'],
+  .callout[data-callout='check'],
+  .callout[data-callout='done']
+) {
+  --callout-color: 76, 115, 67;
+}
+
+.theme-dark :is(
+  .callout[data-callout='success'],
+  .callout[data-callout='check'],
+  .callout[data-callout='done']
+) {
+  --callout-color: 188, 205, 183;
+}
+
+/* 金：question / help / faq */
+.theme-light :is(
+  .callout[data-callout='question'],
+  .callout[data-callout='help'],
+  .callout[data-callout='faq']
+) {
+  --callout-color: 138, 110, 31;
+}
+
+.theme-dark :is(
+  .callout[data-callout='question'],
+  .callout[data-callout='help'],
+  .callout[data-callout='faq']
+) {
+  --callout-color: 220, 197, 169;
+}
+
+/* 橙：warning / caution / attention */
+.theme-light :is(
+  .callout[data-callout='warning'],
+  .callout[data-callout='caution'],
+  .callout[data-callout='attention']
+) {
+  --callout-color: 168, 95, 45;
+}
+
+.theme-dark :is(
+  .callout[data-callout='warning'],
+  .callout[data-callout='caution'],
+  .callout[data-callout='attention']
+) {
+  --callout-color: 226, 180, 141;
+}
+
+/* 红：failure / danger / error / bug */
+.theme-light :is(
+  .callout[data-callout='failure'],
+  .callout[data-callout='fail'],
+  .callout[data-callout='missing'],
+  .callout[data-callout='danger'],
+  .callout[data-callout='error'],
+  .callout[data-callout='bug']
+) {
+  --callout-color: 176, 58, 78;
+}
+
+.theme-dark :is(
+  .callout[data-callout='failure'],
+  .callout[data-callout='fail'],
+  .callout[data-callout='missing'],
+  .callout[data-callout='danger'],
+  .callout[data-callout='error'],
+  .callout[data-callout='bug']
+) {
+  --callout-color: 244, 154, 166;
+}
+
+/* 紫：example */
+.theme-light .callout[data-callout='example'] {
+  --callout-color: 138, 95, 158;
+}
+
+.theme-dark .callout[data-callout='example'] {
+  --callout-color: 204, 176, 240;
+}
+
+/* 玫：quote / cite */
+.theme-light :is(
+  .callout[data-callout='quote'],
+  .callout[data-callout='cite']
+) {
+  --callout-color: 169, 70, 88;
+}
+
+.theme-dark :is(
+  .callout[data-callout='quote'],
+  .callout[data-callout='cite']
+) {
+  --callout-color: 227, 177, 201;
+}
+
+/* -----------------------------------------------------------------
+   14. Blockquotes - 引用块：左缎带 + 玻璃底
+   ----------------------------------------------------------------- */
+.markdown-rendered blockquote {
+  position: relative;
+  margin-inline-start: 0;
+  padding: 0.4em 1em;
+  border-left: 3px solid var(--rtm-interactive-accent);
+  border-radius: 0 10px 10px 0;
+  background-color: rgb(196 90 109 / 5%);
+}
+
+.theme-dark .markdown-rendered blockquote {
+  background-color: rgb(227 177 201 / 7%);
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-quote {
+  border-left: 3px solid var(--rtm-interactive-accent);
+  background-color: rgb(196 90 109 / 5%);
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .HyperMD-quote {
+  background-color: rgb(227 177 201 / 7%);
+}
+
+/* 分隔线：渐隐线 + 樱花符号 */
+.markdown-rendered hr {
+  border: none;
+  height: 1px;
+  margin-block: 2.2em;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--background-modifier-border-hover) 50%,
+    transparent 100%
+  );
+  position: relative;
+  overflow: visible;
+}
+
+.markdown-rendered hr::after {
+  content: '❀';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding-inline: 10px;
+  color: var(--rtm-interactive-accent);
+  font-size: 0.85em;
+  line-height: 1;
+  text-shadow: 0 0 8px rgb(240 181 206 / 40%);
+}
+
+/* -----------------------------------------------------------------
+   15. Images & Embeds - 图片圆角卡片与嵌入玻璃卡
+   ----------------------------------------------------------------- */
+.markdown-rendered img:not(.emoji) {
+  border-radius: 10px;
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: 0 4px 16px rgb(60 30 45 / 12%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-dark .markdown-rendered img:not(.emoji) {
+  box-shadow: 0 4px 16px rgb(0 0 0 / 35%);
+}
+
+.markdown-rendered img:not(.emoji):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(60 30 45 / 18%);
+}
+
+.theme-dark .markdown-rendered img:not(.emoji):hover {
+  box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
+}
+
+/* 笔记嵌入：玻璃卡片 + 强调色顶边 */
+.markdown-rendered .markdown-embed {
+  background-color: var(--rtm-workspace-leaf-bg);
+  border: 1px solid var(--background-modifier-border);
+  border-top: 3px solid var(--rtm-interactive-accent);
+  border-radius: 10px;
+  padding: 0.75em 1em;
+}
+
+.markdown-rendered .markdown-embed-title {
+  font-family: var(--rtm-markdown-editor-font);
+  color: var(--h2-color);
+}
+
+/* -----------------------------------------------------------------
+   16. Properties - 属性面板
+   ----------------------------------------------------------------- */
+.metadata-container {
+  --metadata-background: transparent;
+  --metadata-title-color: var(--text-muted);
+
+  padding-block-end: var(--size-4-2);
+}
+
+.metadata-property-key {
+  color: var(--text-muted);
+}
+
+.metadata-property-icon {
+  color: var(--rtm-interactive-accent);
+}
+
+/* -----------------------------------------------------------------
+   17. Graph View - 关系图色板（与正文强调色同源）
+   ----------------------------------------------------------------- */
+.theme-light .graph-view.color-fill { color: #C45A6D; }
+.theme-light .graph-view.color-fill-tag { color: #8A5F9E; }
+.theme-light .graph-view.color-fill-attachment { color: #C0723F; }
+.theme-light .graph-view.color-fill-unresolved { color: #BFA4AE; }
+.theme-light .graph-view.color-fill-focused { color: #A23B4E; }
+.theme-light .graph-view.color-arrow { color: #C45A6D; }
+.theme-light .graph-view.color-circle { color: #F5C4D3; }
+.theme-light .graph-view.color-line { color: #E6BAC5; }
+.theme-light .graph-view.color-text { color: #5E3A46; }
+.theme-light .graph-view.color-highlight { color: rgb(196 90 109 / 30%); }
+
+.theme-dark .graph-view.color-fill { color: #E3B1C9; }
+.theme-dark .graph-view.color-fill-tag { color: #CCB0F0; }
+.theme-dark .graph-view.color-fill-attachment { color: #E2B48D; }
+.theme-dark .graph-view.color-fill-unresolved { color: #7E6577; }
+.theme-dark .graph-view.color-fill-focused { color: #F0B5CE; }
+.theme-dark .graph-view.color-arrow { color: #E3B1C9; }
+.theme-dark .graph-view.color-circle { color: #7E6577; }
+.theme-dark .graph-view.color-line { color: #6B5468; }
+.theme-dark .graph-view.color-text { color: #EBC4D7; }
+.theme-dark .graph-view.color-highlight { color: rgb(227 177 201 / 25%); }
+
+/* -----------------------------------------------------------------
+   18. UI Controls & Surfaces - 界面控件与表面
+   ----------------------------------------------------------------- */
+body {
+  --toggle-thumb-color: #FFF;
+}
+
+.theme-dark {
+  --toggle-thumb-color: #3A2E3A;
+}
+
+/* --- 18.1 Tooltip --- */
+.tooltip {
+  background-color: var(--rtm-modal-bg);
+  color: var(--text-normal);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 18%);
+  font-size: var(--font-ui-smaller);
+}
+
+.tooltip.mod-primary {
+  background-color: var(--rtm-interactive-accent);
+  color: var(--text-on-accent);
+  border-color: transparent;
+}
+
+/* --- 18.2 菜单（右键菜单/下拉菜单） --- */
+.menu {
+  background-color: var(--rtm-menu-bg);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 20%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.menu-item {
+  border-radius: 8px;
+}
+
+.menu-item:hover,
+.menu-item.selected {
+  background-color: var(--background-modifier-hover);
+}
+
+.menu-item.selected .menu-item-icon {
+  color: var(--rtm-interactive-accent);
+}
+
+/* --- 18.3 弹窗 Modal --- */
+.modal {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgb(0 0 0 / 25%);
+}
+
+.modal-title {
+  font-family: var(--rtm-markdown-editor-font);
+  font-weight: 700;
+}
+
+.modal-bg {
+  background-color: rgb(40 20 35 / 40%);
+}
+
+/* --- 18.4 命令面板 / 快速切换 / 建议列表 --- */
+.suggestion-container {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 20%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.suggestion-item.is-selected {
+  background-color: var(--rtm-interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.suggestion-item.is-selected .suggestion-flair {
+  color: var(--text-on-accent);
+}
+
+.suggestion-hotkey {
+  background-color: var(--background-modifier-hover);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* --- 18.5 通知 Notice --- */
+.notice {
+  background-color: var(--rtm-menu-bg);
+  color: var(--text-normal);
+  border: 1px solid var(--rtm-interactive-accent);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+}
+
+/* --- 18.6 按钮：主按钮走马卡龙渐变 --- */
+button {
+  border-radius: 8px;
+}
+
+button.mod-cta {
+  background-image: linear-gradient(135deg,
+    var(--rtm-interactive-accent) 0%,
+    var(--interactive-accent-hover) 100%
+  );
+  color: var(--text-on-accent);
+  border: none;
+}
+
+button.mod-cta:hover {
+  filter: brightness(1.06);
+}
+
+/* --- 18.7 输入控件 --- */
+input[type='text'],
+input[type='search'],
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='tel'],
+input[type='url'],
+textarea {
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  padding: 4px 8px;
+}
+
+input[type='text']:focus,
+input[type='search']:focus,
+input[type='email']:focus,
+input[type='number']:focus,
+input[type='password']:focus,
+input[type='tel']:focus,
+input[type='url']:focus,
+textarea:focus {
+  border-color: var(--rtm-interactive-accent);
+  box-shadow: 0 0 0 2px rgb(196 90 109 / 20%);
+}
+
+.theme-dark input[type='text']:focus,
+.theme-dark input[type='search']:focus,
+.theme-dark input[type='email']:focus,
+.theme-dark input[type='number']:focus,
+.theme-dark input[type='password']:focus,
+.theme-dark input[type='tel']:focus,
+.theme-dark input[type='url']:focus,
+.theme-dark textarea:focus {
+  box-shadow: 0 0 0 2px rgb(227 177 201 / 22%);
+}
+
+/* 开关 */
+.checkbox-container {
+  background-color: var(--interactive-normal);
+}
+
+.checkbox-container.is-enabled {
+  background-color: var(--rtm-interactive-accent);
+}
+
+/* 滑条 / 进度条 / 设置页原生复选框 */
+input[type='range'],
+input[type='checkbox']:not(.task-list-item-checkbox),
+progress {
+  accent-color: var(--rtm-interactive-accent);
+}
+
+/* --- 18.8 滚动条圆角 --- */
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+}
+
+/* --- 18.9 搜索结果命中高亮 --- */
+.search-result-file-matched-text {
+  background-color: rgb(196 90 109 / 25%);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+.theme-dark .search-result-file-matched-text {
+  background-color: rgb(227 177 201 / 25%);
+}
+
+/* --- 18.10 状态栏与空状态 --- */
+.status-bar {
+  font-size: var(--font-ui-smaller);
+}
+
+.empty-state-title {
+  color: var(--text-muted);
+}
+
+/* --- 18.11 移动端底栏玻璃 --- */
+body.is-mobile .mobile-navbar,
+body.is-mobile .mobile-toolbar {
+  background-color: var(--rtm-menu-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
 
 /* -----------------------------------------------------------------
    Style Settings 配置 - 需安装 Style Settings 插件后生效

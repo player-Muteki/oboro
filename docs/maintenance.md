@@ -55,5 +55,10 @@
   为「樱花木彩墨」标题阶梯与次要信息的既有设计取向；如需收紧，压深 h6 至 `#C96A83` 一档即可。
 - **stylelint 豁免**（见 `.stylelintrc.json`）：`selector-class-pattern` 置空（Obsidian 内部类如
   `HyperMD-codeblock-begin` 非 kebab-case）；`declaration-block-no-duplicate-custom-properties`
-  置空（「先实色、再 color-mix」双写兜底模式必需）。9 条 `-webkit-` 前缀成对声明 warning 为有意保留。
+  置空（「先实色、再 color-mix」双写兜底模式必需）；`property-no-vendor-prefix` 置空与
+  `declaration-block-no-duplicate-properties` 的前缀忽略（Safari/WKWebView 需要
+  `-webkit-backdrop-filter` / `-webkit-mask-image` / `-webkit-background-clip` 等前缀成对声明，
+  **切勿对 theme.css 裸跑 `stylelint --fix` 后不复核——它曾把前缀行当重复属性删除**）。
+- **callout 类型色**：浅色侧 8 组标题色全部压至对比度 ≥4.5:1（青 `#3E7168` 绿 `#4C7343`
+  金 `#8A6E1F` 橙 `#A85F2D` 玫 `#A94658` 蓝 `#4A6FA5` 红 `#B03A4E` 紫 `#8A5F9E`）。
 
