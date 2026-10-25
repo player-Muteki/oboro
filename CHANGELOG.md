@@ -5,12 +5,14 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
-## [Unreleased]
+## [0.1.0] - 2026-10-25
+
+Oboro（朧樱）首个公开版本，自 Sakura Macaron 更名而来。
 
 ### Changed
 
 - **主题更名 Sakura Macaron → Oboro（朧樱）**：「朧」即玻璃的雾，一词收拢夜樱、
-  樱粉与磨玻璃。`manifest.json` 版本随更名升至 0.2.0；全部私有变量前缀
+  樱粉与磨玻璃。全部私有变量前缀
   `--smc-*` → `--ob-*`，Style Settings 面板 id `smc-*` → `ob-*`
   （**已保存的 Style Settings 自定义值会重置为默认**）；安装目录
   `themes/Sakura Macaron/` → `themes/Oboro/`。
@@ -155,5 +157,5 @@
 - 移动端适配：`(hover: none)` 下背景回退为随内容定位。
 - 工程：stylelint（官方 obsidianmd 规则）+ GitHub Actions lint / 自动发版工作流 + 一键安装脚本。
 
-[Unreleased]: https://github.com/player-Muteki/oboro-obsidian/compare/0.1.0...HEAD
-[0.1.0]: https://github.com/player-Muteki/oboro-obsidian/releases/tag/0.1.0
+[Unreleased]: https://github.com/player-Muteki/oboro/compare/0.1.0...HEAD
+[0.1.0]: https://github.com/player-Muteki/oboro/releases/tag/0.1.0
