@@ -3196,13 +3196,13 @@ settings:
   -
     id: dv-light-bg
     title: 浅色壁纸
-    description: '两种填法：完整 background-image 值（url("https://…") 等）；或仓库内相对路径（如 Image Source/light-bg.jpg）——相对路径需配解析脚本注入 --app-bg-image 才生效，纯 CSS 无法解析。留空则无壁纸。'
+    description: '填入完整 background-image 值，例如 url("https://example.com/bg.jpg")。留空则无壁纸 —— 纯色底，不内置任何背景图。'
     type: variable-text
     default: none
   -
     id: dv-dark-bg
     title: 深色壁纸
-    description: '两种填法：完整 background-image 值（url("https://…") 等）；或仓库内相对路径（如 Image Source/dark-bg.jpg）——相对路径需配解析脚本注入 --app-bg-image 才生效，纯 CSS 无法解析。留空则无壁纸。'
+    description: '填入完整 background-image 值，例如 url("https://example.com/night.jpg")。留空则无壁纸 —— 纯色底，不内置任何背景图。'
     type: variable-text
     default: none
   -
