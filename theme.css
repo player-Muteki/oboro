@@ -705,6 +705,14 @@ body {
   --ob-glass-sheen-opacity: 0.1;
 }
 
+/* 移动端玻璃减剂量：小屏 GPU 上叠层 backdrop-filter 昂贵，
+   模糊半径减半（12px），保住材质观感的同时保帧省电。
+   html 前缀提特异性 —— Style Settings 的模糊滑杆以同特异性晚序写入，
+   否则减剂量会被它压回（同 reduce 块的坑） */
+html body.is-mobile {
+  --ob-glass-blur: 12px;
+}
+
 /* 侧栏：全剂量玻璃 + 镜面上缘 */
 .workspace-split.mod-horizontal.mod-left-split,
 .workspace-split.mod-horizontal.mod-right-split {
@@ -3046,6 +3054,15 @@ body:not(.is-mobile) .sidebar-toggle-button.mod-left {
   box-shadow:
     0 4px 16px rgb(0 0 0 / 10%),
     var(--ob-glass-edge-soft);
+}
+
+/* macOS：红绿灯占据窗口左上，FAB 的绝对定位会与之相撞 —— 交还原生
+   内联定位（mod-top-left-space 的安全让位由原生处理），仅保留圆钮外观 */
+body.is-macos:not(.is-mobile) .sidebar-toggle-button.mod-left {
+  position: static;
+  top: auto;
+  left: auto;
+  margin-inline: 4px;
 }
 
 body:not(.is-mobile) .sidebar-toggle-button.mod-left .clickable-icon {
