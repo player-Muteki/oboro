@@ -1,10 +1,10 @@
-# Sakura Macaron · 樱花马卡龙
+# Oboro · 朧樱
 
 Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护眼的**夜樱**。
 面板半透明 + 毛玻璃，可透出壁纸；代码块顶部有七段脉冲光带，语言名渲染成马卡龙胶囊。
 
-与同名 VS Code 主题 [sakura-macaron](https://github.com/player-Muteki/sakura-macaron) 同源——
-一套配色，两个编辑器。
+配套的 VS Code 主题 [sakura-macaron](https://github.com/player-Muteki/sakura-macaron) 同出一套配色——
+一个主题，两个编辑器。
 
 ## 特性
 
@@ -38,8 +38,8 @@ Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护�
 ### 手动安装
 
 1. 下载 [`theme.css`](./theme.css) 与 [`manifest.json`](./manifest.json)。
-2. 在库中创建 `.obsidian/themes/Sakura Macaron/` 目录，把两个文件放进去。
-3. 设置 → 外观 → 主题，选择 **Sakura Macaron**。
+2. 在库中创建 `.obsidian/themes/Oboro/` 目录，把两个文件放进去。
+3. 设置 → 外观 → 主题，选择 **Oboro**。
 
 或直接 clone 本仓库后运行：
 
@@ -56,7 +56,7 @@ Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护�
 主题默认使用内置渐变。想要壁纸，两种方式任选：
 
 1. **Style Settings 插件**（推荐）：安装 [Style Settings](https://github.com/mgmeyers/obsidian-style-settings)，
-   在其设置面板的 *Sakura Macaron* 区填入浅色 / 深色壁纸的
+   在其设置面板的 *Oboro* 区填入浅色 / 深色壁纸的
    `background-image` 值，例如 `url("https://example.com/bg.jpg")`。
 2. **脚本注入**：在任意可执行脚本的场景（如主页 dataviewjs）向 `body` 注入
    `--dv-light-bg` / `--dv-dark-bg`，内联样式优先生效——两个通道可并存。

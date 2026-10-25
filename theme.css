@@ -1,5 +1,5 @@
 /* =================================================================
-   Obsidian Theme: Sakura Macaron
+   Obsidian Theme: Oboro
    Light: 樱粉 (Sakura Pink) · Dark: 夜樱 (Night Sakura)
    特性：双模式调色板 · 毛玻璃 · 壁纸引擎 · 代码块七段光带 · 语言胶囊
    兼容：Obsidian 1.13+（CodeMirror 6 HyperMD 代码块）
@@ -16,34 +16,34 @@
    ----------------------------------------------------------------- */
 body {
   /* 字体：主题级排版入口，可在 设置 → 外观 → 字体 中覆盖 */
-  --smc-markdown-editor-font: 'Lora', 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
-  --smc-code-font: 'Cascadia Code', 'JetBrains Mono', ui-monospace, sfmono-regular, menlo, consolas, monospace;
-  --font-text-theme: var(--smc-markdown-editor-font);
-  --font-monospace-theme: var(--smc-code-font);
+  --ob-markdown-editor-font: 'Lora', 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+  --ob-code-font: 'Cascadia Code', 'JetBrains Mono', ui-monospace, sfmono-regular, menlo, consolas, monospace;
+  --font-text-theme: var(--ob-markdown-editor-font);
+  --font-monospace-theme: var(--ob-code-font);
 
   /* 标题字号与字重（--h*-size 为官方变量入口） */
-  --smc-h1-size: 1.6em;
-  --smc-h2-size: 1.4em;
-  --smc-h3-size: 1.2em;
-  --smc-h4-size: 1.1em;
-  --smc-h5-size: 1em;
-  --smc-h6-size: 0.9em;
-  --smc-h1-weight: 700;
-  --smc-h2-weight: 600;
-  --smc-h3-weight: 600;
-  --smc-h4-weight: 600;
-  --smc-h5-weight: 600;
-  --smc-h6-weight: 600;
-  --h1-size: var(--smc-h1-size);
-  --h2-size: var(--smc-h2-size);
-  --h3-size: var(--smc-h3-size);
-  --h4-size: var(--smc-h4-size);
-  --h5-size: var(--smc-h5-size);
-  --h6-size: var(--smc-h6-size);
+  --ob-h1-size: 1.6em;
+  --ob-h2-size: 1.4em;
+  --ob-h3-size: 1.2em;
+  --ob-h4-size: 1.1em;
+  --ob-h5-size: 1em;
+  --ob-h6-size: 0.9em;
+  --ob-h1-weight: 700;
+  --ob-h2-weight: 600;
+  --ob-h3-weight: 600;
+  --ob-h4-weight: 600;
+  --ob-h5-weight: 600;
+  --ob-h6-weight: 600;
+  --h1-size: var(--ob-h1-size);
+  --h2-size: var(--ob-h2-size);
+  --h3-size: var(--ob-h3-size);
+  --h4-size: var(--ob-h4-size);
+  --h5-size: var(--ob-h5-size);
+  --h6-size: var(--ob-h6-size);
 
   /* 代码块圆角 */
-  --smc-code-radius: 12px;
-  --smc-code-inline-radius: 4px;
+  --ob-code-radius: 12px;
+  --ob-code-inline-radius: 4px;
   --line-height-normal: 1.75;
 
   -webkit-font-smoothing: antialiased;
@@ -64,9 +64,9 @@ body {
   }
 }
 
-/* 行内代码圆角（接驳调色板里的 --smc-code-inline-radius） */
+/* 行内代码圆角（接驳调色板里的 --ob-code-inline-radius） */
 .markdown-rendered :not(pre) > code {
-  border-radius: var(--smc-code-inline-radius);
+  border-radius: var(--ob-code-inline-radius);
 }
 
 /* -----------------------------------------------------------------
@@ -75,54 +75,54 @@ body {
 .theme-light {
   --app-bg-image: var(--dv-light-bg, none);
   --app-background-gradient: linear-gradient(135deg, #FFF0F5 0%, #FDE4EC 50%, #F8BBD0 100%);
-  --smc-bg-primary: #FFF0F5;
-  --smc-bg-primary-alt: #FFF;
-  --smc-bg-secondary: #FDE4EC;
-  --smc-bg-secondary-alt: #F8BBD0;
-  --smc-bg-paper: #FFF8FA;
-  --smc-txt-accent: #5E3A46;
-  --smc-txt-accent-mute: #82636F;
-  --smc-txt-accent-faint: #BFA4AE;
-  --smc-interactive-accent: #C45A6D;
-  --interactive-accent: var(--smc-interactive-accent);
+  --ob-bg-primary: #FFF0F5;
+  --ob-bg-primary-alt: #FFF;
+  --ob-bg-secondary: #FDE4EC;
+  --ob-bg-secondary-alt: #F8BBD0;
+  --ob-bg-paper: #FFF8FA;
+  --ob-txt-accent: #5E3A46;
+  --ob-txt-accent-mute: #82636F;
+  --ob-txt-accent-faint: #BFA4AE;
+  --ob-interactive-accent: #C45A6D;
+  --interactive-accent: var(--ob-interactive-accent);
   --interactive-accent-hover: #9E4253;
-  --smc-code-bg: #F2DEE4;
-  --smc-code-border-color: #D89CAB;
-  --code-normal: var(--smc-txt-accent);
+  --ob-code-bg: #F2DEE4;
+  --ob-code-border-color: #D89CAB;
+  --code-normal: var(--ob-txt-accent);
   --code-comment: #775874;
-  --smc-blockquote-bg: transparent;
-  --smc-blockquote-border-color: var(--smc-interactive-accent);
-  --smc-bold-color: #C45A6D;
-  --smc-tab-bg-active: var(--smc-bg-primary);
-  --smc-tab-bg-active: color-mix(in srgb, var(--smc-bg-primary) 90%, transparent);
-  --smc-tab-inactive-bg: var(--smc-bg-secondary);
-  --smc-tab-inactive-bg: color-mix(in srgb, var(--smc-bg-secondary) 75%, transparent);
-  --smc-tab-inactive-bg-hover: var(--smc-bg-primary);
-  --smc-tab-outline-color: var(--smc-interactive-accent);
-  --smc-tab-radius: 6px;
-  --smc-table-header-bg: var(--smc-bg-secondary);
-  --smc-table-data-bg: var(--smc-bg-primary);
-  --smc-table-data-bg: color-mix(in srgb, var(--smc-bg-primary) 86%, transparent);
-  --smc-table-border-color: #E6BAC5;
-  --smc-tag-bg: var(--smc-bg-secondary);
-  --smc-tag-bg: color-mix(in srgb, var(--smc-bg-secondary) 88%, transparent);
-  --smc-tag-bg-hover: var(--smc-interactive-accent);
-  --smc-tag-color: var(--smc-txt-accent-mute);
-  --smc-tag-border-color: transparent;
-  --smc-workspace-root-bg: var(--smc-bg-secondary);
-  --smc-workspace-root-bg: color-mix(in srgb, var(--smc-bg-secondary) 70%, transparent);
-  --smc-workspace-leaf-bg: var(--smc-bg-primary);
-  --smc-workspace-leaf-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
-  --smc-markdown-editor-bg: var(--smc-bg-primary);
-  --smc-markdown-editor-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
-  --smc-view-content-bg: var(--smc-markdown-editor-bg);
-  --smc-modal-bg: var(--smc-bg-paper);
-  --smc-menu-bg: var(--smc-bg-paper);
-  --smc-scrollbar-thumb-bg: #E89FB0;
-  --smc-titlebar-bg-focus: #FCE8EE;
-  --smc-titlebar-bg: #FFF5F7;
-  --smc-titlebar-txt-color-focus: #76515C;
-  --smc-titlebar-txt-color: #9C7781;
+  --ob-blockquote-bg: transparent;
+  --ob-blockquote-border-color: var(--ob-interactive-accent);
+  --ob-bold-color: #C45A6D;
+  --ob-tab-bg-active: var(--ob-bg-primary);
+  --ob-tab-bg-active: color-mix(in srgb, var(--ob-bg-primary) 90%, transparent);
+  --ob-tab-inactive-bg: var(--ob-bg-secondary);
+  --ob-tab-inactive-bg: color-mix(in srgb, var(--ob-bg-secondary) 75%, transparent);
+  --ob-tab-inactive-bg-hover: var(--ob-bg-primary);
+  --ob-tab-outline-color: var(--ob-interactive-accent);
+  --ob-tab-radius: 6px;
+  --ob-table-header-bg: var(--ob-bg-secondary);
+  --ob-table-data-bg: var(--ob-bg-primary);
+  --ob-table-data-bg: color-mix(in srgb, var(--ob-bg-primary) 86%, transparent);
+  --ob-table-border-color: #E6BAC5;
+  --ob-tag-bg: var(--ob-bg-secondary);
+  --ob-tag-bg: color-mix(in srgb, var(--ob-bg-secondary) 88%, transparent);
+  --ob-tag-bg-hover: var(--ob-interactive-accent);
+  --ob-tag-color: var(--ob-txt-accent-mute);
+  --ob-tag-border-color: transparent;
+  --ob-workspace-root-bg: var(--ob-bg-secondary);
+  --ob-workspace-root-bg: color-mix(in srgb, var(--ob-bg-secondary) 70%, transparent);
+  --ob-workspace-leaf-bg: var(--ob-bg-primary);
+  --ob-workspace-leaf-bg: color-mix(in srgb, var(--ob-bg-primary) 85%, transparent);
+  --ob-markdown-editor-bg: var(--ob-bg-primary);
+  --ob-markdown-editor-bg: color-mix(in srgb, var(--ob-bg-primary) 85%, transparent);
+  --ob-view-content-bg: var(--ob-markdown-editor-bg);
+  --ob-modal-bg: var(--ob-bg-paper);
+  --ob-menu-bg: var(--ob-bg-paper);
+  --ob-scrollbar-thumb-bg: #E89FB0;
+  --ob-titlebar-bg-focus: #FCE8EE;
+  --ob-titlebar-bg: #FFF5F7;
+  --ob-titlebar-txt-color-focus: #76515C;
+  --ob-titlebar-txt-color: #9C7781;
 }
 
 /* -----------------------------------------------------------------
@@ -136,54 +136,54 @@ body {
     radial-gradient(120% 90% at 18% 0%, rgb(240 181 206 / 10%) 0%, transparent 62%),
     radial-gradient(100% 80% at 82% 100%, rgb(204 176 240 / 9%) 0%, transparent 60%),
     linear-gradient(160deg, #3C2D3C 0%, #33252F 52%, #281F2B 100%);
-  --smc-bg-primary: #3C2D3C;
-  --smc-bg-primary-alt: #413240;
-  --smc-bg-secondary: #352737;
-  --smc-bg-secondary-alt: #281F2B;
-  --smc-bg-paper: #3A2E3A;
-  --smc-txt-accent: #EBC4D7;
-  --smc-txt-accent-mute: #BC9DB0;
-  --smc-txt-accent-faint: #7E6577;
-  --smc-interactive-accent: #E3B1C9;
-  --interactive-accent: var(--smc-interactive-accent);
+  --ob-bg-primary: #3C2D3C;
+  --ob-bg-primary-alt: #413240;
+  --ob-bg-secondary: #352737;
+  --ob-bg-secondary-alt: #281F2B;
+  --ob-bg-paper: #3A2E3A;
+  --ob-txt-accent: #EBC4D7;
+  --ob-txt-accent-mute: #BC9DB0;
+  --ob-txt-accent-faint: #7E6577;
+  --ob-interactive-accent: #E3B1C9;
+  --interactive-accent: var(--ob-interactive-accent);
   --interactive-accent-hover: #F0B5CE;
-  --smc-code-bg: #342834;
-  --smc-code-border-color: #27202A;
+  --ob-code-bg: #342834;
+  --ob-code-border-color: #27202A;
   --code-normal: #E9C7D8;
   --code-comment: #BBA9BA;
-  --smc-blockquote-bg: transparent;
-  --smc-blockquote-border-color: var(--smc-interactive-accent);
-  --smc-bold-color: #E9C7D8;
-  --smc-tab-bg-active: var(--smc-bg-primary);
-  --smc-tab-bg-active: color-mix(in srgb, var(--smc-bg-primary) 90%, transparent);
-  --smc-tab-inactive-bg: var(--smc-bg-secondary);
-  --smc-tab-inactive-bg: color-mix(in srgb, var(--smc-bg-secondary) 75%, transparent);
-  --smc-tab-inactive-bg-hover: var(--smc-bg-primary);
-  --smc-tab-outline-color: var(--smc-interactive-accent);
-  --smc-tab-radius: 6px;
-  --smc-table-header-bg: #3E303D;
-  --smc-table-data-bg: var(--smc-bg-primary);
-  --smc-table-data-bg: color-mix(in srgb, var(--smc-bg-primary) 86%, transparent);
-  --smc-table-border-color: #27202A;
-  --smc-tag-bg: #533F50;
-  --smc-tag-bg: color-mix(in srgb, var(--smc-interactive-accent) 14%, transparent);
-  --smc-tag-bg-hover: var(--smc-interactive-accent);
-  --smc-tag-color: #F3A4B8;
-  --smc-tag-border-color: transparent;
-  --smc-workspace-root-bg: var(--smc-bg-secondary);
-  --smc-workspace-root-bg: color-mix(in srgb, var(--smc-bg-secondary) 70%, transparent);
-  --smc-workspace-leaf-bg: var(--smc-bg-primary);
-  --smc-workspace-leaf-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
-  --smc-markdown-editor-bg: var(--smc-bg-primary);
-  --smc-markdown-editor-bg: color-mix(in srgb, var(--smc-bg-primary) 85%, transparent);
-  --smc-view-content-bg: var(--smc-markdown-editor-bg);
-  --smc-modal-bg: #342834;
-  --smc-menu-bg: #3E303D;
-  --smc-scrollbar-thumb-bg: #7E6577;
-  --smc-titlebar-bg-focus: #2F2130;
-  --smc-titlebar-bg: #2F2130;
-  --smc-titlebar-txt-color-focus: #DCC8D3;
-  --smc-titlebar-txt-color: #AD98A7;
+  --ob-blockquote-bg: transparent;
+  --ob-blockquote-border-color: var(--ob-interactive-accent);
+  --ob-bold-color: #E9C7D8;
+  --ob-tab-bg-active: var(--ob-bg-primary);
+  --ob-tab-bg-active: color-mix(in srgb, var(--ob-bg-primary) 90%, transparent);
+  --ob-tab-inactive-bg: var(--ob-bg-secondary);
+  --ob-tab-inactive-bg: color-mix(in srgb, var(--ob-bg-secondary) 75%, transparent);
+  --ob-tab-inactive-bg-hover: var(--ob-bg-primary);
+  --ob-tab-outline-color: var(--ob-interactive-accent);
+  --ob-tab-radius: 6px;
+  --ob-table-header-bg: #3E303D;
+  --ob-table-data-bg: var(--ob-bg-primary);
+  --ob-table-data-bg: color-mix(in srgb, var(--ob-bg-primary) 86%, transparent);
+  --ob-table-border-color: #27202A;
+  --ob-tag-bg: #533F50;
+  --ob-tag-bg: color-mix(in srgb, var(--ob-interactive-accent) 14%, transparent);
+  --ob-tag-bg-hover: var(--ob-interactive-accent);
+  --ob-tag-color: #F3A4B8;
+  --ob-tag-border-color: transparent;
+  --ob-workspace-root-bg: var(--ob-bg-secondary);
+  --ob-workspace-root-bg: color-mix(in srgb, var(--ob-bg-secondary) 70%, transparent);
+  --ob-workspace-leaf-bg: var(--ob-bg-primary);
+  --ob-workspace-leaf-bg: color-mix(in srgb, var(--ob-bg-primary) 85%, transparent);
+  --ob-markdown-editor-bg: var(--ob-bg-primary);
+  --ob-markdown-editor-bg: color-mix(in srgb, var(--ob-bg-primary) 85%, transparent);
+  --ob-view-content-bg: var(--ob-markdown-editor-bg);
+  --ob-modal-bg: #342834;
+  --ob-menu-bg: #3E303D;
+  --ob-scrollbar-thumb-bg: #7E6577;
+  --ob-titlebar-bg-focus: #2F2130;
+  --ob-titlebar-bg: #2F2130;
+  --ob-titlebar-txt-color-focus: #DCC8D3;
+  --ob-titlebar-txt-color: #AD98A7;
 }
 
 /* -----------------------------------------------------------------
@@ -217,10 +217,10 @@ body {
 
   /* 表面 */
   --background-primary: #3C2D3C;
-  --background-primary: color-mix(in srgb, #3C2D3C var(--smc-glass-primary-opacity, 88%), transparent);
+  --background-primary: color-mix(in srgb, #3C2D3C var(--ob-glass-primary-opacity, 88%), transparent);
   --background-primary-alt: #413240;
   --background-secondary: #352737;
-  --background-secondary: color-mix(in srgb, #352737 var(--smc-glass-secondary-opacity, 80%), transparent);
+  --background-secondary: color-mix(in srgb, #352737 var(--ob-glass-secondary-opacity, 80%), transparent);
   --background-secondary-alt: #281F2B;
   --background-secondary-alt: color-mix(in srgb, #281F2B 84%, transparent);
   --background-modifier-border: #27202A;
@@ -297,13 +297,13 @@ body {
 
   /* 标题栏与标签页 */
   --titlebar-background: #2F2130;
-  --titlebar-background: color-mix(in srgb, #2F2130 var(--smc-glass-secondary-opacity, 80%), transparent);
+  --titlebar-background: color-mix(in srgb, #2F2130 var(--ob-glass-secondary-opacity, 80%), transparent);
   --titlebar-background-focused: #2F2130;
-  --titlebar-background-focused: color-mix(in srgb, #2F2130 var(--smc-glass-secondary-opacity, 80%), transparent);
+  --titlebar-background-focused: color-mix(in srgb, #2F2130 var(--ob-glass-secondary-opacity, 80%), transparent);
   --titlebar-text-color: #AD98A7;
   --titlebar-text-color-focused: #DCC8D3;
   --tab-container-background: #3A2E3A;
-  --tab-container-background: color-mix(in srgb, #3A2E3A var(--smc-glass-secondary-opacity, 80%), transparent);
+  --tab-container-background: color-mix(in srgb, #3A2E3A var(--ob-glass-secondary-opacity, 80%), transparent);
   --tab-background-active: #3C2D3C;
   --tab-background-active: color-mix(in srgb, #3C2D3C 30%, transparent);
   --tab-text-color: #C3AFBB;
@@ -353,10 +353,10 @@ body {
 
   /* 表面 */
   --background-primary: #FFF0F5;
-  --background-primary: color-mix(in srgb, #FFF0F5 var(--smc-glass-primary-opacity, 90%), transparent);
+  --background-primary: color-mix(in srgb, #FFF0F5 var(--ob-glass-primary-opacity, 90%), transparent);
   --background-primary-alt: #FFF;
   --background-secondary: #FDE4EC;
-  --background-secondary: color-mix(in srgb, #FDE4EC var(--smc-glass-secondary-opacity, 84%), transparent);
+  --background-secondary: color-mix(in srgb, #FDE4EC var(--ob-glass-secondary-opacity, 84%), transparent);
   --background-secondary-alt: #F8BBD0;
   --background-secondary-alt: color-mix(in srgb, #F8BBD0 86%, transparent);
   --background-modifier-border: #E6BAC5;
@@ -371,7 +371,7 @@ body {
 
   /* 文字 */
   --text-normal: #5E3A46;
-  --text-muted: var(--smc-txt-accent-mute);
+  --text-muted: var(--ob-txt-accent-mute);
   --text-faint: #BFA4AE;
   --text-accent: #C45A6D;
   --text-accent-hover: #9E4253;
@@ -433,13 +433,13 @@ body {
 
   /* 标题栏与标签页 */
   --titlebar-background: #FCE8EE;
-  --titlebar-background: color-mix(in srgb, #FCE8EE var(--smc-glass-secondary-opacity, 84%), transparent);
+  --titlebar-background: color-mix(in srgb, #FCE8EE var(--ob-glass-secondary-opacity, 84%), transparent);
   --titlebar-background-focused: #FCE8EE;
-  --titlebar-background-focused: color-mix(in srgb, #FCE8EE var(--smc-glass-secondary-opacity, 84%), transparent);
+  --titlebar-background-focused: color-mix(in srgb, #FCE8EE var(--ob-glass-secondary-opacity, 84%), transparent);
   --titlebar-text-color: #9C7781;
   --titlebar-text-color-focused: #76515C;
   --tab-container-background: #FDE4EC;
-  --tab-container-background: color-mix(in srgb, #FDE4EC var(--smc-glass-secondary-opacity, 84%), transparent);
+  --tab-container-background: color-mix(in srgb, #FDE4EC var(--ob-glass-secondary-opacity, 84%), transparent);
   --tab-background-active: #FFF0F5;
   --tab-background-active: color-mix(in srgb, #FFF0F5 30%, transparent);
   --tab-text-color: #9C7781;
@@ -469,7 +469,7 @@ body {
    ----------------------------------------------------------------- */
 .markdown-rendered :is(h1, h2, h3, h4, h5, h6),
 .cm-header {
-  font-family: var(--smc-markdown-editor-font);
+  font-family: var(--ob-markdown-editor-font);
   letter-spacing: 0.02em;
 }
 
@@ -480,38 +480,38 @@ body {
 
 .markdown-rendered h1,
 .cm-header-1 {
-  font-size: var(--smc-h1-size);
-  font-weight: var(--smc-h1-weight);
+  font-size: var(--ob-h1-size);
+  font-weight: var(--ob-h1-weight);
 }
 
 .markdown-rendered h2,
 .cm-header-2 {
-  font-size: var(--smc-h2-size);
-  font-weight: var(--smc-h2-weight);
+  font-size: var(--ob-h2-size);
+  font-weight: var(--ob-h2-weight);
 }
 
 .markdown-rendered h3,
 .cm-header-3 {
-  font-size: var(--smc-h3-size);
-  font-weight: var(--smc-h3-weight);
+  font-size: var(--ob-h3-size);
+  font-weight: var(--ob-h3-weight);
 }
 
 .markdown-rendered h4,
 .cm-header-4 {
-  font-size: var(--smc-h4-size);
-  font-weight: var(--smc-h4-weight);
+  font-size: var(--ob-h4-size);
+  font-weight: var(--ob-h4-weight);
 }
 
 .markdown-rendered h5,
 .cm-header-5 {
-  font-size: var(--smc-h5-size);
-  font-weight: var(--smc-h5-weight);
+  font-size: var(--ob-h5-size);
+  font-weight: var(--ob-h5-weight);
 }
 
 .markdown-rendered h6,
 .cm-header-6 {
-  font-size: var(--smc-h6-size);
-  font-weight: var(--smc-h6-weight);
+  font-size: var(--ob-h6-size);
+  font-weight: var(--ob-h6-weight);
 }
 
 .markdown-rendered :is(strong, b),
@@ -621,24 +621,24 @@ body {
    - 噪点 = Fluent Acrylic / Isinglass 的 LDR 纹理层
    ----------------------------------------------------------------- */
 body {
-  --smc-glass-blur: 18px;
-  --smc-glass-saturation: 170%;
-  --smc-glass-brightness: 108%;
-  --smc-glass-grain-opacity: 0.035;
+  --ob-glass-blur: 18px;
+  --ob-glass-saturation: 170%;
+  --ob-glass-brightness: 108%;
+  --ob-glass-grain-opacity: 0.035;
 
   /* 亮度入链（Velocity 手法）：模糊同时提亮背景，玻璃透亮不靠加白底 */
-  --smc-glass-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation))
-    brightness(var(--smc-glass-brightness));
-  --smc-glass-soft-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation))
-    brightness(var(--smc-glass-brightness));
-  --smc-glass-mild-filter: blur(calc(var(--smc-glass-blur) * 0.6)) saturate(var(--smc-glass-saturation))
-    brightness(var(--smc-glass-brightness));
-  --smc-glass-chip-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation))
-    brightness(var(--smc-glass-brightness));
-  --smc-glass-overlay-opacity: 82%;
-  --smc-glass-modal-opacity: 88%;
-  --smc-glass-notice-opacity: 86%;
-  --smc-glass-sheen: linear-gradient(
+  --ob-glass-filter: blur(var(--ob-glass-blur)) saturate(var(--ob-glass-saturation))
+    brightness(var(--ob-glass-brightness));
+  --ob-glass-soft-filter: blur(calc(var(--ob-glass-blur) * 0.75)) saturate(var(--ob-glass-saturation))
+    brightness(var(--ob-glass-brightness));
+  --ob-glass-mild-filter: blur(calc(var(--ob-glass-blur) * 0.6)) saturate(var(--ob-glass-saturation))
+    brightness(var(--ob-glass-brightness));
+  --ob-glass-chip-filter: blur(calc(var(--ob-glass-blur) * 0.5)) saturate(var(--ob-glass-saturation))
+    brightness(var(--ob-glass-brightness));
+  --ob-glass-overlay-opacity: 82%;
+  --ob-glass-modal-opacity: 88%;
+  --ob-glass-notice-opacity: 86%;
+  --ob-glass-sheen: linear-gradient(
     165deg,
     rgb(255 255 255 / 55%) 0%,
     rgb(255 255 255 / 20%) 18%,
@@ -649,81 +649,81 @@ body {
      （Flutter FakeGlass 的 highlight + bevel 分层思路）；0.5px 环描边保证
      任何壁纸上都有一道清晰的轮廓；两条模糊晕模拟 bezel 曲率；末位宽顶洗光
      （Velocity 的 interior glow）给面板内部进深 */
-  --smc-glass-edge: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim),
-    inset 1px 0 0 var(--smc-glass-rim-soft),
-    inset 0 -1px 0 var(--smc-glass-shade),
-    inset -1px 0 0 var(--smc-glass-shade),
-    inset 0 3px 4px -2px var(--smc-glass-rim-blur),
-    inset 0 -3px 6px -3px var(--smc-glass-shade-blur),
-    inset 0 1px 1px -0.5px var(--smc-glass-fringe-warm),
-    inset 0 -1px 1px -0.5px var(--smc-glass-fringe-cool),
-    inset 0 12px 24px -10px var(--smc-glass-wash);
+  --ob-glass-edge: inset 0 0 0 0.5px var(--ob-glass-rim-soft),
+    inset 0 1px 0 var(--ob-glass-rim),
+    inset 1px 0 0 var(--ob-glass-rim-soft),
+    inset 0 -1px 0 var(--ob-glass-shade),
+    inset -1px 0 0 var(--ob-glass-shade),
+    inset 0 3px 4px -2px var(--ob-glass-rim-blur),
+    inset 0 -3px 6px -3px var(--ob-glass-shade-blur),
+    inset 0 1px 1px -0.5px var(--ob-glass-fringe-warm),
+    inset 0 -1px 1px -0.5px var(--ob-glass-fringe-cool),
+    inset 0 12px 24px -10px var(--ob-glass-wash);
 
   /* 控件级缘：只要轮廓 + 顶部高光，不含曲率晕与下缘阴影 */
-  --smc-glass-edge-soft: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 0 1px 0 var(--smc-glass-rim);
+  --ob-glass-edge-soft: inset 0 0 0 0.5px var(--ob-glass-rim-soft),
+    inset 0 1px 0 var(--ob-glass-rim);
 
   /* 面板内容区缘光：完整缘去掉顶部硬高光线/顶部曲率/顶部色散 ——
      顶栏去线方向，标签条下方的硬线突兀 */
-  --smc-glass-edge-leaf: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
-    inset 1px 0 0 var(--smc-glass-rim-soft),
-    inset -1px 0 0 var(--smc-glass-shade),
-    inset 0 -1px 0 var(--smc-glass-shade),
-    inset 0 -3px 6px -3px var(--smc-glass-shade-blur),
-    inset 0 -1px 1px -0.5px var(--smc-glass-fringe-cool);
-  --smc-table-tint: 18%;
+  --ob-glass-edge-leaf: inset 0 0 0 0.5px var(--ob-glass-rim-soft),
+    inset 1px 0 0 var(--ob-glass-rim-soft),
+    inset -1px 0 0 var(--ob-glass-shade),
+    inset 0 -1px 0 var(--ob-glass-shade),
+    inset 0 -3px 6px -3px var(--ob-glass-shade-blur),
+    inset 0 -1px 1px -0.5px var(--ob-glass-fringe-cool);
+  --ob-table-tint: 18%;
 }
 
 .theme-dark {
-  --smc-glass-primary-opacity: 74%;
-  --smc-glass-secondary-opacity: 68%;
-  --smc-glass-rim: rgb(255 255 255 / 14%);
-  --smc-glass-rim-soft: rgb(255 255 255 / 7%);
-  --smc-glass-shade: rgb(0 0 0 / 22%);
-  --smc-glass-rim-blur: rgb(255 255 255 / 5%);
-  --smc-glass-shade-blur: rgb(0 0 0 / 12%);
-  --smc-glass-fringe-warm: rgb(255 200 150 / 5%);
-  --smc-glass-fringe-cool: rgb(150 200 255 / 5%);
-  --smc-glass-wash: rgb(255 255 255 / 3%);
-  --smc-glass-sheen-opacity: 0.07;
+  --ob-glass-primary-opacity: 74%;
+  --ob-glass-secondary-opacity: 68%;
+  --ob-glass-rim: rgb(255 255 255 / 14%);
+  --ob-glass-rim-soft: rgb(255 255 255 / 7%);
+  --ob-glass-shade: rgb(0 0 0 / 22%);
+  --ob-glass-rim-blur: rgb(255 255 255 / 5%);
+  --ob-glass-shade-blur: rgb(0 0 0 / 12%);
+  --ob-glass-fringe-warm: rgb(255 200 150 / 5%);
+  --ob-glass-fringe-cool: rgb(150 200 255 / 5%);
+  --ob-glass-wash: rgb(255 255 255 / 3%);
+  --ob-glass-sheen-opacity: 0.07;
 }
 
 .theme-light {
-  --smc-glass-primary-opacity: 78%;
-  --smc-glass-secondary-opacity: 72%;
-  --smc-glass-rim: rgb(255 255 255 / 60%);
-  --smc-glass-rim-soft: rgb(255 255 255 / 32%);
-  --smc-glass-shade: rgb(82 40 60 / 8%);
-  --smc-glass-rim-blur: rgb(255 255 255 / 28%);
-  --smc-glass-shade-blur: rgb(82 40 60 / 5%);
+  --ob-glass-primary-opacity: 78%;
+  --ob-glass-secondary-opacity: 72%;
+  --ob-glass-rim: rgb(255 255 255 / 60%);
+  --ob-glass-rim-soft: rgb(255 255 255 / 32%);
+  --ob-glass-shade: rgb(82 40 60 / 8%);
+  --ob-glass-rim-blur: rgb(255 255 255 / 28%);
+  --ob-glass-shade-blur: rgb(82 40 60 / 5%);
 
   /* 浅色底已亮，色散不可辨则关；sheen 略强于深色以压过纸底 */
-  --smc-glass-fringe-warm: transparent;
-  --smc-glass-fringe-cool: transparent;
-  --smc-glass-wash: rgb(255 255 255 / 5%);
-  --smc-glass-sheen-opacity: 0.1;
+  --ob-glass-fringe-warm: transparent;
+  --ob-glass-fringe-cool: transparent;
+  --ob-glass-wash: rgb(255 255 255 / 5%);
+  --ob-glass-sheen-opacity: 0.1;
 }
 
 /* 侧栏：全剂量玻璃 + 镜面上缘 */
 .workspace-split.mod-horizontal.mod-left-split,
 .workspace-split.mod-horizontal.mod-right-split {
-  backdrop-filter: var(--smc-glass-filter);
-  -webkit-backdrop-filter: var(--smc-glass-filter);
-  box-shadow: var(--smc-glass-edge);
+  backdrop-filter: var(--ob-glass-filter);
+  -webkit-backdrop-filter: var(--ob-glass-filter);
+  box-shadow: var(--ob-glass-edge);
 }
 
 /* 编辑器：减剂量模糊保文字可读性；缘光用无顶缘变体（顶栏去线） */
 .workspace-split.mod-root .workspace-leaf-content {
-  backdrop-filter: var(--smc-glass-mild-filter);
-  -webkit-backdrop-filter: var(--smc-glass-mild-filter);
-  box-shadow: var(--smc-glass-edge-leaf);
+  backdrop-filter: var(--ob-glass-mild-filter);
+  -webkit-backdrop-filter: var(--ob-glass-mild-filter);
+  box-shadow: var(--ob-glass-edge-leaf);
 }
 
 /* 标签页栏：次剂量 */
 .workspace-tab-header-container {
-  backdrop-filter: var(--smc-glass-soft-filter);
-  -webkit-backdrop-filter: var(--smc-glass-soft-filter);
+  backdrop-filter: var(--ob-glass-soft-filter);
+  -webkit-backdrop-filter: var(--ob-glass-soft-filter);
 
   /* 顶栏去线：原生 border-bottom 分隔线与缘光环全部退场，
      标签条与内容区只靠玻璃色调差和 chip 粒分隔 */
@@ -746,7 +746,7 @@ body {
 /* 编辑器：玻璃底与模糊统一落在 leaf-content 一层 */
 .workspace-split.mod-root .workspace-leaf-content {
   background-color: var(--background-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-glass-primary-opacity, 88%), transparent);
+  background-color: color-mix(in srgb, var(--ob-bg-primary) var(--ob-glass-primary-opacity, 88%), transparent);
 }
 
 /* 侧栏：内部 leaf/view-content 不画背景 */
@@ -761,7 +761,7 @@ body {
 .workspace-split.mod-horizontal.mod-left-split,
 .workspace-split.mod-horizontal.mod-right-split {
   background-color: var(--background-secondary);
-  background-color: color-mix(in srgb, var(--smc-bg-secondary) var(--smc-glass-secondary-opacity, 80%), transparent);
+  background-color: color-mix(in srgb, var(--ob-bg-secondary) var(--ob-glass-secondary-opacity, 80%), transparent);
 }
 
 /* -----------------------------------------------------------------
@@ -785,7 +785,7 @@ body {
 
 /* 活动标签：玫瑰轻染气泡 chip（无描边，靠染色 + 指示条标识）；未激活透明 */
 .workspace-tabs .workspace-tab-header.is-active {
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 14%, transparent);
+  background-color: color-mix(in srgb, var(--ob-interactive-accent) 14%, transparent);
   border-radius: 10px;
   color: var(--text-normal);
 }
@@ -793,13 +793,13 @@ body {
 /* 侧栏（文件库/搜索等）活动标签：同款气泡 */
 .workspace-split.mod-horizontal.mod-left-split .workspace-tab-header.is-active,
 .workspace-split.mod-horizontal.mod-right-split .workspace-tab-header.is-active {
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 14%, transparent);
+  background-color: color-mix(in srgb, var(--ob-interactive-accent) 14%, transparent);
   color: var(--text-normal);
 }
 
 /* 悬停标签：轻染 + 文字提亮 */
 .workspace-tabs .workspace-tab-header:hover:not(.is-active) {
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 16%, transparent);
+  background-color: color-mix(in srgb, var(--ob-bg-primary) 16%, transparent);
   color: var(--text-normal);
 }
 
@@ -811,7 +811,7 @@ body {
 /* 活动栏 Ribbon：半透明底 + 镜面缘（不带 backdrop-filter——
    侧栏开关按钮是 ribbon 的绝对定位后代，模糊会把 ribbon 变成其包含块，按钮会被搬位） */
 .side-dock-ribbon {
-  box-shadow: inset 0 0 0 0.5px var(--smc-glass-rim-soft), inset -1px 0 0 var(--smc-glass-rim-soft);
+  box-shadow: inset 0 0 0 0.5px var(--ob-glass-rim-soft), inset -1px 0 0 var(--ob-glass-rim-soft);
 }
 
 /* 细颗粒噪点：给弹层叠加一层玻璃质感颗粒（Isinglass 手法） */
@@ -826,7 +826,7 @@ body {
   pointer-events: none;
   border-radius: inherit;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  opacity: var(--smc-glass-grain-opacity);
+  opacity: var(--ob-glass-grain-opacity);
 }
 
 /* 镜面 sheen：顶部对角反射光。z-index:-1 落在背景之上、内容之下 ——
@@ -842,8 +842,8 @@ body {
   z-index: -1;
   pointer-events: none;
   border-radius: inherit;
-  background-image: var(--smc-glass-sheen);
-  opacity: var(--smc-glass-sheen-opacity);
+  background-image: var(--ob-glass-sheen);
+  opacity: var(--ob-glass-sheen-opacity);
 }
 
 /* 无障碍：系统开启「减少透明度」时退回实色面板 */
@@ -851,19 +851,19 @@ body {
   body {
     background-image: none;
 
-    --smc-glass-filter: none;
-    --smc-glass-soft-filter: none;
-    --smc-glass-mild-filter: none;
-    --smc-glass-chip-filter: none;
-    --smc-glass-overlay-opacity: 100%;
-    --smc-glass-modal-opacity: 100%;
-    --smc-glass-notice-opacity: 100%;
+    --ob-glass-filter: none;
+    --ob-glass-soft-filter: none;
+    --ob-glass-mild-filter: none;
+    --ob-glass-chip-filter: none;
+    --ob-glass-overlay-opacity: 100%;
+    --ob-glass-modal-opacity: 100%;
+    --ob-glass-notice-opacity: 100%;
 
     /* 缘光/sheen/色散属于玻璃装饰，退实色时一并退场 */
-    --smc-glass-edge: none;
-    --smc-glass-edge-soft: none;
-    --smc-glass-edge-leaf: none;
-    --smc-glass-sheen-opacity: 0;
+    --ob-glass-edge: none;
+    --ob-glass-edge-soft: none;
+    --ob-glass-edge-leaf: none;
+    --ob-glass-sheen-opacity: 0;
   }
 
   .theme-dark {
@@ -907,16 +907,16 @@ body {
      html 前缀提特异性 —— Style Settings 以同特异性晚序写入实度滑杆值，
      否则这两个 100% 会被它压回（对装了 Style Settings 的用户退化失效） */
   html body.theme-dark {
-    --smc-glass-primary-opacity: 100%;
-    --smc-glass-secondary-opacity: 100%;
+    --ob-glass-primary-opacity: 100%;
+    --ob-glass-secondary-opacity: 100%;
     --ribbon-background: #281F2B;
     --ribbon-background-collapsed: #281F2B;
     --code-background: #342834;
   }
 
   html body.theme-light {
-    --smc-glass-primary-opacity: 100%;
-    --smc-glass-secondary-opacity: 100%;
+    --ob-glass-primary-opacity: 100%;
+    --ob-glass-secondary-opacity: 100%;
     --ribbon-background: #F8BBD0;
     --ribbon-background-collapsed: #F8BBD0;
     --code-background: #F2DEE4;
@@ -925,7 +925,7 @@ body {
   .markdown-rendered table,
   .markdown-rendered .callout,
   .markdown-rendered .markdown-embed {
-    background-color: var(--smc-bg-primary);
+    background-color: var(--ob-bg-primary);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -946,48 +946,48 @@ body {
   }
 }
 
-/* 高可读性 · 不透明模式：Style Settings 手动开关（body.smc-solid），效果与
+/* 高可读性 · 不透明模式：Style Settings 手动开关（body.ob-solid），效果与
    系统减少透明度一致 —— 实度全部归 100%、模糊/缘光/噪声/光晕退场。
    参考 AbsolutelyGlass 的 ca-solid 思路（实色面板不等于放弃玻璃变量体系） */
-body.smc-solid,
-html body.smc-solid {
+body.ob-solid,
+html body.ob-solid {
   background-image: none;
 
-  --smc-glass-filter: none;
-  --smc-glass-soft-filter: none;
-  --smc-glass-mild-filter: none;
-  --smc-glass-chip-filter: none;
-  --smc-glass-overlay-opacity: 100%;
-  --smc-glass-modal-opacity: 100%;
-  --smc-glass-notice-opacity: 100%;
-  --smc-glass-primary-opacity: 100%;
-  --smc-glass-secondary-opacity: 100%;
-  --smc-glass-edge: none;
-  --smc-glass-edge-soft: none;
-  --smc-glass-edge-leaf: none;
-  --smc-glass-sheen-opacity: 0;
-  --smc-glass-grain-opacity: 0;
-  --ribbon-background: var(--smc-bg-secondary);
-  --ribbon-background-collapsed: var(--smc-bg-secondary);
+  --ob-glass-filter: none;
+  --ob-glass-soft-filter: none;
+  --ob-glass-mild-filter: none;
+  --ob-glass-chip-filter: none;
+  --ob-glass-overlay-opacity: 100%;
+  --ob-glass-modal-opacity: 100%;
+  --ob-glass-notice-opacity: 100%;
+  --ob-glass-primary-opacity: 100%;
+  --ob-glass-secondary-opacity: 100%;
+  --ob-glass-edge: none;
+  --ob-glass-edge-soft: none;
+  --ob-glass-edge-leaf: none;
+  --ob-glass-sheen-opacity: 0;
+  --ob-glass-grain-opacity: 0;
+  --ribbon-background: var(--ob-bg-secondary);
+  --ribbon-background-collapsed: var(--ob-bg-secondary);
 }
 
-body.smc-solid :is(.menu, .modal, .suggestion-container, .prompt, .hover-popover, .notice, .tooltip) {
+body.ob-solid :is(.menu, .modal, .suggestion-container, .prompt, .hover-popover, .notice, .tooltip) {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
-body.smc-solid
+body.ob-solid
   :is(.workspace-tab-header-container, .workspace-split.mod-horizontal.mod-left-split, .workspace-split.mod-horizontal.mod-right-split, .workspace-split.mod-root .workspace-leaf-content, .theme-light .status-bar, .theme-dark .status-bar) {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
-body.smc-solid :is(.menu, .modal, .suggestion-container, .prompt, .hover-popover)::after {
+body.ob-solid :is(.menu, .modal, .suggestion-container, .prompt, .hover-popover)::after {
   content: none;
 }
 
-body.smc-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markdown-rendered .markdown-embed) {
-  background-color: var(--smc-bg-primary);
+body.ob-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markdown-rendered .markdown-embed) {
+  background-color: var(--ob-bg-primary);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
@@ -995,10 +995,10 @@ body.smc-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markd
 /* 不支持 backdrop-filter 的老 webview：玻璃变量直接退实色（框架兜底） */
 @supports not (backdrop-filter: blur(1px)) {
   body {
-    --smc-glass-filter: none;
-    --smc-glass-soft-filter: none;
-    --smc-glass-mild-filter: none;
-    --smc-glass-chip-filter: none;
+    --ob-glass-filter: none;
+    --ob-glass-soft-filter: none;
+    --ob-glass-mild-filter: none;
+    --ob-glass-chip-filter: none;
   }
 }
 
@@ -1009,15 +1009,15 @@ body.smc-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markd
 .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin {
   padding-top: 40px;
   position: relative;
-  border-radius: var(--smc-code-radius);
+  border-radius: var(--ob-code-radius);
 }
 
 .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin {
-  border-radius: var(--smc-code-radius) var(--smc-code-radius) 0 0;
+  border-radius: var(--ob-code-radius) var(--ob-code-radius) 0 0;
 }
 
 .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-end {
-  border-radius: 0 0 var(--smc-code-radius) var(--smc-code-radius);
+  border-radius: 0 0 var(--ob-code-radius) var(--ob-code-radius);
 }
 
 /* 顶部半透明底座鼠标穿透，不再阻挡原生 Copy 按钮 */
@@ -1394,14 +1394,14 @@ body.smc-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markd
    ----------------------------------------------------------------- */
 
 /* 关闭代码块顶部七段光带与横条（保留留白给 Copy 按钮与语言胶囊） */
-body.smc-no-band .markdown-rendered pre[class*="language-"]::before,
-body.smc-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::before {
+body.ob-no-band .markdown-rendered pre[class*="language-"]::before,
+body.ob-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::before {
   content: none;
   animation: none;
 }
 
-body.smc-no-band .markdown-rendered pre[class*="language-"]::after,
-body.smc-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::after {
+body.ob-no-band .markdown-rendered pre[class*="language-"]::after,
+body.ob-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::after {
   display: none;
 }
 
@@ -1410,7 +1410,7 @@ body.smc-no-band .markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin:
    ----------------------------------------------------------------- */
 body {
   --tag-radius: 12px;
-  --link-decoration-color: var(--smc-interactive-accent);
+  --link-decoration-color: var(--ob-interactive-accent);
 }
 
 .markdown-rendered a {
@@ -1481,13 +1481,13 @@ input[type='checkbox'].task-list-item-checkbox {
 }
 
 input[type='checkbox'].task-list-item-checkbox:hover {
-  border-color: var(--smc-interactive-accent);
+  border-color: var(--ob-interactive-accent);
   box-shadow: 0 0 0 3px rgb(196 90 109 / 15%);
 }
 
 input[type='checkbox'].task-list-item-checkbox:checked {
-  border-color: var(--smc-interactive-accent);
-  background-color: var(--smc-interactive-accent);
+  border-color: var(--ob-interactive-accent);
+  background-color: var(--ob-interactive-accent);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
   background-size: 68%;
   background-position: center;
@@ -1527,8 +1527,8 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   border: 1px solid rgb(var(--callout-color), 0.25);
   background-color: rgb(var(--callout-color), 0.1);
   box-shadow: 0 2px 10px rgb(0 0 0 / 6%);
-  backdrop-filter: var(--smc-glass-chip-filter);
-  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
+  backdrop-filter: var(--ob-glass-chip-filter);
+  -webkit-backdrop-filter: var(--ob-glass-chip-filter);
 }
 
 .callout-title {
@@ -1738,7 +1738,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   position: relative;
   margin-inline-start: 0;
   padding: 0.4em 1em;
-  border-left: 3px solid var(--smc-interactive-accent);
+  border-left: 3px solid var(--ob-interactive-accent);
   border-radius: 0 10px 10px 0;
   background-color: rgb(196 90 109 / 5%);
 }
@@ -1748,7 +1748,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
 }
 
 .markdown-source-view.mod-cm6 .HyperMD-quote {
-  border-left: 3px solid var(--smc-interactive-accent);
+  border-left: 3px solid var(--ob-interactive-accent);
   background-color: rgb(196 90 109 / 5%);
 }
 
@@ -1777,7 +1777,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   top: 50%;
   transform: translate(-50%, -50%);
   padding-inline: 10px;
-  color: var(--smc-interactive-accent);
+  color: var(--ob-interactive-accent);
   font-size: 0.85em;
   line-height: 1;
   text-shadow: 0 0 8px rgb(240 181 206 / 40%);
@@ -1808,17 +1808,17 @@ input[type='checkbox'].task-list-item-checkbox:checked {
 
 /* 笔记嵌入：玻璃卡片 + 强调色顶边 */
 .markdown-rendered .markdown-embed {
-  background-color: var(--smc-workspace-leaf-bg);
+  background-color: var(--ob-workspace-leaf-bg);
   border: 1px solid var(--background-modifier-border);
-  border-top: 3px solid var(--smc-interactive-accent);
+  border-top: 3px solid var(--ob-interactive-accent);
   border-radius: 10px;
   padding: 0.75em 1em;
-  backdrop-filter: var(--smc-glass-chip-filter);
-  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
+  backdrop-filter: var(--ob-glass-chip-filter);
+  -webkit-backdrop-filter: var(--ob-glass-chip-filter);
 }
 
 .markdown-rendered .markdown-embed-title {
-  font-family: var(--smc-markdown-editor-font);
+  font-family: var(--ob-markdown-editor-font);
   color: var(--h2-color);
 }
 
@@ -1837,7 +1837,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
 }
 
 .metadata-property-icon {
-  color: var(--smc-interactive-accent);
+  color: var(--ob-interactive-accent);
 }
 
 /* -----------------------------------------------------------------
@@ -1878,7 +1878,7 @@ body {
 
 /* --- 18.1 Tooltip --- */
 .tooltip {
-  background-color: var(--smc-modal-bg);
+  background-color: var(--ob-modal-bg);
   color: var(--text-normal);
   border-radius: 8px;
   box-shadow: 0 4px 16px rgb(0 0 0 / 18%);
@@ -1886,24 +1886,24 @@ body {
 }
 
 .tooltip.mod-primary {
-  background-color: var(--smc-interactive-accent);
+  background-color: var(--ob-interactive-accent);
   color: var(--text-on-accent);
   border-color: transparent;
 }
 
 /* --- 18.2 菜单（右键菜单/下拉菜单） --- */
 .menu {
-  background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
+  background-color: var(--ob-menu-bg);
+  background-color: color-mix(in srgb, var(--ob-menu-bg) var(--ob-glass-overlay-opacity), transparent);
 
   /* 去线：轮廓交给缘光环（原生 --border-width 描边会叠加成双线） */
   border: none;
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
-    var(--smc-glass-edge);
-  backdrop-filter: var(--smc-glass-filter);
-  -webkit-backdrop-filter: var(--smc-glass-filter);
+    var(--ob-glass-edge);
+  backdrop-filter: var(--ob-glass-filter);
+  -webkit-backdrop-filter: var(--ob-glass-filter);
 }
 
 .menu-item {
@@ -1916,24 +1916,24 @@ body {
 }
 
 .menu-item.selected .menu-item-icon {
-  color: var(--smc-interactive-accent);
+  color: var(--ob-interactive-accent);
 }
 
 /* --- 18.3 弹窗 Modal --- */
 .modal {
-  background-color: var(--smc-modal-bg);
-  background-color: color-mix(in srgb, var(--smc-modal-bg) var(--smc-glass-modal-opacity), transparent);
+  background-color: var(--ob-modal-bg);
+  background-color: color-mix(in srgb, var(--ob-modal-bg) var(--ob-glass-modal-opacity), transparent);
   border: none;
   border-radius: 16px;
   box-shadow:
     0 16px 48px rgb(0 0 0 / 18%),
-    var(--smc-glass-edge);
-  backdrop-filter: var(--smc-glass-filter);
-  -webkit-backdrop-filter: var(--smc-glass-filter);
+    var(--ob-glass-edge);
+  backdrop-filter: var(--ob-glass-filter);
+  -webkit-backdrop-filter: var(--ob-glass-filter);
 }
 
 .modal-title {
-  font-family: var(--smc-markdown-editor-font);
+  font-family: var(--ob-markdown-editor-font);
   font-weight: 700;
 }
 
@@ -1942,10 +1942,10 @@ body {
    大卡片又各自画实色。按递归透明链原则，玻璃底仍由 .modal 一层承担，
    原生实色层转透明；内容卡片不给实色，改走轻染（与表格 tint 同思路） */
 .modal.mod-settings {
-  background-color: var(--smc-modal-bg);
-  background-color: color-mix(in srgb, var(--smc-modal-bg) var(--smc-glass-modal-opacity), transparent);
+  background-color: var(--ob-modal-bg);
+  background-color: color-mix(in srgb, var(--ob-modal-bg) var(--ob-glass-modal-opacity), transparent);
 
-  --setting-items-background: color-mix(in srgb, var(--smc-bg-primary) 55%, transparent);
+  --setting-items-background: color-mix(in srgb, var(--ob-bg-primary) 55%, transparent);
 }
 
 .modal.mod-settings .modal-content,
@@ -1962,15 +1962,15 @@ body {
 
 /* 建议列表 */
 .suggestion-container {
-  background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
+  background-color: var(--ob-menu-bg);
+  background-color: color-mix(in srgb, var(--ob-menu-bg) var(--ob-glass-overlay-opacity), transparent);
   border: none;
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
-    var(--smc-glass-edge);
-  backdrop-filter: var(--smc-glass-filter);
-  -webkit-backdrop-filter: var(--smc-glass-filter);
+    var(--ob-glass-edge);
+  backdrop-filter: var(--ob-glass-filter);
+  -webkit-backdrop-filter: var(--ob-glass-filter);
 }
 
 /* 命令面板：底色 / 模糊 / 描边交给原生 --prompt-* 变量（成熟主题的通行做法，
@@ -1979,13 +1979,13 @@ body {
   border-radius: var(--modal-radius);
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
-    var(--smc-glass-edge);
+    var(--ob-glass-edge);
 }
 
 .suggestion-item.is-selected {
   --hotkey-background: color-mix(in srgb, var(--text-on-accent) 16%, transparent);
 
-  background-color: var(--smc-interactive-accent);
+  background-color: var(--ob-interactive-accent);
   color: var(--text-on-accent);
 }
 
@@ -2002,16 +2002,16 @@ body {
 
 /* --- 18.5 通知 Notice --- */
 .notice {
-  background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-notice-opacity), transparent);
+  background-color: var(--ob-menu-bg);
+  background-color: color-mix(in srgb, var(--ob-menu-bg) var(--ob-glass-notice-opacity), transparent);
   color: var(--text-normal);
-  border: 1px solid var(--smc-interactive-accent);
+  border: 1px solid var(--ob-interactive-accent);
   border-radius: 10px;
   box-shadow:
     0 8px 24px rgb(0 0 0 / 16%),
-    var(--smc-glass-edge);
-  backdrop-filter: var(--smc-glass-soft-filter);
-  -webkit-backdrop-filter: var(--smc-glass-soft-filter);
+    var(--ob-glass-edge);
+  backdrop-filter: var(--ob-glass-soft-filter);
+  -webkit-backdrop-filter: var(--ob-glass-soft-filter);
 }
 
 /* --- 18.6 按钮：主按钮走马卡龙渐变 --- */
@@ -2021,7 +2021,7 @@ button {
 
 button.mod-cta {
   background-image: linear-gradient(135deg,
-    var(--smc-interactive-accent) 0%,
+    var(--ob-interactive-accent) 0%,
     var(--interactive-accent-hover) 100%
   );
   color: var(--text-on-accent);
@@ -2029,8 +2029,8 @@ button.mod-cta {
 
   /* 玻璃斜面（Velocity 手法）：oklab 相对色从强调色推导高光，双上斜内阴影 */
   box-shadow:
-    inset 3px 3px 1.5px -1.25px oklab(from var(--smc-interactive-accent) calc(l + 0.075) a b / 75%),
-    inset -3px -3px 1.5px -1.25px oklab(from var(--smc-interactive-accent) calc(l + 0.075) a b / 50%);
+    inset 3px 3px 1.5px -1.25px oklab(from var(--ob-interactive-accent) calc(l + 0.075) a b / 75%),
+    inset -3px -3px 1.5px -1.25px oklab(from var(--ob-interactive-accent) calc(l + 0.075) a b / 50%);
 }
 
 button.mod-cta:hover {
@@ -2059,7 +2059,7 @@ input[type='password']:focus,
 input[type='tel']:focus,
 input[type='url']:focus,
 textarea:focus {
-  border-color: var(--smc-interactive-accent);
+  border-color: var(--ob-interactive-accent);
   box-shadow: 0 0 0 2px rgb(196 90 109 / 20%);
 }
 
@@ -2087,14 +2087,14 @@ textarea:focus {
 }
 
 .checkbox-container.is-enabled {
-  background-color: var(--smc-interactive-accent);
+  background-color: var(--ob-interactive-accent);
 }
 
 /* 滑条 / 进度条 / 设置页原生复选框 */
 input[type='range'],
 input[type='checkbox']:not(.task-list-item-checkbox),
 progress {
-  accent-color: var(--smc-interactive-accent);
+  accent-color: var(--ob-interactive-accent);
 }
 
 /* --- 18.8 滚动条圆角 --- */
@@ -2122,8 +2122,8 @@ progress {
   background-color: #F8BBD0;
   background-color: color-mix(in srgb, #F8BBD0 55%, transparent);
   color: #5E3A46;
-  backdrop-filter: var(--smc-glass-soft-filter);
-  -webkit-backdrop-filter: var(--smc-glass-soft-filter);
+  backdrop-filter: var(--ob-glass-soft-filter);
+  -webkit-backdrop-filter: var(--ob-glass-soft-filter);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 40%);
 }
 
@@ -2131,8 +2131,8 @@ progress {
   background-color: #AD7F96;
   background-color: color-mix(in srgb, #AD7F96 45%, transparent);
   color: #F5CFE1;
-  backdrop-filter: var(--smc-glass-soft-filter);
-  -webkit-backdrop-filter: var(--smc-glass-soft-filter);
+  backdrop-filter: var(--ob-glass-soft-filter);
+  -webkit-backdrop-filter: var(--ob-glass-soft-filter);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
 }
 
@@ -2143,35 +2143,35 @@ progress {
 /* --- 18.11 移动端底栏玻璃 --- */
 body.is-mobile .mobile-navbar,
 body.is-mobile .mobile-toolbar {
-  background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-notice-opacity), transparent);
-  backdrop-filter: var(--smc-glass-filter);
-  -webkit-backdrop-filter: var(--smc-glass-filter);
-  box-shadow: var(--smc-glass-edge-soft);
+  background-color: var(--ob-menu-bg);
+  background-color: color-mix(in srgb, var(--ob-menu-bg) var(--ob-glass-notice-opacity), transparent);
+  backdrop-filter: var(--ob-glass-filter);
+  -webkit-backdrop-filter: var(--ob-glass-filter);
+  box-shadow: var(--ob-glass-edge-soft);
 }
 
 /* --- 18.12 悬停预览卡片（Popover / 页面预览） --- */
 .hover-popover {
-  background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
+  background-color: var(--ob-menu-bg);
+  background-color: color-mix(in srgb, var(--ob-menu-bg) var(--ob-glass-overlay-opacity), transparent);
   border-radius: 12px;
   box-shadow:
     0 12px 40px rgb(0 0 0 / 14%),
-    var(--smc-glass-edge);
-  backdrop-filter: var(--smc-glass-filter);
-  -webkit-backdrop-filter: var(--smc-glass-filter);
-  animation: smc-fade-scale 0.16s var(--smc-ease-spring);
+    var(--ob-glass-edge);
+  backdrop-filter: var(--ob-glass-filter);
+  -webkit-backdrop-filter: var(--ob-glass-filter);
+  animation: ob-fade-scale 0.16s var(--ob-ease-spring);
 }
 
 /* -----------------------------------------------------------------
    19. Motion - 入场动效：弹性绽放
    ----------------------------------------------------------------- */
 body {
-  --smc-ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
-  --smc-anim-moderate: 0.18s;
+  --ob-ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
+  --ob-anim-moderate: 0.18s;
 }
 
-@keyframes smc-fade-scale {
+@keyframes ob-fade-scale {
   0% {
     opacity: 0;
     transform: scale(1.03);
@@ -2183,7 +2183,7 @@ body {
   }
 }
 
-@keyframes smc-fade {
+@keyframes ob-fade {
   from {
     opacity: 0;
   }
@@ -2191,18 +2191,18 @@ body {
 
 /* 弹窗：绽放式弹出 */
 .modal {
-  animation: smc-fade-scale var(--smc-anim-moderate) var(--smc-ease-spring);
+  animation: ob-fade-scale var(--ob-anim-moderate) var(--ob-ease-spring);
 }
 
 /* 菜单 / 命令面板建议列表：快速淡入缩放 */
 .menu,
 .suggestion-container {
-  animation: smc-fade-scale 0.16s var(--smc-ease-spring);
+  animation: ob-fade-scale 0.16s var(--ob-ease-spring);
 }
 
 /* 通知：滑入淡入 */
 .notice {
-  animation: smc-fade 0.25s ease-out;
+  animation: ob-fade 0.25s ease-out;
 }
 
 /* 无障碍：跟随系统减少动态效果偏好，停用全部主题动画 */
@@ -2223,20 +2223,20 @@ body {
    20. Signature Details - 标志性细节：一眼可辨的形状级定制
    ----------------------------------------------------------------- */
 .theme-light {
-  --smc-warn: #B96A52;
-  --smc-warn-fill: #D99A6C;
-  --smc-danger: #B03A4E;
-  --smc-info: #4A6FA5;
-  --smc-defer: #8A5F9E;
+  --ob-warn: #B96A52;
+  --ob-warn-fill: #D99A6C;
+  --ob-danger: #B03A4E;
+  --ob-info: #4A6FA5;
+  --ob-defer: #8A5F9E;
   --inline-title-color: #A23B4E;
 }
 
 .theme-dark {
-  --smc-warn: #DFAF9B;
-  --smc-warn-fill: #EFC3A8;
-  --smc-danger: #F49AA6;
-  --smc-info: #B6C1E0;
-  --smc-defer: #CCB0F0;
+  --ob-warn: #DFAF9B;
+  --ob-warn-fill: #EFC3A8;
+  --ob-danger: #F49AA6;
+  --ob-info: #B6C1E0;
+  --ob-defer: #CCB0F0;
   --inline-title-color: #EAD3A0;
 }
 
@@ -2298,16 +2298,16 @@ body {
 }
 
 .workspace-tab-header-inner-close-button:hover {
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 18%, transparent);
+  background-color: color-mix(in srgb, var(--ob-interactive-accent) 18%, transparent);
   color: var(--text-normal);
 }
 
 /* --- 20.3 任务方块变体：/ 进行中 · ! 重要 · ? 疑问 · > 延期 --- */
 .markdown-preview-view li.task-list-item[data-task='/'] input[type='checkbox'],
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='/'] input[type='checkbox'] {
-  border-color: var(--smc-warn);
+  border-color: var(--ob-warn);
   background-color: transparent;
-  background-image: linear-gradient(to top, var(--smc-warn-fill) 0 48%, transparent 52% 100%);
+  background-image: linear-gradient(to top, var(--ob-warn-fill) 0 48%, transparent 52% 100%);
 }
 
 .markdown-preview-view li.task-list-item[data-task='-'] input[type='checkbox'],
@@ -2324,8 +2324,8 @@ body {
 
 .markdown-preview-view li.task-list-item[data-task='!'] input[type='checkbox'],
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='!'] input[type='checkbox'] {
-  border-color: var(--smc-danger);
-  background-color: var(--smc-danger);
+  border-color: var(--ob-danger);
+  background-color: var(--ob-danger);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 3L9.4 14h5.2L12 3zm-.7 13.2a1.9 1.9 0 101.4 0z'/%3E%3C/svg%3E");
   background-size: 70%;
   background-position: center;
@@ -2334,36 +2334,36 @@ body {
 
 .markdown-preview-view li.task-list-item[data-task='?'] input[type='checkbox'],
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='?'] input[type='checkbox'] {
-  border-color: var(--smc-info);
+  border-color: var(--ob-info);
   border-style: dashed;
-  background-color: color-mix(in srgb, var(--smc-info) 15%, transparent);
+  background-color: color-mix(in srgb, var(--ob-info) 15%, transparent);
 }
 
 .markdown-preview-view li.task-list-item[data-task='>'] input[type='checkbox'],
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='>'] input[type='checkbox'] {
-  border-color: var(--smc-defer);
-  background-color: color-mix(in srgb, var(--smc-defer) 25%, transparent);
+  border-color: var(--ob-defer);
+  background-color: color-mix(in srgb, var(--ob-defer) 25%, transparent);
 }
 
 /* 变体任务文字配色 */
 .markdown-preview-view li.task-list-item[data-task='/'],
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='/'] {
-  color: var(--smc-warn);
+  color: var(--ob-warn);
 }
 
 .markdown-preview-view li.task-list-item[data-task='!'],
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='!'] {
-  color: var(--smc-danger);
+  color: var(--ob-danger);
 }
 
 .markdown-preview-view li.task-list-item[data-task='?'],
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='?'] {
-  color: var(--smc-info);
+  color: var(--ob-info);
 }
 
 .markdown-preview-view li.task-list-item[data-task='>'],
 .markdown-source-view.mod-cm6 .HyperMD-task-line[data-task='>'] {
-  color: var(--smc-defer);
+  color: var(--ob-defer);
 }
 
 /* --- 20.4 引用块：❝ 装饰符 --- */
@@ -2372,7 +2372,7 @@ body {
   position: absolute;
   top: -0.45em;
   left: 12px;
-  color: var(--smc-interactive-accent);
+  color: var(--ob-interactive-accent);
   font-size: 1.5em;
   line-height: 1;
   opacity: 0.55;
@@ -2399,18 +2399,18 @@ body {
 }
 
 body:not(.is-grabbing) .nav-file-title.is-active {
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 16%, transparent);
-  box-shadow: inset 2px 0 0 var(--smc-interactive-accent);
+  background-color: color-mix(in srgb, var(--ob-interactive-accent) 16%, transparent);
+  box-shadow: inset 2px 0 0 var(--ob-interactive-accent);
 }
 
 /* --- 20.7 表格：轻染玻璃（tint）——表格是"染在玻璃上的一层色"，
        而非又一块面板；壁纸透过率 ≈ (1-30%)×(1-面板实度)，肉眼可辨 --- */
 .markdown-rendered table {
-  background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 18%), transparent);
-  box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
-  backdrop-filter: var(--smc-glass-chip-filter);
-  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
+  background-color: var(--ob-bg-primary);
+  background-color: color-mix(in srgb, var(--ob-bg-primary) var(--ob-table-tint, 18%), transparent);
+  box-shadow: inset 0 1px 0 var(--ob-glass-rim-soft);
+  backdrop-filter: var(--ob-glass-chip-filter);
+  -webkit-backdrop-filter: var(--ob-glass-chip-filter);
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--table-border-color);
@@ -2426,12 +2426,12 @@ body:not(.is-grabbing) .nav-file-title.is-active {
 }
 
 .markdown-rendered tbody tr:hover td {
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 7%, transparent);
+  background-color: color-mix(in srgb, var(--ob-interactive-accent) 7%, transparent);
 }
 
 /* --- 20.8 Ribbon：弹性图标 --- */
 body:not(.is-mobile) .side-dock-ribbon-action {
-  transition: transform 0.18s var(--smc-ease-spring);
+  transition: transform 0.18s var(--ob-ease-spring);
 }
 
 body:not(.is-mobile) .side-dock-ribbon-action:hover {
@@ -2460,8 +2460,8 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 
 ::-webkit-scrollbar-thumb {
   background-image: linear-gradient(180deg,
-    color-mix(in srgb, var(--smc-interactive-accent) 90%, transparent),
-    color-mix(in srgb, var(--smc-interactive-accent) 45%, transparent)
+    color-mix(in srgb, var(--ob-interactive-accent) 90%, transparent),
+    color-mix(in srgb, var(--ob-interactive-accent) 45%, transparent)
   );
 }
 
@@ -2469,7 +2469,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 .empty-state-title::before {
   content: '❀';
   margin-inline-end: 0.4em;
-  color: var(--smc-interactive-accent);
+  color: var(--ob-interactive-accent);
 }
 
 /* --- 20.13 行内链接：点状下划线 --- */
@@ -2499,7 +2499,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 .dataview.dataview-inline-query-result {
   border-radius: 6px;
   padding: 0 4px;
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 12%, transparent);
+  background-color: color-mix(in srgb, var(--ob-interactive-accent) 12%, transparent);
 }
 
 /* dv 表格首列对齐微调 */
@@ -2511,7 +2511,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 .tasks-count {
   border-radius: 999px;
   padding: 1px 8px;
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 16%, transparent);
+  background-color: color-mix(in srgb, var(--ob-interactive-accent) 16%, transparent);
   color: var(--text-muted);
 }
 
@@ -2519,17 +2519,17 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 #calendar-container {
   background-color: transparent;
 
-  --color-accent: var(--smc-interactive-accent);
+  --color-accent: var(--ob-interactive-accent);
 }
 
 .calendar .day.today {
-  background-color: var(--smc-interactive-accent);
+  background-color: var(--ob-interactive-accent);
   color: var(--text-on-accent);
   border-radius: 999px;
 }
 
 .calendar .day.active {
-  box-shadow: inset 0 0 0 2px var(--smc-interactive-accent);
+  box-shadow: inset 0 0 0 2px var(--ob-interactive-accent);
   border-radius: 999px;
 }
 
@@ -2552,14 +2552,14 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 #editingToolbarModalBar,
 #editingToolbarPopoverBar,
 .editingToolbarPopoverBar {
-  background-color: var(--smc-menu-bg);
-  background-color: color-mix(in srgb, var(--smc-menu-bg) var(--smc-glass-overlay-opacity), transparent);
+  background-color: var(--ob-menu-bg);
+  background-color: color-mix(in srgb, var(--ob-menu-bg) var(--ob-glass-overlay-opacity), transparent);
   border-radius: 14px;
   box-shadow:
     0 8px 24px rgb(0 0 0 / 14%),
-    var(--smc-glass-edge);
-  backdrop-filter: var(--smc-glass-filter);
-  -webkit-backdrop-filter: var(--smc-glass-filter);
+    var(--ob-glass-edge);
+  backdrop-filter: var(--ob-glass-filter);
+  -webkit-backdrop-filter: var(--ob-glass-filter);
 }
 
 /* --- 21.5 Table Editor / 实时预览表格 widget：容器衔接玻璃表格 --- */
@@ -2570,28 +2570,28 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 
 .markdown-source-view.mod-cm6 .cm-table-widget table,
 .markdown-source-view.mod-cm6 .table-editor table {
-  background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-table-tint, 18%), transparent);
-  box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
+  background-color: var(--ob-bg-primary);
+  background-color: color-mix(in srgb, var(--ob-bg-primary) var(--ob-table-tint, 18%), transparent);
+  box-shadow: inset 0 1px 0 var(--ob-glass-rim-soft);
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--table-border-color);
   border-radius: 10px;
   overflow: hidden;
-  backdrop-filter: var(--smc-glass-chip-filter);
-  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
+  backdrop-filter: var(--ob-glass-chip-filter);
+  -webkit-backdrop-filter: var(--ob-glass-chip-filter);
 }
 
 /* --- 21.6 Real Claudian（AI 助手 zen 抽屉）：玻璃化 --- */
 body .claudian-zen-drawer {
-  background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) var(--smc-glass-primary-opacity, 88%), transparent);
+  background-color: var(--ob-bg-primary);
+  background-color: color-mix(in srgb, var(--ob-bg-primary) var(--ob-glass-primary-opacity, 88%), transparent);
   border-radius: 14px;
   box-shadow:
     0 8px 32px rgb(0 0 0 / 14%),
-    var(--smc-glass-edge);
-  backdrop-filter: var(--smc-glass-filter);
-  -webkit-backdrop-filter: var(--smc-glass-filter);
+    var(--ob-glass-edge);
+  backdrop-filter: var(--ob-glass-filter);
+  -webkit-backdrop-filter: var(--ob-glass-filter);
 }
 
 /* --- 21.7 Kanban：看板/列表/卡片玻璃（未安装亦可安全存在） --- */
@@ -2600,25 +2600,25 @@ body .claudian-zen-drawer {
 }
 
 .kanban-plugin__lane {
-  background-color: var(--smc-bg-secondary);
-  background-color: color-mix(in srgb, var(--smc-bg-secondary) var(--smc-glass-secondary-opacity, 80%), transparent);
+  background-color: var(--ob-bg-secondary);
+  background-color: color-mix(in srgb, var(--ob-bg-secondary) var(--ob-glass-secondary-opacity, 80%), transparent);
   border: 1px solid var(--background-modifier-border);
   border-radius: 12px;
-  backdrop-filter: var(--smc-glass-chip-filter);
-  -webkit-backdrop-filter: var(--smc-glass-chip-filter);
+  backdrop-filter: var(--ob-glass-chip-filter);
+  -webkit-backdrop-filter: var(--ob-glass-chip-filter);
 }
 
 .kanban-plugin__item {
   border-radius: 8px;
   border: 1px solid var(--background-modifier-border);
-  background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 88%, transparent);
-  box-shadow: inset 0 1px 0 var(--smc-glass-rim-soft);
+  background-color: var(--ob-bg-primary);
+  background-color: color-mix(in srgb, var(--ob-bg-primary) 88%, transparent);
+  box-shadow: inset 0 1px 0 var(--ob-glass-rim-soft);
 }
 
 .kanban-plugin__item.is-dragging {
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--smc-interactive-accent) 35%, transparent);
-  border-color: var(--smc-interactive-accent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--ob-interactive-accent) 35%, transparent);
+  border-color: var(--ob-interactive-accent);
 }
 
 .kanban-plugin__item-button-wrapper button {
@@ -2663,7 +2663,7 @@ body {
   --callout-border-width: 1px;
   --hr-thickness: 1px;
   --footnote-size: 0.85em;
-  --inline-title-font: var(--smc-markdown-editor-font);
+  --inline-title-font: var(--ob-markdown-editor-font);
   --inline-title-weight: 700;
   --h1-weight: 700;
   --h2-weight: 600;
@@ -2758,8 +2758,8 @@ body {
   /* 弹层与控件 */
   --modal-background: #342834;
   --modal-border-color: #27202A;
-  --prompt-background: color-mix(in srgb, #3E303D var(--smc-glass-overlay-opacity), transparent);
-  --prompt-backdrop-filter: var(--smc-glass-filter);
+  --prompt-background: color-mix(in srgb, #3E303D var(--ob-glass-overlay-opacity), transparent);
+  --prompt-backdrop-filter: var(--ob-glass-filter);
   --prompt-border-color: #27202A;
   --dropdown-background-hover: #473446;
   --checkbox-border-color-hover: #F0B5CE;
@@ -2873,8 +2873,8 @@ body {
   /* 弹层与控件 */
   --modal-background: #FFF;
   --modal-border-color: #E6BAC5;
-  --prompt-background: color-mix(in srgb, #FFF8FA var(--smc-glass-overlay-opacity), transparent);
-  --prompt-backdrop-filter: var(--smc-glass-filter);
+  --prompt-background: color-mix(in srgb, #FFF8FA var(--ob-glass-overlay-opacity), transparent);
+  --prompt-backdrop-filter: var(--ob-glass-filter);
   --prompt-border-color: #E6BAC5;
   --dropdown-background-hover: #FAD6E2;
   --checkbox-border-color-hover: #C45A6D;
@@ -2918,16 +2918,16 @@ body {
        注意：Ribbon 不加 backdrop-filter/overflow（包含块陷阱见维护文档）
    ----------------------------------------------------------------- */
 body {
-  --smc-card-radius: 14px;
-  --smc-card-gap: 8px;
-  --smc-card-drop-shadow: 0 12px 40px rgb(0 0 0 / 14%);
-  --smc-card-shadow: var(--smc-card-drop-shadow), var(--smc-glass-edge);
+  --ob-card-radius: 14px;
+  --ob-card-gap: 8px;
+  --ob-card-drop-shadow: 0 12px 40px rgb(0 0 0 / 14%);
+  --ob-card-shadow: var(--ob-card-drop-shadow), var(--ob-glass-edge);
 }
 
 /* 工作区外衬与卡间距：四边 + 卡间均留出透壁纸的缝隙（flex gap） */
 body:not(.is-mobile) .workspace {
-  padding: var(--smc-card-gap);
-  gap: var(--smc-card-gap);
+  padding: var(--ob-card-gap);
+  gap: var(--ob-card-gap);
 }
 
 /* 侧栏与编辑器主区：浮动卡片（圆角 + 悬浮投影 + 镜面缘）；mod-sidedock 为新类名 */
@@ -2936,19 +2936,19 @@ body:not(.is-mobile) .workspace-split.mod-sidedock.mod-secondary-split,
 body:not(.is-mobile) .workspace-split.mod-horizontal.mod-left-split,
 body:not(.is-mobile) .workspace-split.mod-horizontal.mod-right-split,
 body:not(.is-mobile) .workspace-split.mod-root {
-  border-radius: var(--smc-card-radius);
-  box-shadow: var(--smc-card-shadow);
+  border-radius: var(--ob-card-radius);
+  box-shadow: var(--ob-card-shadow);
 }
 
 /* 卡片顶部：标签区圆角衔接（防方角穿孔） */
 body:not(.is-mobile) .workspace-split.mod-root .workspace-tabs.mod-top,
 body:not(.is-mobile) .workspace-split.mod-horizontal .workspace-tab-header-container {
-  border-radius: var(--smc-card-radius) var(--smc-card-radius) 0 0;
+  border-radius: var(--ob-card-radius) var(--ob-card-radius) 0 0;
 }
 
 /* 卡片底部：编辑器内容区圆角收底 */
 body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf-content {
-  border-radius: 0 0 var(--smc-card-radius) var(--smc-card-radius);
+  border-radius: 0 0 var(--ob-card-radius) var(--ob-card-radius);
 }
 
 /* 分屏：窗格即小卡 —— 组间留缝（窗格为 flex-grow 布局，加 gap 不会溢出），
@@ -2956,11 +2956,11 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-leaf-content {
    按 leaf-content 生效，天然覆盖每一格），上下/左右分屏同构 */
 body:not(.is-mobile) .workspace-split.mod-root,
 body:not(.is-mobile) .workspace-split.mod-root .workspace-split {
-  gap: var(--smc-card-gap);
+  gap: var(--ob-card-gap);
 }
 
 body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container {
-  border-radius: var(--smc-card-radius) var(--smc-card-radius) 0 0;
+  border-radius: var(--ob-card-radius) var(--ob-card-radius) 0 0;
 }
 
 /* 分屏把手：原生描边（--divider-color 0.8px）是旧「贴边分隔线」设计，
@@ -2979,19 +2979,19 @@ body:not(.is-mobile) .workspace-split.mod-root .workspace-tab-header-container {
 /* 悬停反馈：原生把 3px 把手条涂成实色 divider-hover，读起来就是一条贴边
    粉线；改成半透明玫瑰光晕，保留「此处可拖」的暗示 */
 .workspace-leaf-resize-handle:hover {
-  background-color: color-mix(in srgb, var(--smc-interactive-accent) 35%, transparent);
+  background-color: color-mix(in srgb, var(--ob-interactive-accent) 35%, transparent);
 }
 
 /* 编辑区卡片不再自带镜面缘：窗格缝隙里会裸露出卡片的白顶缘/暗底缘，
    像横跨两格的杂线；外缘的缘光已由每格标签头（edge-soft）与内容区
    （完整 edge）承担，这里只留投影 */
 body:not(.is-mobile) .workspace-split.mod-root {
-  box-shadow: var(--smc-card-drop-shadow);
+  box-shadow: var(--ob-card-drop-shadow);
 }
 
 /* Ribbon：独立浮动轨（圆角 + 镜面缘，无模糊保按钮定位；间距由 flex gap 提供） */
 body:not(.is-mobile) .side-dock-ribbon {
-  border-radius: var(--smc-card-radius);
+  border-radius: var(--ob-card-radius);
 }
 
 body:not(.is-mobile) .workspace-ribbon.mod-primary::before {
@@ -3001,7 +3001,7 @@ body:not(.is-mobile) .workspace-ribbon.mod-primary::before {
 
 /* 顶部为 FAB 圆钮让位 */
 body:not(.is-mobile) .side-dock-ribbon.mod-primary {
-  margin-top: calc(38px + var(--smc-card-gap));
+  margin-top: calc(38px + var(--ob-card-gap));
 }
 
 /* 右侧辅助轨仅承载开栏按钮：透明轨收敛，按钮成浮动玻璃药丸（去孤立感） */
@@ -3030,22 +3030,22 @@ body:not(.is-mobile) .sidebar-toggle-button.mod-right .clickable-icon {
 
 /* 左开关：圆钮对齐工具栏中线和顶部标签栏中线 */
 body:not(.is-mobile) .sidebar-toggle-button.mod-left {
-  --smc-sidebar-toggle-size: 36px;
+  --ob-sidebar-toggle-size: 36px;
 
-  top: calc(var(--smc-card-gap) + (var(--header-height) - var(--smc-sidebar-toggle-size)) / 2);
-  left: calc(var(--smc-card-gap) + (var(--ribbon-width) - var(--smc-sidebar-toggle-size)) / 2);
-  width: var(--smc-sidebar-toggle-size);
-  height: var(--smc-sidebar-toggle-size);
+  top: calc(var(--ob-card-gap) + (var(--header-height) - var(--ob-sidebar-toggle-size)) / 2);
+  left: calc(var(--ob-card-gap) + (var(--ribbon-width) - var(--ob-sidebar-toggle-size)) / 2);
+  width: var(--ob-sidebar-toggle-size);
+  height: var(--ob-sidebar-toggle-size);
   padding: 0;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background-color: var(--smc-bg-primary);
-  background-color: color-mix(in srgb, var(--smc-bg-primary) 88%, transparent);
+  background-color: var(--ob-bg-primary);
+  background-color: color-mix(in srgb, var(--ob-bg-primary) 88%, transparent);
   box-shadow:
     0 4px 16px rgb(0 0 0 / 10%),
-    var(--smc-glass-edge-soft);
+    var(--ob-glass-edge-soft);
 }
 
 body:not(.is-mobile) .sidebar-toggle-button.mod-left .clickable-icon {
@@ -3061,8 +3061,8 @@ body:not(.is-mobile) .sidebar-toggle-button .clickable-icon {
    左 FAB 的 88% 玻璃底若被替换，悬停时会整个透明露出壁纸 */
 body:not(.is-mobile) .sidebar-toggle-button:hover {
   background-image: linear-gradient(
-    color-mix(in srgb, var(--smc-interactive-accent) 30%, transparent),
-    color-mix(in srgb, var(--smc-interactive-accent) 30%, transparent)
+    color-mix(in srgb, var(--ob-interactive-accent) 30%, transparent),
+    color-mix(in srgb, var(--ob-interactive-accent) 30%, transparent)
   );
 }
 
@@ -3076,7 +3076,7 @@ body:not(.is-mobile) .sidebar-toggle-button:hover .clickable-icon svg {
 
 /* 侧栏底部 vault 档案条圆角收底（防方角穿孔） */
 body:not(.is-mobile) .mod-sidedock .workspace-sidedock-vault-profile {
-  border-radius: 0 0 var(--smc-card-radius) var(--smc-card-radius);
+  border-radius: 0 0 var(--ob-card-radius) var(--ob-card-radius);
 }
 
 /* 档案条透明融入侧栏卡（Velocity 做法：条不另起一面），切换器做圆角药丸；
@@ -3095,16 +3095,16 @@ body:not(.is-mobile) .workspace-sidedock-vault-profile .workspace-drawer-vault-s
 .workspace-sidedock-vault-profile .clickable-icon,
 .workspace-tab-header-tab-list .clickable-icon {
   border-radius: 999px;
-  transition: transform 0.15s var(--smc-ease-spring), background-color 0.15s ease-out;
+  transition: transform 0.15s var(--ob-ease-spring), background-color 0.15s ease-out;
 
   /* 个性化：深玫瑰描边 + 加粗笔触（Velocity 以粗描边做图标辨识度） */
-  color: var(--smc-txt-accent);
+  color: var(--ob-txt-accent);
 
   --icon-stroke: 2px;
 }
 
 .workspace-sidedock-vault-profile .workspace-drawer-vault-switcher-icon {
-  color: var(--smc-txt-accent);
+  color: var(--ob-txt-accent);
 
   --icon-stroke: 2px;
 }
@@ -3112,13 +3112,13 @@ body:not(.is-mobile) .workspace-sidedock-vault-profile .workspace-drawer-vault-s
 .workspace-sidedock-vault-profile .clickable-icon > .svg-icon,
 .workspace-tab-header-tab-list .clickable-icon > .svg-icon,
 .sidebar-toggle-button:active .clickable-icon > .svg-icon {
-  transition: transform 0.15s var(--smc-ease-spring);
+  transition: transform 0.15s var(--ob-ease-spring);
 }
 
 :is(.workspace-sidedock-vault-profile, .workspace-tab-header-tab-list) .clickable-icon:hover {
   background-image: linear-gradient(
-    color-mix(in srgb, var(--smc-interactive-accent) 30%, transparent),
-    color-mix(in srgb, var(--smc-interactive-accent) 30%, transparent)
+    color-mix(in srgb, var(--ob-interactive-accent) 30%, transparent),
+    color-mix(in srgb, var(--ob-interactive-accent) 30%, transparent)
   );
   color: var(--text-normal);
 }
@@ -3145,7 +3145,7 @@ body:not(.is-mobile) .workspace-sidedock-vault-profile .workspace-drawer-vault-s
     center / contain no-repeat;
   mask-mode: luminance;
   -webkit-mask-mode: luminance;
-  transition: transform 0.15s var(--smc-ease-spring);
+  transition: transform 0.15s var(--ob-ease-spring);
 }
 
 .workspace-sidedock-vault-profile .clickable-icon:has(.lucide-settings):active::after {
@@ -3161,7 +3161,7 @@ body:not(.is-mobile) .workspace-sidedock-vault-profile .workspace-drawer-vault-s
 
 /* 状态栏：浮动玻璃药丸条 */
 body:not(.is-mobile) .status-bar {
-  margin: 0 var(--smc-card-gap) var(--smc-card-gap);
+  margin: 0 var(--ob-card-gap) var(--ob-card-gap);
   border-radius: 10px;
   border: 1px solid var(--status-bar-border-color);
 }
@@ -3171,8 +3171,8 @@ body:not(.is-mobile) .status-bar {
    ----------------------------------------------------------------- */
 
 /* @settings
-name: Sakura Macaron
-id: sakura-macaron
+name: Oboro
+id: oboro
 settings:
   -
     id: wallpaper
@@ -3197,7 +3197,7 @@ settings:
     type: heading
     level: 2
   -
-    id: smc-glass-primary-opacity
+    id: ob-glass-primary-opacity
     title: 编辑器面板实度
     description: '数值越低越透、壁纸越明显；74 为液态玻璃默认，100 为不透明。'
     type: variable-number-slider
@@ -3207,7 +3207,7 @@ settings:
     step: 2
     format: '%'
   -
-    id: smc-glass-secondary-opacity
+    id: ob-glass-secondary-opacity
     title: 侧栏面板实度
     description: '数值越低越透；68 为液态玻璃默认。'
     type: variable-number-slider
@@ -3217,7 +3217,7 @@ settings:
     step: 2
     format: '%'
   -
-    id: smc-glass-blur
+    id: ob-glass-blur
     title: 玻璃模糊强度
     description: Apple 液态玻璃质感的主要来源，配合壁纸使用效果最佳。
     type: variable-number-slider
@@ -3227,7 +3227,7 @@ settings:
     step: 2
     format: px
   -
-    id: smc-glass-brightness
+    id: ob-glass-brightness
     title: 玻璃亮度提升
     description: '模糊同时提亮背景（Velocity 手法），玻璃更透亮；100 为不提升，108 为默认。'
     type: variable-number-slider
@@ -3237,7 +3237,7 @@ settings:
     step: 2
     format: '%'
   -
-    id: smc-glass-saturation
+    id: ob-glass-saturation
     title: 玻璃饱和度提升
     description: '让玻璃后的壁纸颜色更浓郁（100 为不提升），170 为默认。'
     type: variable-number-slider
@@ -3247,7 +3247,7 @@ settings:
     step: 10
     format: '%'
   -
-    id: smc-solid
+    id: ob-solid
     title: 高可读性 · 不透明模式
     description: '一键退掉全部玻璃：面板实色、无模糊、无缘光/噪点，适合演示、截图或低性能设备。与系统「减少透明度」效果一致。'
     type: class-toggle
@@ -3258,7 +3258,7 @@ settings:
     type: heading
     level: 2
   -
-    id: smc-no-band
+    id: ob-no-band
     title: 关闭代码块顶部光带
     description: 隐藏代码块顶部的七段脉冲光带与半透明横条。
     type: class-toggle

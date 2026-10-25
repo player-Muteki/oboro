@@ -7,6 +7,14 @@
 
 ## [Unreleased]
 
+### Changed
+
+- **主题更名 Sakura Macaron → Oboro（朧樱）**：「朧」即玻璃的雾，一词收拢夜樱、
+  樱粉与磨玻璃。`manifest.json` 版本随更名升至 0.2.0；全部私有变量前缀
+  `--smc-*` → `--ob-*`，Style Settings 面板 id `smc-*` → `ob-*`
+  （**已保存的 Style Settings 自定义值会重置为默认**）；安装目录
+  `themes/Sakura Macaron/` → `themes/Oboro/`。
+
 ### Added
 
 - **浮动圆角玻璃卡（第 23 节）**：组件交界从扁平板拼接升级为 macOS 浮动卡语言——
@@ -147,5 +155,5 @@
 - 移动端适配：`(hover: none)` 下背景回退为随内容定位。
 - 工程：stylelint（官方 obsidianmd 规则）+ GitHub Actions lint / 自动发版工作流 + 一键安装脚本。
 
-[Unreleased]: https://github.com/player-Muteki/sakura-macaron-obsidian/compare/0.1.0...HEAD
-[0.1.0]: https://github.com/player-Muteki/sakura-macaron-obsidian/releases/tag/0.1.0
+[Unreleased]: https://github.com/player-Muteki/oboro-obsidian/compare/0.1.0...HEAD
+[0.1.0]: https://github.com/player-Muteki/oboro-obsidian/releases/tag/0.1.0
