@@ -1,112 +1,109 @@
 # Oboro · 朧樱
 
-**Oboro**（朧樱，"hazy sakura"）is a dual-mode Obsidian theme: a crisp **Sakura Pink** in light mode and a
+**Oboro** (朧樱, "hazy sakura") is a dual-mode Obsidian theme: a crisp **Sakura Pink** in light mode and a
 low-saturation **Night Sakura** in dark. Translucent frosted-glass panels float over your wallpaper with layered
 rim lighting, film grain, a pulsing light-band on code blocks, and macaron-language pills across the UI.
 
-- **Dual palettes** — symmetric light/dark tokens with tiered text contrast (normal / muted / faint / accent).
-- **Liquid glass engine** — blur + saturation + brightness filter chain, bevel edge lighting, sheen and grain layers,
-  fully tunable via Style Settings (opacity / blur / saturation / brightness sliders).
-- **Custom details** — glass callouts, dotted internal links, seven-segment pulse light-band on code blocks,
-  language pills, a hand-drawn five-petal sakura settings icon, press-to-squish micro-interactions.
-- **Accessibility & platforms** — solid "High readability" mode via Style Settings, `prefers-reduced-transparency`
-  support, graceful fallbacks on older webviews, reduced glass on mobile, macOS traffic-light clearance.
+🌐 [中文说明](README.zh-CN.md)
 
-**Install**: download `manifest.json` + `theme.css` into `.obsidian/themes/Oboro/`, then select Oboro in
-Settings → Appearance. Works best with the Style Settings plugin.
+A companion VS Code theme, [sakura-macaron](https://github.com/player-Muteki/sakura-macaron), shares the same
+palette — one theme, two editors.
 
-> 中文说明见下（Chinese documentation below）。
+## Preview
 
-Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护眼的**夜樱**。
-面板半透明 + 毛玻璃，可透出壁纸；代码块顶部有七段脉冲光带，语言名渲染成马卡龙胶囊。
+Sakura Pink (light):
 
-配套的 VS Code 主题 [sakura-macaron](https://github.com/player-Muteki/sakura-macaron) 同出一套配色——
-一个主题，两个编辑器。
+![Sakura Pink light mode](screenshots/screenshot-light.png)
 
-## 预览
+Night Sakura (dark):
 
-樱粉（浅色）：
+![Night Sakura dark mode](screenshots/screenshot-dark.png)
 
-![樱粉浅色模式](screenshots/screenshot-light.png)
+## Features
 
-夜樱（深色）：
+- **Dual palettes** — strictly symmetric Sakura Pink / Night Sakura tokens with tiered text contrast
+  (body / secondary / faint / accent).
+- **Component theming** — macaron task checkboxes and task-status text, glass callouts (8 type-color families),
+  left-ribbon blockquotes, sakura dividers ❀, three-level list bullets, rounded image cards, glass embed cards,
+  graph palette — plus the full set of UI controls: tooltips, menus, modals, command palette, inputs, toggles, sliders.
+- **Wallpaper engine** — translucent panels + liquid glass, wallpaper bleeding through the card gaps.
+  No wallpaper → a flat color (no built-in fallback image). Panel opacity / glass blur / saturation boost /
+  wallpapers are all live-tunable in Style Settings.
+- **Seven-segment pulse light-band** — a 30°-tilted segmented gradient bar with a white sweep every 3.5 s;
+  sakura-pink in light mode, drawn from the night-sakura syntax palette in dark.
+- **Language pills** — macaron-colored pills on the top-right of code blocks for nine languages
+  (C, C++, C#, x86, ASM, Verilog, Java, Python, Rust), all contrast ≥ 4.5:1.
+- **Gradient bold** — light "berry → gold", dark "rose → cream gold", with an inline-code rescue patch and a
+  print/PDF solid fallback.
+- **Six-level heading color ladder** + serif heading stack (Lora → Source Han Serif → Songti).
+- **Engineering** — official stylelint rules, GitHub Actions lint + tag-triggered release, solid-color fallbacks
+  on every `color-mix()` declaration (auto-fallback on older kernels), mobile background positioning adaptation.
 
-![夜樱深色模式](screenshots/screenshot-dark.png)
+## Palette quick reference
 
-## 特性
-
-- **双模式调色板**：樱粉 / 夜樱严格对称，各级文字对比度分档（正文 / 次要 / 极淡 / 强调）。
-- **组件个性化**：马卡龙任务框与任务状态文字、玻璃 callout（8 组类型色）、引用块左缎带、
-  樱花分隔线 ❀、三级列表圆点、图片圆角卡片、笔记嵌入玻璃卡、关系图色板，
-  以及 tooltip / 菜单 / 弹窗 / 命令面板 / 输入框 / 开关 / 滑条等全套界面控件。
-- **壁纸引擎**：面板半透明 + 液态玻璃，壁纸透出边缘花影；无壁纸时回退到内置渐变。
-  **面板实度 / 玻璃模糊 / 饱和度提升 / 壁纸**均可在 Style Settings 实时调节。
-- **代码块七段脉冲光带**：倾斜 30° 的分段渐变条，白光每 3.5s 扫过一次；浅色是樱花粉系，深色取自夜樱语法色板。
-- **语言胶囊**：C / C++ / C# / x86 / ASM / Verilog / Java / Python / Rust 九种语言的代码块右上角显示马卡龙配色胶囊，对比度全部 ≥ 4.5:1。
-- **渐变加粗**：浅色「莓红→金」、深色「樱玫→奶油金」，带行内代码拯救补丁与打印/PDF 实色回退。
-- **六级标题色阶梯** + 标题衬线字体（Lora → 思源宋体 → 宋体系列）。
-- **工程化**：官方 stylelint 规则校验、GitHub Actions lint + 标签自动发版、全部 `color-mix` 声明带实色兜底（旧内核自动回退）、移动端背景定位适配。
-
-## 色板速览
-
-| 角色 | 浅色·樱粉 | 深色·夜樱 |
+| Role | Light · Sakura Pink | Dark · Night Sakura |
 | --- | --- | --- |
-| 编辑器背景 | `#FFF0F5` | `#3C2D3C` |
-| 侧栏背景 | `#FDE4EC` | `#352737` |
-| 活动栏 | `#F8BBD0` | `#281F2B` |
-| 状态栏 | `#F8BBD0` | `#AD7F96` |
-| 正文 | `#5E3A46` | `#EBC4D7` |
-| 强调色 | `#C45A6D` | `#E3B1C9` |
-| 关键字 | `#BB2557` | `#F3A4B8` |
-| 字符串 | `#3C7016` | `#ACD39A` |
+| Editor background | `#FFF0F5` | `#3C2D3C` |
+| Sidebar background | `#FDE4EC` | `#352737` |
+| Activity bar | `#F8BBD0` | `#281F2B` |
+| Status bar | `#F8BBD0` | `#AD7F96` |
+| Body text | `#5E3A46` | `#EBC4D7` |
+| Accent | `#C45A6D` | `#E3B1C9` |
+| Keyword | `#BB2557` | `#F3A4B8` |
+| String | `#3C7016` | `#ACD39A` |
 
-## 安装
+## Installation
 
-### 手动安装
+### Manual
 
-1. 下载 [`theme.css`](./theme.css) 与 [`manifest.json`](./manifest.json)。
-2. 在库中创建 `.obsidian/themes/Oboro/` 目录，把两个文件放进去。
-3. 设置 → 外观 → 主题，选择 **Oboro**。
+1. Download [`theme.css`](./theme.css) and [`manifest.json`](./manifest.json).
+2. Create `.obsidian/themes/Oboro/` in your vault and drop both files in.
+3. Settings → Appearance → select **Oboro**.
 
-或直接 clone 本仓库后运行：
+Or clone this repository and run:
 
 ```bash
-./scripts/install.sh /path/to/vault .obsidian   # 第二参数按需换成 .obsidian_pc 等
+./scripts/install.sh /path/to/vault .obsidian   # adjust the second arg, e.g. .obsidian_pc
 ```
 
-### 社区市场
+### Community marketplace
 
-（提交审核中，上架后可直接从 设置 → 外观 → 主题 → 浏览 安装。）
+(Submission under review — once listed, install directly from Settings → Appearance → Themes → Browse.)
 
-## 壁纸配置
+## Wallpaper
 
-主题默认使用内置渐变。想要壁纸，两种方式任选：
+The theme ships with **no background image** — empty wallpaper fields mean a flat color. To add one:
 
-1. **Style Settings 插件**（推荐）：安装 [Style Settings](https://github.com/mgmeyers/obsidian-style-settings)，
-   在其设置面板的 *Oboro* 区填入浅色 / 深色壁纸的
-   `background-image` 值，例如 `url("https://example.com/bg.jpg")`。
-2. **脚本注入**：在任意可执行脚本的场景（如主页 dataviewjs）向 `body` 注入
-   `--dv-light-bg` / `--dv-dark-bg`，内联样式优先生效——两个通道可并存。
+1. **Style Settings plugin** (recommended): install [Style Settings](https://github.com/mgmeyers/obsidian-style-settings)
+   and fill the light / dark wallpaper fields in its *Oboro* section with a full `background-image` value,
+   e.g. `url("https://example.com/bg.jpg")`.
+2. **Script injection**: from any scripting surface (e.g. homepage dataviewjs), inject
+   `--dv-light-bg` / `--dv-dark-bg` on `body`; inline styles take precedence — both channels can coexist.
 
-另有「关闭代码块顶部光带」开关。
+There is also a toggle to disable the code-block light band.
 
-## 开发
+> Glass reads best over a wallpaper: with empty wallpaper fields the theme falls back to a flat color and the
+> frosted effect is much subtler.
+
+## Development
 
 ```bash
 npm install
-npm run lint          # stylelint-config-obsidianmd（社区审核同款规则）
+npm run lint          # stylelint-config-obsidianmd (the same rules as community review)
 ./scripts/install.sh /path/to/vault .obsidian_linux
 ```
 
-改完 `theme.css` 装回测试库，命令面板运行「重新加载」即可热更新。
-发版与上架流程见 [docs/maintenance.md](./docs/maintenance.md)。
+After editing `theme.css`, install it back to the test vault and run "Reload app without saving" from the
+command palette to hot-reload. Release and marketplace procedures: [docs/maintenance.md](./docs/maintenance.md).
 
-## 兼容性
+## Compatibility
 
-- 最低 Obsidian **1.13.0**。
-- 面板半透明使用 `color-mix()`（Chromium 111+）；不支持时自动回退实色，布局不受影响。
-- 移动端（iPad 等）`(hover: none)` 下背景回退为随内容定位，规避 WKWebView 的 fixed 背景问题。
-- 主题不加载任何远程资源；壁纸由用户自行配置。
+- Minimum Obsidian **1.13.0**.
+- Panel translucency uses `color-mix()` (Chromium 111+); unsupported kernels fall back to solid colors with
+  layout unaffected.
+- On mobile (`hover: none`) the background falls back to content-anchored positioning, avoiding the WKWebView
+  fixed-background issue.
+- The theme loads no remote resources; wallpapers are user-provided.
 
 ## License
 
