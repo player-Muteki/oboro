@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # 新仓库默认 token 只读：创建 release 需要 contents 写权限
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v7
 
