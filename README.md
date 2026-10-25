@@ -8,9 +8,13 @@ Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护�
 
 ## 预览
 
-| 樱粉（浅色） | 夜樱（深色） |
-| :---: | :---: |
-| ![樱粉浅色模式](screenshots/screenshot-light.png) | ![夜樱深色模式](screenshots/screenshot-dark.png) |
+樱粉（浅色）：
+
+![樱粉浅色模式](screenshots/screenshot-light.png)
+
+夜樱（深色）：
+
+![夜樱深色模式](screenshots/screenshot-dark.png)
 
 ## 特性
 
