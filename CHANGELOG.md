@@ -5,6 +5,16 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## [0.1.2] - 2026-10-25
+
+### Changed
+
+- **壁纸引擎语义修正：留空 = 无任何背景图**。移除内置兜底渐变（浅色樱花粉渐变、
+  深色夜樱三层渐变）——渐变本质也是客制化背景，不该替用户做主。
+  `--app-bg-image`（即 Style Settings 的浅色/深色壁纸两项）成为唯一图源，
+  留空时主题为纯色底，玻璃观感依赖壁纸。壁纸设置只支持完整
+  background-image 值（相对路径经实测无法由纯 CSS 解析，撤回）。
+
 ## [0.1.1] - 2026-10-25
 
 ### Fixed
