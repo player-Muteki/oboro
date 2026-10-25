@@ -621,13 +621,20 @@ body {
    - 噪点 = Fluent Acrylic / Isinglass 的 LDR 纹理层
    ----------------------------------------------------------------- */
 body {
-  --smc-glass-blur: 24px;
+  --smc-glass-blur: 18px;
   --smc-glass-saturation: 170%;
+  --smc-glass-brightness: 108%;
   --smc-glass-grain-opacity: 0.035;
-  --smc-glass-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation));
-  --smc-glass-soft-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation));
-  --smc-glass-mild-filter: blur(calc(var(--smc-glass-blur) * 0.6)) saturate(var(--smc-glass-saturation));
-  --smc-glass-chip-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation));
+
+  /* 亮度入链（Velocity 手法）：模糊同时提亮背景，玻璃透亮不靠加白底 */
+  --smc-glass-filter: blur(var(--smc-glass-blur)) saturate(var(--smc-glass-saturation))
+    brightness(var(--smc-glass-brightness));
+  --smc-glass-soft-filter: blur(calc(var(--smc-glass-blur) * 0.75)) saturate(var(--smc-glass-saturation))
+    brightness(var(--smc-glass-brightness));
+  --smc-glass-mild-filter: blur(calc(var(--smc-glass-blur) * 0.6)) saturate(var(--smc-glass-saturation))
+    brightness(var(--smc-glass-brightness));
+  --smc-glass-chip-filter: blur(calc(var(--smc-glass-blur) * 0.5)) saturate(var(--smc-glass-saturation))
+    brightness(var(--smc-glass-brightness));
   --smc-glass-overlay-opacity: 82%;
   --smc-glass-modal-opacity: 88%;
   --smc-glass-notice-opacity: 86%;
@@ -640,7 +647,8 @@ body {
 
   /* 完整镜面缘（面板/弹层级）：光自左上入射 —— 上/左为高光，下/右为阴影
      （Flutter FakeGlass 的 highlight + bevel 分层思路）；0.5px 环描边保证
-     任何壁纸上都有一道清晰的轮廓；两条模糊晕模拟 bezel 曲率 */
+     任何壁纸上都有一道清晰的轮廓；两条模糊晕模拟 bezel 曲率；末位宽顶洗光
+     （Velocity 的 interior glow）给面板内部进深 */
   --smc-glass-edge: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
     inset 0 1px 0 var(--smc-glass-rim),
     inset 1px 0 0 var(--smc-glass-rim-soft),
@@ -649,7 +657,8 @@ body {
     inset 0 3px 4px -2px var(--smc-glass-rim-blur),
     inset 0 -3px 6px -3px var(--smc-glass-shade-blur),
     inset 0 1px 1px -0.5px var(--smc-glass-fringe-warm),
-    inset 0 -1px 1px -0.5px var(--smc-glass-fringe-cool);
+    inset 0 -1px 1px -0.5px var(--smc-glass-fringe-cool),
+    inset 0 12px 24px -10px var(--smc-glass-wash);
 
   /* 控件级缘：只要轮廓 + 顶部高光，不含曲率晕与下缘阴影 */
   --smc-glass-edge-soft: inset 0 0 0 0.5px var(--smc-glass-rim-soft),
@@ -676,6 +685,7 @@ body {
   --smc-glass-shade-blur: rgb(0 0 0 / 12%);
   --smc-glass-fringe-warm: rgb(255 200 150 / 5%);
   --smc-glass-fringe-cool: rgb(150 200 255 / 5%);
+  --smc-glass-wash: rgb(255 255 255 / 3%);
   --smc-glass-sheen-opacity: 0.07;
 }
 
@@ -691,6 +701,7 @@ body {
   /* 浅色底已亮，色散不可辨则关；sheen 略强于深色以压过纸底 */
   --smc-glass-fringe-warm: transparent;
   --smc-glass-fringe-cool: transparent;
+  --smc-glass-wash: rgb(255 255 255 / 5%);
   --smc-glass-sheen-opacity: 0.1;
 }
 
@@ -2015,6 +2026,11 @@ button.mod-cta {
   );
   color: var(--text-on-accent);
   border: none;
+
+  /* 玻璃斜面（Velocity 手法）：oklab 相对色从强调色推导高光，双上斜内阴影 */
+  box-shadow:
+    inset 3px 3px 1.5px -1.25px oklab(from var(--smc-interactive-accent) calc(l + 0.075) a b / 75%),
+    inset -3px -3px 1.5px -1.25px oklab(from var(--smc-interactive-accent) calc(l + 0.075) a b / 50%);
 }
 
 button.mod-cta:hover {
@@ -2056,6 +2072,13 @@ textarea:focus {
 .theme-dark input[type='url']:focus,
 .theme-dark textarea:focus {
   box-shadow: 0 0 0 2px rgb(227 177 201 / 22%);
+}
+
+/* 搜索容器（文件管理筛选框/全局搜索）：容器 ::before 的 16px 放大镜占在
+   左缘 8-24px，上面的全局 input 8px 左内边距会让占位文字压进图标 ——
+   恢复图标清除位 */
+.search-input-container input {
+  padding-inline-start: 28px;
 }
 
 /* 开关 */
@@ -3198,11 +3221,21 @@ settings:
     title: 玻璃模糊强度
     description: Apple 液态玻璃质感的主要来源，配合壁纸使用效果最佳。
     type: variable-number-slider
-    default: 24
+    default: 18
     min: 4
     max: 40
     step: 2
     format: px
+  -
+    id: smc-glass-brightness
+    title: 玻璃亮度提升
+    description: '模糊同时提亮背景（Velocity 手法），玻璃更透亮；100 为不提升，108 为默认。'
+    type: variable-number-slider
+    default: 108
+    min: 100
+    max: 130
+    step: 2
+    format: '%'
   -
     id: smc-glass-saturation
     title: 玻璃饱和度提升
