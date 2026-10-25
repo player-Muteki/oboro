@@ -49,8 +49,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* 壁纸引擎：--app-bg-image 优先（壁纸），--app-background-gradient 兜底渐变 */
-  background-image: var(--app-bg-image, none), var(--app-background-gradient, none);
+  /* 壁纸引擎：--app-bg-image 即全部 —— 留空 = 无图片来源（纯色底），
+     不再内置兜底渐变（渐变本质也是一种客制化背景） */
+  background-image: var(--app-bg-image, none);
   background-color: var(--background-secondary);
   background-attachment: fixed;
   background-size: cover;
@@ -74,7 +75,6 @@ body {
    ----------------------------------------------------------------- */
 .theme-light {
   --app-bg-image: var(--dv-light-bg, none);
-  --app-background-gradient: linear-gradient(135deg, #FFF0F5 0%, #FDE4EC 50%, #F8BBD0 100%);
   --ob-bg-primary: #FFF0F5;
   --ob-bg-primary-alt: #FFF;
   --ob-bg-secondary: #FDE4EC;
@@ -132,10 +132,6 @@ body {
    ----------------------------------------------------------------- */
 .theme-dark {
   --app-bg-image: var(--dv-dark-bg, none);
-  --app-background-gradient:
-    radial-gradient(120% 90% at 18% 0%, rgb(240 181 206 / 10%) 0%, transparent 62%),
-    radial-gradient(100% 80% at 82% 100%, rgb(204 176 240 / 9%) 0%, transparent 60%),
-    linear-gradient(160deg, #3C2D3C 0%, #33252F 52%, #281F2B 100%);
   --ob-bg-primary: #3C2D3C;
   --ob-bg-primary-alt: #413240;
   --ob-bg-secondary: #352737;
@@ -688,6 +684,7 @@ body {
   --ob-glass-wash: rgb(255 255 255 / 3%);
   --ob-glass-sheen-opacity: 0.07;
 }
+
 
 .theme-light {
   --ob-glass-primary-opacity: 78%;
@@ -3199,13 +3196,13 @@ settings:
   -
     id: dv-light-bg
     title: 浅色壁纸
-    description: '填入完整 background-image 值，例如 url("https://example.com/bg.jpg") 或 app:// 资源路径。保持 none 则使用樱花粉渐变。'
+    description: '两种填法：完整 background-image 值（url("https://…") 等）；或仓库内相对路径（如 Image Source/light-bg.jpg）——相对路径需配解析脚本注入 --app-bg-image 才生效，纯 CSS 无法解析。留空则无壁纸。'
     type: variable-text
     default: none
   -
     id: dv-dark-bg
     title: 深色壁纸
-    description: '填入完整 background-image 值，例如 url("https://example.com/night.jpg") 或 app:// 资源路径。保持 none 则使用夜樱渐变。'
+    description: '两种填法：完整 background-image 值（url("https://…") 等）；或仓库内相对路径（如 Image Source/dark-bg.jpg）——相对路径需配解析脚本注入 --app-bg-image 才生效，纯 CSS 无法解析。留空则无壁纸。'
     type: variable-text
     default: none
   -
@@ -3283,6 +3280,6 @@ settings:
   -
     id: wallpaper-note
     title: ''
-    description: '壁纸填 url(...) 形式的 background-image 值；也可用脚本（如主页 dataviewjs）在 body 上注入 --dv-light-bg / --dv-dark-bg，内联样式优先于本面板。液态玻璃效果需要先配置壁纸才能完全展现；系统开启「减少透明度」时主题自动退回实色面板。'
+    description: '壁纸填 url(...) 形式的 background-image 值；也可用脚本（如主页 dataviewjs）在 body 上注入 --dv-light-bg / --dv-dark-bg，内联样式优先于本面板。液态玻璃的透亮观感依赖壁纸，留空时为纯色底、玻璃感会明显减弱；系统开启「减少透明度」时主题自动退回实色面板。'
     type: info-text
 */
