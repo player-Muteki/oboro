@@ -5,6 +5,21 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## [0.1.1] - 2026-10-25
+
+### Fixed
+
+- 官方主题库提审修复：README 增加英文说明（社区以英文为主）；
+  `manifest.json` 增补 `screenshot` 字段指向 `screenshots/screenshot-light.png`
+  ——审查扫描的提交早于截图入库，故报缺失。
+
+### Accepted warnings（审查警告的取舍说明）
+
+- `text-decoration` 部分特性警告：来自行内链接点状下划线（主题签名设计，保留）；
+- 重复 `background-color`：旧 webview 不支持 `color-mix` 时的实色回退写法，故意为之；
+- `:has()`：仅用于档案条两枚图标的子树定位，失效重算开销可忽略；
+- CSS 体积偏大：源码可读优先，发布资产未做压缩。
+
 ## [0.1.0] - 2026-10-25
 
 Oboro（朧樱）首个公开版本，自 Sakura Macaron 更名而来。

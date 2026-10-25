@@ -1,5 +1,22 @@
 # Oboro · 朧樱
 
+**Oboro**（朧樱，"hazy sakura"）is a dual-mode Obsidian theme: a crisp **Sakura Pink** in light mode and a
+low-saturation **Night Sakura** in dark. Translucent frosted-glass panels float over your wallpaper with layered
+rim lighting, film grain, a pulsing light-band on code blocks, and macaron-language pills across the UI.
+
+- **Dual palettes** — symmetric light/dark tokens with tiered text contrast (normal / muted / faint / accent).
+- **Liquid glass engine** — blur + saturation + brightness filter chain, bevel edge lighting, sheen and grain layers,
+  fully tunable via Style Settings (opacity / blur / saturation / brightness sliders).
+- **Custom details** — glass callouts, dotted internal links, seven-segment pulse light-band on code blocks,
+  language pills, a hand-drawn five-petal sakura settings icon, press-to-squish micro-interactions.
+- **Accessibility & platforms** — solid "High readability" mode via Style Settings, `prefers-reduced-transparency`
+  support, graceful fallbacks on older webviews, reduced glass on mobile, macOS traffic-light clearance.
+
+**Install**: download `manifest.json` + `theme.css` into `.obsidian/themes/Oboro/`, then select Oboro in
+Settings → Appearance. Works best with the Style Settings plugin.
+
+> 中文说明见下（Chinese documentation below）。
+
 Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护眼的**夜樱**。
 面板半透明 + 毛玻璃，可透出壁纸；代码块顶部有七段脉冲光带，语言名渲染成马卡龙胶囊。
 
