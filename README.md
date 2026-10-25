@@ -6,6 +6,12 @@ Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护�
 配套的 VS Code 主题 [sakura-macaron](https://github.com/player-Muteki/sakura-macaron) 同出一套配色——
 一个主题，两个编辑器。
 
+## 预览
+
+| 樱粉（浅色） | 夜樱（深色） |
+| :---: | :---: |
+| ![樱粉浅色模式](screenshots/screenshot-light.png) | ![夜樱深色模式](screenshots/screenshot-dark.png) |
+
 ## 特性
 
 - **双模式调色板**：樱粉 / 夜樱严格对称，各级文字对比度分档（正文 / 次要 / 极淡 / 强调）。
