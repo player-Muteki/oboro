@@ -9,8 +9,9 @@
 
 ### Added
 
-- **宣传图**：`screenshots/promo.png`（2560×1440），浅色 / 深色同框，
-  README 中英文预览置顶。
+- **宣传图**：`screenshots/promo.png`（2560×1440），改为“设计标本板”构图：
+  浅色笔记大卡 + 浅色 Liquid Glass callout + 深色代码卡 + 六色色板 + 8 组
+  callout 色点，并带 `01` / `02` 标注；README 中英文预览置顶。
 
 ### Changed
 

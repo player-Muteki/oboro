@@ -11,7 +11,7 @@ palette — one theme, two editors.
 
 ## Preview
 
-![Oboro — light and dark](screenshots/promo.png)
+![Oboro — light and dark specimen board](screenshots/promo.png)
 
 Sakura Pink (light):
 
