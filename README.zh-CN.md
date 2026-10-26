@@ -10,6 +10,8 @@ Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护�
 
 ## 预览
 
+![Oboro 明暗双色宣传图](screenshots/promo.png)
+
 樱粉（浅色）：
 
 ![樱粉浅色模式](screenshots/screenshot-light.png)

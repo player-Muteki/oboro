@@ -7,6 +7,11 @@
 
 ## [Unreleased]
 
+### Added
+
+- **宣传图**：`screenshots/promo.png`（2560×1440），浅色 / 深色同框，
+  README 中英文预览置顶。
+
 ### Changed
 
 - **Callout 换成更透亮的 Liquid Glass**：参考 Apple clear-glass 的分层做法，去掉原来的
