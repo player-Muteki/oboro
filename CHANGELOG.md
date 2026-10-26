@@ -5,6 +5,24 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## [Unreleased]
+
+### Changed
+
+- **Callout 换成更透亮的 Liquid Glass**：参考 Apple clear-glass 的分层做法，去掉原来的
+  10% 类型色实底，改为 3% 中性白 + 顶部镜面高光弧 + 极薄液面纱 + 双色缘光；类型色
+  只留在图标、标题、右下折射晕与底部色缘。`--ob-callout-*` 在浅/深色块分别定义，
+  `ob-solid` 与 `prefers-reduced-transparency` 下退回实色。
+- **面板默认更透**：浅/深色默认面板实度统一为 60% / 54%，壁纸纹理能真正透过编辑器、
+  侧栏与标签条；原先浅色 78/72、深色 74/68 与 Style Settings 的 74/68 不一致。
+- **截图重拍**：`screenshots/screenshot-light.png` / `screenshot-dark.png` 使用新版
+  液态玻璃与樱枝壁纸重拍（2560×1490）。
+
+### Fixed
+
+- **无 Style Settings 时面板实度取错默认值**：浅色块曾写 78/72、深色块 74/68，
+  而 Style Settings 声明 74/68，导致装与不装插件看到两种默认。现统一为 60/54。
+
 ## [0.1.2] - 2026-10-25
 
 ### Changed

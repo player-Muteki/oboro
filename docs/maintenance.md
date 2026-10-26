@@ -78,6 +78,11 @@
   `text-decoration*` 的 partial-support warning 来自插件的 caniuse 数据，可忽略。
 - **callout 类型色**：浅色侧 8 组标题色全部压至对比度 ≥4.5:1（青 `#3E7168` 绿 `#4C7343`
   金 `#8A6E1F` 橙 `#A85F2D` 玫 `#A94658` 蓝 `#4A6FA5` 红 `#B03A4E` 紫 `#8A5F9E`）。
+- **Callout 玻璃配方**：纯 CSS 主题无法向 DOM 注入 SVG filter，因此不做真实折射；
+  用 `--ob-callout-*` 的顶部高光弧、右下类型色晕与底部色缘模拟玻璃厚度。类型色只允许
+  出现在缘光、图标和标题，不要把 `rgb(var(--callout-color), …)` 写回整块
+  `background-color`——青+粉会互相抵消成灰卡。`ob-solid` 与
+  `prefers-reduced-transparency` 已显式清掉 `background-image` / `box-shadow`。
 - **逗号三元组颜色变量**：`--callout-color` 的值是 `"r, g, b"` 逗号三元组，
   `rgb(var(--callout-color) / 25%)`（斜杠+逗号混合）在 Chromium **非法会被整条丢弃**；
   必须写 `rgb(var(--callout-color), 0.25)`（逗号记法，实测有效）。

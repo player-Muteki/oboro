@@ -672,8 +672,8 @@ body {
 }
 
 .theme-dark {
-  --ob-glass-primary-opacity: 74%;
-  --ob-glass-secondary-opacity: 68%;
+  --ob-glass-primary-opacity: 60%;
+  --ob-glass-secondary-opacity: 54%;
   --ob-glass-rim: rgb(255 255 255 / 14%);
   --ob-glass-rim-soft: rgb(255 255 255 / 7%);
   --ob-glass-shade: rgb(0 0 0 / 22%);
@@ -683,12 +683,22 @@ body {
   --ob-glass-fringe-cool: rgb(150 200 255 / 5%);
   --ob-glass-wash: rgb(255 255 255 / 3%);
   --ob-glass-sheen-opacity: 0.07;
+
+  /* Callout 玻璃：Apple clear-glass 配方 —— 薄纱 + 低模糊 + 镜面缘。
+     主题无法向 DOM 注入 SVG filter，做不了真正的折射；改用双色缘光与
+     顶部高光弧模拟玻璃厚度，类型色只留在图标、标题和右下角折射晕。 */
+  --ob-callout-rim: rgb(255 255 255 / 15%);
+  --ob-callout-rim-soft: rgb(255 255 255 / 8%);
+  --ob-callout-veil: rgb(255 255 255 / 4%);
+  --ob-callout-sheen: rgb(255 255 255 / 14%);
+  --ob-callout-highlight: rgb(255 255 255 / 26%);
+  --ob-callout-shade: rgb(0 0 0 / 30%);
 }
 
 
 .theme-light {
-  --ob-glass-primary-opacity: 78%;
-  --ob-glass-secondary-opacity: 72%;
+  --ob-glass-primary-opacity: 60%;
+  --ob-glass-secondary-opacity: 54%;
   --ob-glass-rim: rgb(255 255 255 / 60%);
   --ob-glass-rim-soft: rgb(255 255 255 / 32%);
   --ob-glass-shade: rgb(82 40 60 / 8%);
@@ -700,6 +710,14 @@ body {
   --ob-glass-fringe-cool: transparent;
   --ob-glass-wash: rgb(255 255 255 / 5%);
   --ob-glass-sheen-opacity: 0.1;
+
+  /* Callout 玻璃：浅色侧使用更亮的上缘高光与更轻的底部阴影 */
+  --ob-callout-rim: rgb(255 255 255 / 38%);
+  --ob-callout-rim-soft: rgb(255 255 255 / 50%);
+  --ob-callout-veil: rgb(255 255 255 / 8%);
+  --ob-callout-sheen: rgb(255 255 255 / 30%);
+  --ob-callout-highlight: rgb(255 255 255 / 72%);
+  --ob-callout-shade: rgb(90 50 70 / 14%);
 }
 
 /* 移动端玻璃减剂量：小屏 GPU 上叠层 backdrop-filter 昂贵，
@@ -935,6 +953,13 @@ html body.is-mobile {
     -webkit-backdrop-filter: none;
   }
 
+  .markdown-rendered .callout {
+    background-color: rgb(var(--callout-color), 0.1);
+    background-image: none;
+    border-color: rgb(var(--callout-color), 0.25);
+    box-shadow: none;
+  }
+
   .theme-light .status-bar,
   .theme-dark .status-bar {
     backdrop-filter: none;
@@ -997,6 +1022,13 @@ body.ob-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markdo
   -webkit-backdrop-filter: none;
 }
 
+body.ob-solid .markdown-rendered .callout {
+  background-color: rgb(var(--callout-color), 0.1);
+  background-image: none;
+  border-color: rgb(var(--callout-color), 0.25);
+  box-shadow: none;
+}
+
 /* 不支持 backdrop-filter 的老 webview：玻璃变量直接退实色（框架兜底） */
 @supports not (backdrop-filter: blur(1px)) {
   body {
@@ -1004,6 +1036,13 @@ body.ob-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markdo
     --ob-glass-soft-filter: none;
     --ob-glass-mild-filter: none;
     --ob-glass-chip-filter: none;
+  }
+
+  .callout {
+    background-color: rgb(var(--callout-color), 0.1);
+    background-image: none;
+    border-color: rgb(var(--callout-color), 0.25);
+    box-shadow: none;
   }
 }
 
@@ -1526,12 +1565,43 @@ input[type='checkbox'].task-list-item-checkbox:checked {
    13. Callouts - 玻璃标注：按类型映射八色基板
    ----------------------------------------------------------------- */
 .callout {
-  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
 
   /* --callout-color 是逗号三元组，必须用逗号记法（斜杠+逗号混合在 Chromium 非法） */
-  border: 1px solid rgb(var(--callout-color), 0.25);
-  background-color: rgb(var(--callout-color), 0.1);
-  box-shadow: 0 2px 10px rgb(0 0 0 / 6%);
+  border: 1px solid var(--ob-callout-rim, rgb(255 255 255 / 30%));
+  background-color: rgb(255 255 255 / 3%);
+  background-image:
+    /* 左上镜面高光弧 */
+    radial-gradient(
+      125% 85% at 14% -12%,
+      var(--ob-callout-sheen, rgb(255 255 255 / 24%)) 0%,
+      rgb(255 255 255 / 5%) 34%,
+      transparent 62%
+    ),
+    /* 右下类型色折射晕：保留八色识别，又不把整块玻璃染灰 */
+    radial-gradient(
+      95% 110% at 100% 110%,
+      rgb(var(--callout-color), 0.10),
+      transparent 62%
+    ),
+    /* 极薄液面纱 */
+    linear-gradient(
+      150deg,
+      var(--ob-callout-veil, rgb(255 255 255 / 6%)),
+      transparent 68%
+    );
+  box-shadow:
+    inset 0 0 0 0.5px var(--ob-callout-rim-soft, rgb(255 255 255 / 40%)),
+    inset 0 1.5px 1px -0.5px var(--ob-callout-highlight, rgb(255 255 255 / 62%)),
+    inset 0 -1px 0 rgb(var(--callout-color), 0.2),
+    inset 0 -3px 6px -4px rgb(var(--callout-color), 0.18),
+    inset 0 -1.5px 1px -0.5px var(--ob-callout-shade, rgb(90 50 70 / 16%)),
+    inset 0 12px 24px -18px var(--ob-callout-highlight, rgb(255 255 255 / 30%)),
+    0 14px 36px -26px rgb(0 0 0 / 32%);
+
+  /* 低模糊是折射感的替代：糊得太狠，背后的花纹就死了 */
   backdrop-filter: var(--ob-glass-chip-filter);
   -webkit-backdrop-filter: var(--ob-glass-chip-filter);
 }
@@ -3213,9 +3283,9 @@ settings:
   -
     id: ob-glass-primary-opacity
     title: 编辑器面板实度
-    description: '数值越低越透、壁纸越明显；74 为液态玻璃默认，100 为不透明。'
+    description: '数值越低越透、壁纸越明显；60 为液态玻璃默认，100 为不透明。'
     type: variable-number-slider
-    default: 74
+    default: 60
     min: 50
     max: 100
     step: 2
@@ -3223,9 +3293,9 @@ settings:
   -
     id: ob-glass-secondary-opacity
     title: 侧栏面板实度
-    description: '数值越低越透；68 为液态玻璃默认。'
+    description: '数值越低越透；54 为液态玻璃默认。'
     type: variable-number-slider
-    default: 68
+    default: 54
     min: 50
     max: 100
     step: 2
