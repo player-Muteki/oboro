@@ -7,6 +7,8 @@
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-10-26
+
 ### Added
 
 - **宣传图**：`screenshots/promo.png`（2560×1440），改为“设计标本板”构图：
@@ -206,5 +208,8 @@ Oboro（朧樱）首个公开版本，自 Sakura Macaron 更名而来。
 - 移动端适配：`(hover: none)` 下背景回退为随内容定位。
 - 工程：stylelint（官方 obsidianmd 规则）+ GitHub Actions lint / 自动发版工作流 + 一键安装脚本。
 
-[Unreleased]: https://github.com/player-Muteki/oboro/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/player-Muteki/oboro/compare/0.1.3...HEAD
+[0.1.3]: https://github.com/player-Muteki/oboro/releases/tag/0.1.3
+[0.1.2]: https://github.com/player-Muteki/oboro/releases/tag/0.1.2
+[0.1.1]: https://github.com/player-Muteki/oboro/releases/tag/0.1.1
 [0.1.0]: https://github.com/player-Muteki/oboro/releases/tag/0.1.0
