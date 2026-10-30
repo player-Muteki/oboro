@@ -3064,6 +3064,36 @@ body:not(.is-mobile) .workspace-split.mod-root {
   box-shadow: var(--ob-card-drop-shadow);
 }
 
+/* 移动端主编辑区：手机/平板统一启用浮动圆角，不复用桌面侧栏与 Ribbon 布局。
+   root 与嵌套 split 只承载间距，保持透明以免方形底色从窗格圆角露出。 */
+body.is-mobile .workspace-split.mod-root,
+body.is-mobile .workspace-split.mod-root .workspace-split {
+  background-color: transparent;
+  gap: var(--ob-card-gap);
+}
+
+/* 外衬叠加原生顶部/左右安全区；底部安全区继续由原生内容区处理。 */
+body.is-mobile .workspace > .workspace-split.mod-root {
+  padding:
+    calc(var(--safe-area-inset-top, 0px) + var(--ob-card-gap))
+    calc(var(--safe-area-inset-right, 0px) + var(--ob-card-gap))
+    var(--ob-card-gap)
+    calc(var(--safe-area-inset-left, 0px) + var(--ob-card-gap));
+}
+
+/* 手机原生 root 顶部不叠加安全区，保留其与平板不同的导航栏布局。 */
+body.is-mobile.is-phone .workspace > .workspace-split.mod-root {
+  padding-top: var(--ob-card-gap);
+}
+
+/* 在已有裁切的窗格层统一收口标签栏与内容背景；兼容 root 直接挂 leaf。
+   即使原生 leaf-content 的圆角为 0，也不会露角；不裁切 workspace/侧栏抽屉。 */
+body.is-mobile .workspace-split.mod-root .workspace-tabs,
+body.is-mobile .workspace-split.mod-root > .workspace-leaf {
+  border-radius: var(--ob-card-radius);
+  overflow: hidden;
+}
+
 /* Ribbon：独立浮动轨（圆角 + 镜面缘，无模糊保按钮定位；间距由 flex gap 提供） */
 body:not(.is-mobile) .side-dock-ribbon {
   border-radius: var(--ob-card-radius);
