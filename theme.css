@@ -980,9 +980,9 @@ html body.is-mobile {
   }
 
   .markdown-rendered .callout {
-    background-color: rgb(var(--callout-color), 0.1);
+    background-color: color-mix(in srgb, var(--callout-color) 10%, transparent);
     background-image: none;
-    border-color: rgb(var(--callout-color), 0.25);
+    border-color: color-mix(in srgb, var(--callout-color) 25%, transparent);
     box-shadow: none;
   }
 
@@ -1049,9 +1049,9 @@ body.ob-solid :is(.markdown-rendered table, .markdown-rendered .callout, .markdo
 }
 
 body.ob-solid .markdown-rendered .callout {
-  background-color: rgb(var(--callout-color), 0.1);
+  background-color: color-mix(in srgb, var(--callout-color) 10%, transparent);
   background-image: none;
-  border-color: rgb(var(--callout-color), 0.25);
+  border-color: color-mix(in srgb, var(--callout-color) 25%, transparent);
   box-shadow: none;
 }
 
@@ -1065,9 +1065,9 @@ body.ob-solid .markdown-rendered .callout {
   }
 
   .callout {
-    background-color: rgb(var(--callout-color), 0.1);
+    background-color: color-mix(in srgb, var(--callout-color) 10%, transparent);
     background-image: none;
-    border-color: rgb(var(--callout-color), 0.25);
+    border-color: color-mix(in srgb, var(--callout-color) 25%, transparent);
     box-shadow: none;
   }
 }
@@ -1590,12 +1590,21 @@ input[type='checkbox'].task-list-item-checkbox:checked {
 /* -----------------------------------------------------------------
    13. Callouts - 玻璃标注：按类型映射八色基板
    ----------------------------------------------------------------- */
+
+/* 阅读视图没有 CM widget 的绘制边界；只隔离 callout 的原生外包装，
+   避免浅色模式的 mix-blend-mode 与整张笔记背景混合成白雾。
+   不用 contain: paint：保留外侧阴影，也不改变折叠/嵌套块的布局。 */
+/* stylelint-disable-next-line selector-pseudo-class-disallowed-list -- 原生块包装上的直接子级匹配，不扫描整个文档 */
+.markdown-reading-view .el-div:has(> .callout) {
+  isolation: isolate;
+}
+
 .callout {
   position: relative;
   overflow: hidden;
   border-radius: 14px;
 
-  /* --callout-color 是逗号三元组，必须用逗号记法（斜杠+逗号混合在 Chromium 非法） */
+  /* 与原生标题、图标和表格共享完整 CSS 类型色；透明度只在使用处混合。 */
   border: 1px solid var(--ob-callout-rim, rgb(255 255 255 / 30%));
   background-color: rgb(255 255 255 / 3%);
   background-image:
@@ -1609,7 +1618,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
     /* 右下类型色折射晕：保留八色识别，又不把整块玻璃染灰 */
     radial-gradient(
       95% 110% at 100% 110%,
-      rgb(var(--callout-color), 0.10),
+      color-mix(in srgb, var(--callout-color) 10%, transparent),
       transparent 62%
     ),
     /* 极薄液面纱 */
@@ -1621,8 +1630,8 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   box-shadow:
     inset 0 0 0 0.5px var(--ob-callout-rim-soft, rgb(255 255 255 / 40%)),
     inset 0 1.5px 1px -0.5px var(--ob-callout-highlight, rgb(255 255 255 / 62%)),
-    inset 0 -1px 0 rgb(var(--callout-color), 0.2),
-    inset 0 -3px 6px -4px rgb(var(--callout-color), 0.18),
+    inset 0 -1px 0 color-mix(in srgb, var(--callout-color) 20%, transparent),
+    inset 0 -3px 6px -4px color-mix(in srgb, var(--callout-color) 18%, transparent),
     inset 0 -1.5px 1px -0.5px var(--ob-callout-shade, rgb(90 50 70 / 16%)),
     inset 0 12px 24px -18px var(--ob-callout-highlight, rgb(255 255 255 / 30%)),
     0 14px 36px -26px rgb(0 0 0 / 32%);
@@ -1646,7 +1655,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='summary'],
   .callout[data-callout='tldr']
 ) {
-  --callout-color: 74, 111, 165;
+  --callout-color: rgb(74 111 165);
 }
 
 .theme-dark :is(
@@ -1657,7 +1666,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='summary'],
   .callout[data-callout='tldr']
 ) {
-  --callout-color: 182, 193, 224;
+  --callout-color: rgb(182 193 224);
 }
 
 /* 青：tip / hint / important */
@@ -1666,7 +1675,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='hint'],
   .callout[data-callout='important']
 ) {
-  --callout-color: 62, 113, 104;
+  --callout-color: rgb(62 113 104);
 }
 
 .theme-dark :is(
@@ -1674,7 +1683,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='hint'],
   .callout[data-callout='important']
 ) {
-  --callout-color: 180, 208, 203;
+  --callout-color: rgb(180 208 203);
 }
 
 /* 绿：success / check / done */
@@ -1683,7 +1692,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='check'],
   .callout[data-callout='done']
 ) {
-  --callout-color: 76, 115, 67;
+  --callout-color: rgb(76 115 67);
 }
 
 .theme-dark :is(
@@ -1691,7 +1700,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='check'],
   .callout[data-callout='done']
 ) {
-  --callout-color: 188, 205, 183;
+  --callout-color: rgb(188 205 183);
 }
 
 /* 金：question / help / faq */
@@ -1700,7 +1709,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='help'],
   .callout[data-callout='faq']
 ) {
-  --callout-color: 138, 110, 31;
+  --callout-color: rgb(138 110 31);
 }
 
 .theme-dark :is(
@@ -1708,7 +1717,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='help'],
   .callout[data-callout='faq']
 ) {
-  --callout-color: 220, 197, 169;
+  --callout-color: rgb(220 197 169);
 }
 
 /* 橙：warning / caution / attention */
@@ -1717,7 +1726,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='caution'],
   .callout[data-callout='attention']
 ) {
-  --callout-color: 168, 95, 45;
+  --callout-color: rgb(168 95 45);
 }
 
 .theme-dark :is(
@@ -1725,7 +1734,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='caution'],
   .callout[data-callout='attention']
 ) {
-  --callout-color: 226, 180, 141;
+  --callout-color: rgb(226 180 141);
 }
 
 /* 红：failure / danger / error / bug */
@@ -1737,7 +1746,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='error'],
   .callout[data-callout='bug']
 ) {
-  --callout-color: 176, 58, 78;
+  --callout-color: rgb(176 58 78);
 }
 
 .theme-dark :is(
@@ -1748,16 +1757,16 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='error'],
   .callout[data-callout='bug']
 ) {
-  --callout-color: 244, 154, 166;
+  --callout-color: rgb(244 154 166);
 }
 
 /* 紫：example */
 .theme-light .callout[data-callout='example'] {
-  --callout-color: 138, 95, 158;
+  --callout-color: rgb(138 95 158);
 }
 
 .theme-dark .callout[data-callout='example'] {
-  --callout-color: 204, 176, 240;
+  --callout-color: rgb(204 176 240);
 }
 
 /* 玫：quote / cite */
@@ -1765,55 +1774,55 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='quote'],
   .callout[data-callout='cite']
 ) {
-  --callout-color: 169, 70, 88;
+  --callout-color: rgb(169 70 88);
 }
 
 .theme-dark :is(
   .callout[data-callout='quote'],
   .callout[data-callout='cite']
 ) {
-  --callout-color: 227, 177, 201;
+  --callout-color: rgb(227 177 201);
 }
 
 /* 常用别名：seealso → 蓝，add/added → 绿，change/updated → 橙，remove/deleted → 红 */
 .theme-light :is(
   .callout[data-callout='seealso']
 ) {
-  --callout-color: 74, 111, 165;
+  --callout-color: rgb(74 111 165);
 }
 
 .theme-dark :is(
   .callout[data-callout='seealso']
 ) {
-  --callout-color: 182, 193, 224;
+  --callout-color: rgb(182 193 224);
 }
 
 .theme-light :is(
   .callout[data-callout='add'],
   .callout[data-callout='added']
 ) {
-  --callout-color: 76, 115, 67;
+  --callout-color: rgb(76 115 67);
 }
 
 .theme-dark :is(
   .callout[data-callout='add'],
   .callout[data-callout='added']
 ) {
-  --callout-color: 188, 205, 183;
+  --callout-color: rgb(188 205 183);
 }
 
 .theme-light :is(
   .callout[data-callout='change'],
   .callout[data-callout='updated']
 ) {
-  --callout-color: 168, 95, 45;
+  --callout-color: rgb(168 95 45);
 }
 
 .theme-dark :is(
   .callout[data-callout='change'],
   .callout[data-callout='updated']
 ) {
-  --callout-color: 226, 180, 141;
+  --callout-color: rgb(226 180 141);
 }
 
 .theme-light :is(
@@ -1821,7 +1830,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='removed'],
   .callout[data-callout='deleted']
 ) {
-  --callout-color: 176, 58, 78;
+  --callout-color: rgb(176 58 78);
 }
 
 .theme-dark :is(
@@ -1829,7 +1838,7 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   .callout[data-callout='removed'],
   .callout[data-callout='deleted']
 ) {
-  --callout-color: 244, 154, 166;
+  --callout-color: rgb(244 154 166);
 }
 
 /* -----------------------------------------------------------------
@@ -2483,8 +2492,7 @@ body {
 .callout-icon {
   padding: 3px;
   border-radius: 999px;
-  /* stylelint-disable-next-line color-function-notation */
-  background-color: rgb(var(--callout-color), 0.18);
+  background-color: color-mix(in srgb, var(--callout-color) 18%, transparent);
 }
 
 /* --- 20.6 文件导航：药丸条目 + 活动竖标 --- */
@@ -2519,11 +2527,30 @@ body:not(.is-grabbing) .nav-file-title.is-active {
   overflow: hidden;
 }
 
+/* 阅读表格直接透出已有玻璃面板/外层 callout，避免再次滤镜采样把浅色底冲白。
+   保留表格轻染与缘光，模糊由外层玻璃提供；不改实时预览的 widget 配方。 */
+.markdown-reading-view .markdown-rendered table {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .markdown-rendered thead th {
   background: linear-gradient(180deg,
     color-mix(in srgb, var(--table-header-background) 48%, transparent) 0%,
     color-mix(in srgb, var(--table-header-background) 12%, transparent) 100%
   );
+}
+
+/* 阅读表头只保留 th 的轻染渐变，移除原生 tr 的不透明叠底。
+   不动实时预览的表格 widget，也不清除正文斑马纹/单元格背景。 */
+.markdown-reading-view .markdown-rendered thead tr {
+  background-color: transparent;
+}
+
+@media (hover: hover) {
+  .markdown-reading-view .markdown-rendered thead tr:hover {
+    background-color: color-mix(in srgb, var(--ob-interactive-accent) 7%, transparent);
+  }
 }
 
 .markdown-rendered tbody tr:hover td {
@@ -2666,7 +2693,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 /* --- 21.5 Table Editor / 实时预览表格 widget：容器衔接玻璃表格 --- */
 .table-editor,
 .markdown-source-view.mod-cm6 .cm-table-widget {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .markdown-source-view.mod-cm6 .cm-table-widget table,
@@ -2681,6 +2708,64 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   overflow: hidden;
   backdrop-filter: var(--ob-glass-chip-filter);
   -webkit-backdrop-filter: var(--ob-glass-chip-filter);
+}
+
+/* 笔记表格 · 樱色薄晶：书签式表头 + 细色网格。
+   只装饰普通 Markdown 表格；不注入内容、不覆盖 Dataview/Bases 数据表，
+   不改玻璃背景/滤镜、列对齐与原生选择/拖拽伪元素。 */
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+  table:not(.dataview, .table-view-table) {
+  --ob-table-accent: var(--callout-color, var(--ob-interactive-accent));
+  --ob-table-rule: color-mix(in srgb, var(--ob-table-accent) 20%, transparent);
+  --table-border-color: var(--ob-table-rule);
+  --table-header-border-color: var(--ob-table-rule);
+
+  border-color: color-mix(in srgb, var(--ob-table-accent) 32%, transparent);
+  border-radius: 12px;
+}
+
+/* 表头不叠实色底，横向微染贯穿整行；首格的细色缘像夹在页边的书签。 */
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+  table:not(.dataview, .table-view-table) > thead > tr {
+  background-color: transparent;
+  background-image: linear-gradient(105deg,
+    color-mix(in srgb, var(--ob-table-accent) 12%, transparent),
+    color-mix(in srgb, var(--ob-table-accent) 3%, transparent) 72%,
+    transparent
+  );
+}
+
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+  table:not(.dataview, .table-view-table) > thead > tr > th {
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--ob-table-accent) 28%, transparent);
+}
+
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+  table:not(.dataview, .table-view-table) > thead > tr > th:first-child {
+  box-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--ob-table-accent) 65%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--ob-table-accent) 28%, transparent);
+}
+
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+  table:not(.dataview, .table-view-table):dir(rtl) > thead > tr > th:first-child {
+  box-shadow:
+    inset -3px 0 0 color-mix(in srgb, var(--ob-table-accent) 65%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--ob-table-accent) 28%, transparent);
+}
+
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6 .cm-callout) .markdown-rendered
+  table:not(.dataview, .table-view-table) > :is(thead, tbody, tfoot) > tr > :is(th, td),
+.markdown-source-view.mod-cm6 .cm-table-widget
+  table:not(.dataview, .table-view-table) > :is(thead, tbody, tfoot) > tr > :is(th, td) > .table-cell-wrapper {
+  padding: 0.5em clamp(0.6em, 1.2vw, 0.85em);
+}
+
+@media (hover: hover) {
+  :is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+    table:not(.dataview, .table-view-table) > thead > tr:hover {
+    background-color: color-mix(in srgb, var(--ob-table-accent) 7%, transparent);
+  }
 }
 
 /* --- 21.6 Real Claudian（AI 助手 zen 抽屉）：玻璃化 --- */
