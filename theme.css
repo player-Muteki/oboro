@@ -566,6 +566,13 @@ body {
   border: 1px solid var(--background-modifier-border);
 }
 
+/* MathJax 不继承渐变粗体的透明填充，避免移动端公式字形和分数线丢失。
+   仅重置公式根节点；currentcolor 保留公式内部显式设置的颜色。 */
+.markdown-rendered :is(strong, b) .MathJax,
+.cm-strong .MathJax {
+  -webkit-text-fill-color: currentcolor;
+}
+
 /* 打印/PDF 导出：渐变加粗退回实色，避免透明文字导出空白 */
 @media print {
   .theme-light .markdown-rendered :is(strong, b),

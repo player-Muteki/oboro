@@ -79,6 +79,15 @@
   Ribbon 伪元素背景和底边线的显式控制；本主题只按自身布局清除绘制，不移植它们的布局规则。
 - **对比度**：浅色 h6 `#E59EB1`（1.93:1）与次要文字 `#8E6F7A`（4.05:1）低于 WCAG AA 的 4.5:1，
   为「樱花木彩墨」标题阶梯与次要信息的既有设计取向；如需收紧，压深 h6 至 `#C96A83` 一档即可。
+- **渐变粗体与公式**：`-webkit-text-fill-color: transparent` 会向后代继承；MathJax 的
+  公式根节点 `.MathJax` 必须恢复 `currentcolor`，避免移动端 WebKit 依赖祖先的
+  `background-clip: text` 来绘制公式。只重置公式，不取消整段粗体渐变，也不要给公式
+  所有后代强制指定颜色，否则会破坏 `\textcolor` 等显式着色。与粗体内联代码补丁一起维护。
+  回归时在手机/平板浅深色阅读模式检查 `**文字 $x^2+y_1$ 文字**`、`**$x^2$**`、
+  `**分式 $\frac{1}{2}+\sqrt{x}+\text{speed}$**` 以及
+  `**着色 $\textcolor{red}{x}+y$**`；公式须完整可见且显式着色保留，普通粗体仍是渐变。
+  同时检查非粗体公式、粗体内行内代码、`<b>` 和实时预览不回归。桌面浏览器的移动端
+  尺寸测试不等于 iPad/iPhone WebKit 真机验证，后者需另行目检。
 - **stylelint 豁免**（见 `.stylelintrc.json`）：`selector-class-pattern` 置空（Obsidian 内部类如
   `HyperMD-codeblock-begin` 非 kebab-case）；`declaration-block-no-duplicate-custom-properties`
   置空（「先实色、再 color-mix」双写兜底模式必需）；`property-no-vendor-prefix` 置空与
