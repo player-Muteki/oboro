@@ -833,6 +833,25 @@ html body.is-mobile {
   color: var(--text-normal);
 }
 
+/* 主编辑区普通顶部标签：底色画在 inner，沿用原生底部 padding 留白；
+   外层保留完整点击区域，不调整标签栏高度，也不改侧栏、抽屉或堆叠标签。 */
+.mod-root .workspace-tabs:not(.mod-stacked) > .workspace-tab-header-container {
+  --tab-inner-background-active: color-mix(in srgb, var(--ob-interactive-accent) 14%, transparent);
+}
+
+.mod-root .workspace-tabs:not(.mod-stacked) > .workspace-tab-header-container .workspace-tab-header {
+  background-color: transparent;
+}
+
+.mod-root .workspace-tabs:not(.mod-stacked) > .workspace-tab-header-container .workspace-tab-header-inner {
+  border-radius: 10px;
+  transition: background-color 0.15s ease-out;
+}
+
+.mod-root .workspace-tabs:not(.mod-stacked) > .workspace-tab-header-container .workspace-tab-header:hover:not(.is-active) .workspace-tab-header-inner {
+  background-color: var(--tab-inner-background-hover);
+}
+
 /* 视图标题栏（文件名条）：透明，玻璃由 leaf-content 承担 */
 .workspace-leaf-content .view-header {
   background-color: transparent;

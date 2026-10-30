@@ -79,6 +79,13 @@
   Ribbon 伪元素背景和底边线的显式控制；本主题只按自身布局清除绘制，不移植它们的布局规则。
 - **对比度**：浅色 h6 `#E59EB1`（1.93:1）与次要文字 `#8E6F7A`（4.05:1）低于 WCAG AA 的 4.5:1，
   为「樱花木彩墨」标题阶梯与次要信息的既有设计取向；如需收紧，压深 h6 至 `#C96A83` 一档即可。
+- **顶部标签留白**：主编辑区非堆叠的 `.workspace-tab-header-container` 内，活动/悬停
+  底色统一放在 `.workspace-tab-header-inner`，外层透明；利用原生外层的底部 padding
+  留出约 4px，不通过缩短整个 tab 的高度、加 margin 或抬高标签栏来制造间隙。
+  活动态沿用原生 `--tab-inner-background-active`，悬停/触摸反馈共用
+  `--tab-inner-background-hover`；外层点击区域及关闭按钮位置不能缩小或跳动。
+  回归检查桌面与平板浅深色、多标签切换、悬停、分屏；手机原生隐藏顶部标签栏的行为、
+  侧栏图标标签、移动端抽屉选项及 `.mod-stacked` 堆叠标签应保持原样。
 - **渐变粗体与公式**：`-webkit-text-fill-color: transparent` 会向后代继承；MathJax 的
   公式根节点 `.MathJax` 必须恢复 `currentcolor`，避免移动端 WebKit 依赖祖先的
   `background-clip: text` 来绘制公式。只重置公式，不取消整段粗体渐变，也不要给公式
