@@ -90,9 +90,11 @@ body {
   --ob-code-border-color: #D89CAB;
   --code-normal: var(--ob-txt-accent);
   --code-comment: #775874;
-  --ob-blockquote-bg: transparent;
-  --ob-blockquote-border-color: var(--ob-interactive-accent);
-  --ob-bold-color: #C45A6D;
+  --ob-blockquote-accent: #C45A6D;
+  --ob-blockquote-bg: color-mix(in srgb, var(--ob-blockquote-accent) 10%, transparent);
+  --ob-blockquote-border-color: var(--ob-blockquote-accent);
+  --ob-bold-color: #B11F52;
+  --ob-bold-gradient-end: #A02C80;
   --ob-tab-bg-active: var(--ob-bg-primary);
   --ob-tab-bg-active: color-mix(in srgb, var(--ob-bg-primary) 90%, transparent);
   --ob-tab-inactive-bg: var(--ob-bg-secondary);
@@ -147,9 +149,11 @@ body {
   --ob-code-border-color: #27202A;
   --code-normal: #E9C7D8;
   --code-comment: #BBA9BA;
-  --ob-blockquote-bg: transparent;
-  --ob-blockquote-border-color: var(--ob-interactive-accent);
-  --ob-bold-color: #E9C7D8;
+  --ob-blockquote-accent: #C8B4E0;
+  --ob-blockquote-bg: color-mix(in srgb, var(--ob-blockquote-accent) 12%, transparent);
+  --ob-blockquote-border-color: var(--ob-blockquote-accent);
+  --ob-bold-color: #E6B397;
+  --ob-bold-gradient-end: #EED0A6;
   --ob-tab-bg-active: var(--ob-bg-primary);
   --ob-tab-bg-active: color-mix(in srgb, var(--ob-bg-primary) 90%, transparent);
   --ob-tab-inactive-bg: var(--ob-bg-secondary);
@@ -263,8 +267,8 @@ body {
   --code-operator: #DFA0DC;
 
   /* 引用与标签 */
-  --blockquote-border-color: rgb(227 177 201 / 50%);
-  --blockquote-background-color: transparent;
+  --blockquote-border-color: var(--ob-blockquote-border-color);
+  --blockquote-background-color: var(--ob-blockquote-bg);
   --tag-color: #F3A4B8;
   --tag-color-hover: #F5CFE1;
   --tag-background: rgb(227 177 201 / 14%);
@@ -399,8 +403,8 @@ body {
   --code-operator: #9E3A6D;
 
   /* 引用与标签 */
-  --blockquote-border-color: rgb(196 90 109 / 45%);
-  --blockquote-background-color: transparent;
+  --blockquote-border-color: var(--ob-blockquote-border-color);
+  --blockquote-background-color: var(--ob-blockquote-bg);
   --tag-color: #C45A6D;
   --tag-color-hover: #9E4253;
   --tag-background: rgb(196 90 109 / 10%);
@@ -529,7 +533,8 @@ body {
 
 .theme-light .markdown-rendered :is(strong, b),
 .theme-light .cm-strong {
-  background: linear-gradient(135deg, #D6284F 0%, #E6A100 100%);
+  /* 莓红 → 紫红：去掉棕色端，保留浅底上的清晰度与樱色气质。 */
+  background: linear-gradient(135deg, var(--ob-bold-color) 0%, var(--ob-bold-gradient-end) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -547,7 +552,8 @@ body {
 
 .theme-dark .markdown-rendered :is(strong, b),
 .theme-dark .cm-strong {
-  background: linear-gradient(135deg, #F3A4B8 0%, #EAD3A0 100%);
+  /* 柔和桃金 → 香槟金：收敛粉色比例，保留轻微暖粉调。 */
+  background: linear-gradient(135deg, var(--ob-bold-color) 0%, var(--ob-bold-gradient-end) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -700,6 +706,7 @@ body {
   --ob-callout-sheen: rgb(255 255 255 / 14%);
   --ob-callout-highlight: rgb(255 255 255 / 26%);
   --ob-callout-shade: rgb(0 0 0 / 30%);
+  --ob-callout-tint: 9%;
 }
 
 
@@ -725,6 +732,7 @@ body {
   --ob-callout-sheen: rgb(255 255 255 / 30%);
   --ob-callout-highlight: rgb(255 255 255 / 72%);
   --ob-callout-shade: rgb(90 50 70 / 14%);
+  --ob-callout-tint: 7%;
 }
 
 /* 移动端玻璃减剂量：小屏 GPU 上叠层 backdrop-filter 昂贵，
@@ -913,6 +921,9 @@ html body.is-mobile {
     --ob-glass-edge-soft: none;
     --ob-glass-edge-leaf: none;
     --ob-glass-sheen-opacity: 0;
+    --ob-table-frame-shadow: none;
+    --ob-table-header-edge: none;
+    --ob-table-cell-etch: inset 0 0 0 transparent;
   }
 
   .theme-dark {
@@ -1023,6 +1034,9 @@ html body.ob-solid {
   --ob-glass-edge-leaf: none;
   --ob-glass-sheen-opacity: 0;
   --ob-glass-grain-opacity: 0;
+  --ob-table-frame-shadow: none;
+  --ob-table-header-edge: none;
+  --ob-table-cell-etch: inset 0 0 0 transparent;
   --ribbon-background: var(--ob-bg-secondary);
   --ribbon-background-collapsed: var(--ob-bg-secondary);
 }
@@ -1605,8 +1619,11 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   border-radius: 14px;
 
   /* 与原生标题、图标和表格共享完整 CSS 类型色；透明度只在使用处混合。 */
-  border: 1px solid var(--ob-callout-rim, rgb(255 255 255 / 30%));
-  background-color: rgb(255 255 255 / 3%);
+  border: 1px solid color-mix(in srgb,
+    var(--callout-color) 32%, var(--ob-callout-rim, rgb(255 255 255 / 30%)));
+
+  /* 薄类型色底只增强轮廓与背景的区分，仍让外层玻璃透过；不叠实色面板。 */
+  background-color: color-mix(in srgb, var(--callout-color) var(--ob-callout-tint, 7%), transparent);
   background-image:
     /* 左上镜面高光弧 */
     radial-gradient(
@@ -1848,22 +1865,14 @@ input[type='checkbox'].task-list-item-checkbox:checked {
   position: relative;
   margin-inline-start: 0;
   padding: 0.4em 1em;
-  border-left: 3px solid var(--ob-interactive-accent);
+  border-left: 3px solid var(--ob-blockquote-border-color);
   border-radius: 0 10px 10px 0;
-  background-color: rgb(196 90 109 / 5%);
-}
-
-.theme-dark .markdown-rendered blockquote {
-  background-color: rgb(227 177 201 / 7%);
+  background-color: var(--ob-blockquote-bg);
 }
 
 .markdown-source-view.mod-cm6 .HyperMD-quote {
-  border-left: 3px solid var(--ob-interactive-accent);
-  background-color: rgb(196 90 109 / 5%);
-}
-
-.theme-dark .markdown-source-view.mod-cm6 .HyperMD-quote {
-  background-color: rgb(227 177 201 / 7%);
+  border-left: 3px solid var(--ob-blockquote-border-color);
+  background-color: var(--ob-blockquote-bg);
 }
 
 /* 分隔线：渐隐线 + 樱花符号 */
@@ -2482,7 +2491,7 @@ body {
   position: absolute;
   top: -0.45em;
   left: 12px;
-  color: var(--ob-interactive-accent);
+  color: var(--ob-blockquote-accent);
   font-size: 1.5em;
   line-height: 1;
   opacity: 0.55;
@@ -2710,48 +2719,84 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   -webkit-backdrop-filter: var(--ob-glass-chip-filter);
 }
 
-/* 笔记表格 · 樱色薄晶：书签式表头 + 细色网格。
-   只装饰普通 Markdown 表格；不注入内容、不覆盖 Dataview/Bases 数据表，
-   不改玻璃背景/滤镜、列对齐与原生选择/拖拽伪元素。 */
+/* 笔记表格 · 悬浮晶签：双层包边 + 刻线网格 + 分列玻璃签头 + 首列色脊。
+   只装饰普通 Markdown 表格，不改变布局、边框宽度、列对齐或原生选择/拖拽。
+   不新增模糊层、不用单元格伪元素；字体继续尊重笔记与用户设置。 */
 :is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
   table:not(.dataview, .table-view-table) {
   --ob-table-accent: var(--callout-color, var(--ob-interactive-accent));
-  --ob-table-rule: color-mix(in srgb, var(--ob-table-accent) 20%, transparent);
+  --ob-table-rule: color-mix(in srgb, var(--ob-table-accent) 52%, transparent);
+  --ob-table-spine: color-mix(in srgb, var(--ob-table-accent) 38%, transparent);
+  --ob-table-spine-shadow: inset 2px 0 0 var(--ob-table-spine);
   --table-border-color: var(--ob-table-rule);
   --table-header-border-color: var(--ob-table-rule);
 
-  border-color: color-mix(in srgb, var(--ob-table-accent) 32%, transparent);
+  border-color: color-mix(in srgb, var(--ob-table-accent) 66%, transparent);
   border-radius: 12px;
+
+  /* 内侧亮缘与底部色缘形成包边厚度，不扩张外框或另铺不透明底。 */
+  box-shadow: var(--ob-table-frame-shadow,
+    inset 0 0 0 1px var(--ob-glass-rim-soft),
+    inset 0 -3px 0 color-mix(in srgb, var(--ob-table-accent) 18%, transparent));
 }
 
-/* 表头不叠实色底，横向微染贯穿整行；首格的细色缘像夹在页边的书签。 */
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+  table:not(.dataview, .table-view-table):dir(rtl) {
+  --ob-table-spine-shadow: inset -2px 0 0 var(--ob-table-spine);
+}
+
+/* 色层留在每枚 th 内，签头间由清晰色线分隔；不把整行再铺成色带。
+   多行表头仍自然增高，不移动文字，也不覆盖原生选择层。 */
 :is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
   table:not(.dataview, .table-view-table) > thead > tr {
-  background-color: transparent;
-  background-image: linear-gradient(105deg,
-    color-mix(in srgb, var(--ob-table-accent) 12%, transparent),
-    color-mix(in srgb, var(--ob-table-accent) 3%, transparent) 72%,
-    transparent
-  );
+  background: none;
 }
 
 :is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
   table:not(.dataview, .table-view-table) > thead > tr > th {
-  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--ob-table-accent) 28%, transparent);
+  border-color: var(--ob-table-rule);
+  border-bottom-color: color-mix(in srgb, var(--ob-table-accent) 72%, transparent);
+  border-radius: 10px 10px 6px 6px;
+  background-color: transparent;
+  background-image:
+    radial-gradient(ellipse at 18% 0%, var(--ob-glass-rim-soft), transparent 68%),
+    linear-gradient(155deg,
+      color-mix(in srgb, var(--ob-table-accent) 24%, transparent),
+      color-mix(in srgb, var(--ob-table-accent) 8%, transparent)
+    );
+  background-clip: padding-box;
+
+  /* 双道收边：细亮线贴着深色下沿，表头像嵌在玻璃框中的独立晶签。 */
+  box-shadow: var(--ob-table-header-edge,
+    inset 0 1px 0 var(--ob-glass-rim-soft),
+    inset 0 -1px 0 var(--ob-glass-rim-soft),
+    inset 0 -3px 0 color-mix(in srgb, var(--ob-table-accent) 32%, transparent));
+  letter-spacing: 0.02em;
+}
+
+/* 横纵格线全部保留；色线内侧用一像素亮缘模拟刻线，不改边框几何或选择层。 */
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+  table:not(.dataview, .table-view-table) > :is(tbody, tfoot) > tr > :is(th, td) {
+  border-color: var(--ob-table-rule);
+  box-shadow: var(--ob-table-cell-etch,
+    inset 0 1px 0 var(--ob-glass-rim-soft),
+    inset 1px 0 0 var(--ob-glass-rim-soft));
 }
 
 :is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
-  table:not(.dataview, .table-view-table) > thead > tr > th:first-child {
-  box-shadow:
-    inset 3px 0 0 color-mix(in srgb, var(--ob-table-accent) 65%, transparent),
-    inset 0 -1px 0 color-mix(in srgb, var(--ob-table-accent) 28%, transparent);
+  table:not(.dataview, .table-view-table) > :is(tbody, tfoot) > tr > :is(th, td):first-child {
+  background-image: linear-gradient(90deg,
+    color-mix(in srgb, var(--ob-table-accent) 5%, transparent), transparent);
+  box-shadow: var(--ob-table-spine-shadow),
+    var(--ob-table-cell-etch,
+      inset 0 1px 0 var(--ob-glass-rim-soft),
+      inset 1px 0 0 var(--ob-glass-rim-soft));
 }
 
 :is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
-  table:not(.dataview, .table-view-table):dir(rtl) > thead > tr > th:first-child {
-  box-shadow:
-    inset -3px 0 0 color-mix(in srgb, var(--ob-table-accent) 65%, transparent),
-    inset 0 -1px 0 color-mix(in srgb, var(--ob-table-accent) 28%, transparent);
+  table:not(.dataview, .table-view-table):dir(rtl) > :is(tbody, tfoot) > tr > :is(th, td):first-child {
+  background-image: linear-gradient(270deg,
+    color-mix(in srgb, var(--ob-table-accent) 5%, transparent), transparent);
 }
 
 :is(.markdown-reading-view, .markdown-source-view.mod-cm6 .cm-callout) .markdown-rendered
@@ -2761,10 +2806,16 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   padding: 0.5em clamp(0.6em, 1.2vw, 0.85em);
 }
 
+/* 只在真正可悬停的设备提亮签头，触屏不留下粘滞悬停；键盘聚焦同样可辨。 */
+:is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
+  table:not(.dataview, .table-view-table) > thead > tr > th:focus-within {
+  background-color: color-mix(in srgb, var(--ob-table-accent) 8%, transparent);
+}
+
 @media (hover: hover) {
   :is(.markdown-reading-view, .markdown-source-view.mod-cm6) .markdown-rendered
-    table:not(.dataview, .table-view-table) > thead > tr:hover {
-    background-color: color-mix(in srgb, var(--ob-table-accent) 7%, transparent);
+    table:not(.dataview, .table-view-table) > thead > tr > th:hover {
+    background-color: color-mix(in srgb, var(--ob-table-accent) 8%, transparent);
   }
 }
 
@@ -2914,7 +2965,7 @@ body {
   --icon-color-focused: #E3B1C9;
 
   /* 行内强调 */
-  --bold-color: #E9C7D8;
+  --bold-color: var(--ob-bold-color);
   --italic-color: #DCC8D3;
   --code-punctuation: #C9B3C6;
 
@@ -3029,7 +3080,7 @@ body {
   --icon-color-focused: #A23B4E;
 
   /* 行内强调 */
-  --bold-color: #C45A6D;
+  --bold-color: var(--ob-bold-color);
   --italic-color: #76515C;
   --code-punctuation: #755A72;
 
