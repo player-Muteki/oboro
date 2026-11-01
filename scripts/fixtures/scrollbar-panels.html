@@ -1,0 +1,91 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Oboro panel scrollbar regression</title>
+<!-- Minimal native layout rules, before the theme, matching Obsidian 1.14.x. -->
+<style id="native">
+* { box-sizing:border-box; }
+body { --size-4-1:4px;--size-4-2:8px;--size-4-3:12px;--size-4-4:16px;--size-4-6:24px;--size-4-8:32px;--size-4-12:48px;--size-4-16:64px;--scrollbar-width:12px;--scrollbar-height:12px;--safe-area-inset-bottom:0px;--keyboard-height:0px;--modal-header-height:44px; }
+body.styled-scrollbars ::-webkit-scrollbar {width:12px;height:12px;}
+.workspace-leaf-content {width:100%;height:100%;overflow:hidden;display:flex;flex-direction:column;}
+.view-content {height:100%;width:100%;overflow:auto;padding:12px;padding-bottom:max(var(--safe-area-inset-bottom),32px);}
+.nav-files-container {flex-grow:1;overflow:hidden auto;padding:4px 12px max(var(--safe-area-inset-bottom),24px);}
+.workspace-drawer-active-tab-content .nav-files-container {padding-top:12px;}
+.workspace-leaf-content:is([data-type="outline"],[data-type="all-properties"],[data-type="properties"]) .view-content {padding-top:4px;}
+.workspace-leaf-content[data-type="bookmarks"] .view-content {padding:4px 12px 32px;}
+.tag-container {padding:4px 12px max(var(--safe-area-inset-bottom),32px);overflow:auto;}
+.search-result-container {padding:12px 12px 16px;position:relative;flex:1 0 0;}
+.search-result-container.mod-global-search {overflow-y:auto;padding-bottom:max(var(--safe-area-inset-bottom),12px);}
+.workspace-leaf-content:is([data-type="backlink"],[data-type="outgoing-link"]) .view-content {padding:0;overflow:hidden;display:flex;flex-direction:column;}
+.backlink-pane,.outgoing-link-pane {overflow-y:auto;flex:1 0 0;padding:4px 12px max(var(--safe-area-inset-bottom),32px);}
+.outgoing-link-pane {padding-top:12px;}
+.modal.mod-settings .vertical-tab-header {display:flex;flex-direction:column;overflow:hidden;}
+.modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container,.setting-search-results) {overflow-y:auto;flex:1 1 0%;min-height:0;padding:0 12px 12px;}
+.modal.mod-settings .vertical-tab-header .setting-search-results {padding:12px;}
+.vertical-tab-content {height:100%;overflow-y:auto;padding:48px 48px max(var(--keyboard-height),64px);container-type:inline-size;}
+.setting-page.vertical-tab-content {padding-top:0;}
+.is-phone .modal.mod-settings .vertical-tab-header {overflow:auto;flex-grow:1;height:100%;}
+.is-phone .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container,.setting-search-results) {flex:0 0 auto;overflow:initial;}
+.is-phone .modal.mod-settings .vertical-tab-header .vertical-tab-header-group-container {padding:0;}
+.is-phone .modal.mod-settings .vertical-tab-header::after {content:"";display:block;flex:0 0 auto;height:max(var(--keyboard-height),100px);}
+.is-phone .modal.mod-settings .vertical-tab-content {padding-inline:16px;padding-bottom:max(100px,var(--safe-area-inset-bottom));}
+.is-phone .modal.mod-sidebar-layout :is(.vertical-tab-header,.vertical-tab-content) {padding-top:calc(var(--modal-header-height) + 16px);}
+</style>
+<link id="theme" rel="stylesheet" href="../../theme.css">
+<style id="fixture">
+body {margin:0;padding:20px;background:linear-gradient(25deg,#f5edf8,#d9e5ee);}
+body.theme-dark {background:linear-gradient(25deg,#293947,#573c56);}
+#panels {display:grid;grid-template-columns:repeat(4,260px);gap:16px;}
+.panel {height:var(--test-height,370.375px);min-width:0;overflow:hidden;position:relative;isolation:isolate;}
+/* Only constrain the fixture's outer surface, never its scrollports. */
+.panel.modal {display:block;max-width:none;min-width:0;padding:0;border:0;box-shadow:none;background:transparent;}
+.panel .header {height:37px;flex:0 0 37px;padding:8px;font-size:12px;}
+.panel > .vertical-tab-header {width:100%;min-width:0;max-width:none;height:100%;}
+.panel .entry {height:31px;min-height:31px;margin:0;padding:3px;white-space:nowrap;font-size:12px;}
+.panel .wide {width:700px;height:1px;}
+.panel .markdown-reading-view,.panel .cm-editor {height:100%;padding:0;}
+.panel .markdown-preview-view,.panel .cm-scroller {height:100%;overflow:auto;padding:32px;}
+.panel .cm-editor {display:block;}
+.panel .internal-scroll {height:70px;overflow:auto;}
+</style>
+<body class="theme-light styled-scrollbars">
+<div id="panels"></div>
+<script>
+const entries = n => Array.from({length:n},(_,i)=>`<div class="entry">${i+1}. 樱花面板 · 原生滚动</div>`).join('');
+const cases = [
+ ['files','file-explorer','nav-files-container',true],
+ ['outline','outline','view-content',true],
+ ['tags','tag','view-content tag-container',true],
+ ['bookmarks','bookmarks','view-content',true],
+ ['all-properties','all-properties','view-content',true],
+ ['properties','properties','view-content',true],
+ ['search','search','search-result-container mod-global-search',true],
+ ['backlinks','backlink','view-content',true,'backlink-pane'],
+ ['outgoing','outgoing-link','view-content',true,'outgoing-link-pane'],
+ ['settings','settings','vertical-tab-content',false],
+ ['setting-page','settings','setting-page vertical-tab-content',false],
+ ['settings-list','settings-list','vertical-tab-header-group-container',true],
+ ['settings-search','settings-list','setting-search-results',true],
+ ['short','file-explorer','nav-files-container',true],
+ ['docked-note','markdown','markdown-preview-view',false],
+ ['docked-editor','markdown','cm-scroller',false]
+];
+for (const [id,type,cls,header,inner] of cases) {
+ const section = document.createElement('section');section.className='panel';
+ const count=id==='short'?1:55;
+ let content=`<div id="${id}" data-scroll class="${inner||cls}">${entries(count)}</div>`;
+ if(inner) content=`<div class="${cls}">${content}</div>`;
+ if(type==='markdown') {
+  content=id==='docked-editor'?`<div class="markdown-source-view mod-cm6" style="height:100%"><div class="cm-editor">${content}</div></div>`:`<div class="markdown-reading-view">${content}</div>`;
+ }
+ if(type==='settings-list') {
+  section.classList.add('modal','mod-settings');
+  content=`<div class="vertical-tab-header" ${id==='settings-list'?'id="phone-settings" data-phone-scroll':''}><div class="header">Settings navigation</div>${content}</div>`;
+ } else if(type==='settings') section.classList.add('modal','mod-settings');
+ else content=`<div class="workspace-leaf-content" data-type="${type}">${header?'<div class="header">'+type+'</div>':''}${content}</div>`;
+ section.innerHTML=content;document.getElementById('panels').append(section);
+}
+// Autosizing/nested and unsupported/plugin scrollports must keep native sizing.
+const untouched=document.createElement('section');untouched.className='panel';
+untouched.innerHTML=`<div class="workspace-leaf-content" data-type="markdown"><div class="internal-query"><div id="embedded-query" class="search-result-container" style="overflow:auto;max-height:100px">${entries(8)}</div></div><pre id="code-scroll" class="internal-scroll">${'code\n'.repeat(12)}</pre><div id="embedded-backlinks" class="embedded-backlinks internal-scroll"><div class="backlink-pane">${entries(8)}</div></div></div>`;
+document.getElementById('panels').append(untouched);
+</script>
