@@ -1,0 +1,58 @@
+{
+  "theme": "Oboro",
+  "version": "0.3.2",
+  "capturedOn": "2026-11-01",
+  "obsidian": "1.14.5",
+  "styleSettings": "1.0.9",
+  "view": "reading",
+  "viewport": {
+    "width": 2048,
+    "height": 1232,
+    "deviceScaleFactor": 1.25
+  },
+  "appearance": {
+    "textFont": "Noto Serif CJK SC, Lora",
+    "monospaceFont": "Cascadia Code",
+    "fontSize": 23,
+    "accent": "#c08890"
+  },
+  "glass": {
+    "oboro@@ob-glass-primary-opacity": 80,
+    "oboro@@ob-glass-secondary-opacity": 72,
+    "oboro@@ob-solid": false,
+    "oboro@@ob-glass-brightness": 108,
+    "oboro@@ob-glass-saturation": 170
+  },
+  "rects": {
+    "table": {
+      "x": 425.20001220703125,
+      "y": 875.8250122070312,
+      "width": 661.3624877929688,
+      "height": 220.40000915527344
+    },
+    "callout": {
+      "x": 425.20001220703125,
+      "y": 564.1875,
+      "width": 700,
+      "height": 204
+    },
+    "quote": {
+      "x": 425.20001220703125,
+      "y": 1142.2249755859375,
+      "width": 700,
+      "height": 58.650001525878906
+    },
+    "code": {
+      "x": 1265.2000732421875,
+      "y": 357.1875,
+      "width": 700,
+      "height": 172.75
+    },
+    "scrollbar": {
+      "x": 368,
+      "y": 86.7125015258789,
+      "width": 832,
+      "height": 1137.2874755859375
+    }
+  }
+}

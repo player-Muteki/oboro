@@ -11,7 +11,10 @@ palette — one theme, two editors.
 
 ## Preview
 
-![Oboro — light and dark specimen board](screenshots/promo.png)
+![Oboro 0.3.2 — actual light/dark views with glass table, callout and code details](screenshots/promo.png)
+
+Captured in Obsidian with **Style Settings**, custom sakura wallpapers, and the same glass parameters in both modes.
+Wallpapers are user-supplied, not bundled. [Capture setup and artwork sources](screenshots/README.md).
 
 Sakura Pink (light):
 
@@ -20,6 +23,16 @@ Sakura Pink (light):
 Night Sakura (dark):
 
 ![Night Sakura dark mode](screenshots/screenshot-dark.png)
+
+<details>
+<summary>Painted sakura scrollbar — four-palette detail study</summary>
+
+![Enlarged sakura scrollbar artwork: light and dark, at rest and highlighted](screenshots/scrollbar-detail.png)
+
+The SVG is enlarged 3.5× for inspection, not shown at its actual UI size. The branch stays fixed;
+only the original bark and blossoms under the thumb change colour.
+
+</details>
 
 ## Features
 
@@ -37,6 +50,7 @@ Night Sakura (dark):
   (C, C++, C#, x86, ASM, Verilog, Java, Python, Rust), all contrast ≥ 4.5:1.
 - **Gradient bold** — light "berry → purple", dark "soft peach gold → champagne gold", with inline-code /
   nested-math fixes and solid-text fallbacks for print/PDF and forced colors.
+- **Painted sakura scrollbars** — detailed bark, petals and buds; a stationary transparent branch with a locally recoloured scroll-position highlight across editor and sidebar panels.
 - **Six-level heading color ladder** + serif heading stack (Lora → Source Han Serif → Songti).
 - **Engineering** — official stylelint rules, version / SVG consistency checks, validated tag-triggered draft releases,
   isolated browser regressions, and mobile background positioning adaptation.
