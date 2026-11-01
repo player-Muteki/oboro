@@ -118,11 +118,15 @@
   面板必须有确定高度或 flex-fill 布局，不能把 size containment 扩展到自动内容高度的弹窗、嵌入查询或手机设置子列表。
   手机设置菜单滚动的是外层 `.vertical-tab-header`，桌面/平板是内部分类/搜索列表；不要同时装饰父子两层。
   共享 `:is()` 的特异性取最高分支，默认间距使用 `var()` 回退，避免高特异性默认值压过各面板的单独配置。
+  `scroll-state(scrollable: inline)` 对 `overflow-x:hidden` 的程序化滚动也可能成立，不等于有可见横向槽。
+  原生文件列表必须使用 `--ob-scrollbar-inline-gutter: 0px`，避免多扣 12px 使高亮原画随进度偏移。
 - `python3 scripts/check-scrollbar-panels.py` 使用独立 agent-browser 会话和 Python Pillow，打开仓库内的
   `scripts/fixtures/scrollbar-panels.html`，不连接/修改用户 Obsidian。检查浅深色、390/834/1440px、
   非整数高度、横向溢出、安全区、键盘和手机设置；校验尺寸/内容高度、轨道原位、面板独立进度、
   高亮只出现在原生滑块内、短内容不造滑块及嵌入滚动区保持原生，并验证原生拖动和 PageDown，
   截图/报告写入临时目录。
+- `python3 scripts/check-scrollbar-motion.py` 保留原画几何/透明度和 18px 渐隐，以白色轨道/红色高亮在黑底上校验轮廓；
+  连续正反向滚动期间不切样式、不切 overflow、不重建滚动条，检查高亮像素不得落在静止原画轮廓外，防止视觉重影。
 - 所需特性以 `@supports` 联合检测（滚动时间线、size/scroll-state 容器和 CSS round）；
   不支持时去除装饰原画并回退基础滑块，不展示未同步的花枝副本。强制颜色模式普通/悬停/按压均为系统实色。
   纵向覆盖主区/侧栏的 Markdown 阅读容器与 CM6 scroller，以及文件、全局搜索、目录、标签、书签、

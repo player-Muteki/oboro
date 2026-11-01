@@ -2797,6 +2797,9 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   }
 
   .workspace-leaf-content[data-type='file-explorer'] .nav-files-container {
+    /* 原生 overflow-x:hidden 仍可能被判定为 scrollable:inline，但并不绘制横向槽。
+       不能扣除不存在的横向滚动条，否则变色原画会随进度错位，叠出移动重影。 */
+    --ob-scrollbar-inline-gutter: 0px;
     --ob-scrollbar-panel-bottom: max(var(--safe-area-inset-bottom), var(--size-4-6));
   }
 
@@ -2946,7 +2949,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
       body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
       .is-phone .modal.mod-settings .vertical-tab-header
     )::-webkit-scrollbar-thumb:vertical:active {
-      --ob-scrollbar-horizontal-size: var(--scrollbar-height);
+      --ob-scrollbar-horizontal-size: var(--ob-scrollbar-inline-gutter, var(--scrollbar-height));
     }
   }
 }
