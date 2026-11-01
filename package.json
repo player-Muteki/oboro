@@ -1,10 +1,13 @@
 {
   "name": "oboro",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
   "description": "Oboro（朧樱）— 樱粉/夜樱双模式 Obsidian 主题",
   "scripts": {
-    "lint": "stylelint \"**/*.css\""
+    "lint": "stylelint \"**/*.css\"",
+    "test": "node --test scripts/*.test.mjs",
+    "check": "npm run lint && npm test && node scripts/check-release.mjs && python3 scripts/check-scrollbar-art.py",
+    "check:browser": "python3 scripts/check-accessibility.py && python3 scripts/check-scrollbar-panels.py && python3 scripts/check-scrollbar-motion.py"
   },
   "devDependencies": {
     "stylelint": "^17.0.0",

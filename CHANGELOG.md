@@ -7,6 +7,20 @@
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-11-01
+
+### Fixed
+
+- **减少动态效果**：补齐悬停预览卡片的入场动画禁用规则，保留樱枝滚动条的进度同步。
+
+### Changed
+
+- **樱枝滚动条精绘**：细化不对称花瓣、翻折透色、花脉与花丝，补充侧花层次、伴生花苞、叶缘和枝干皴理；保持透明背景、静止原画、滑块局部重着色与端部渐隐。新增独立 SVG 主稿和统一配色生成器，避免四种状态的图形分叉。
+
+- **粗体兼容性与样式维护**：强制颜色模式显式使用实色文字；合并浅深色相同的渐变声明，移除档案条多余的通用伪元素按压规则，保留樱花按钮的专用反馈。
+- **质量门禁**：新增版本一致性检查与单元测试；分支 CI 和发布流程执行 lint、版本及 SVG 检查，发布前校验标签与 manifest 版本一致。
+- **回归与文档**：新增隔离浏览器无障碍测试和统一检查入口；更新中英文粗体配色说明，撤下旧内核 `color-mix()` 全面回退的过度承诺，补全发版版本同步步骤。
+
 ## [0.3.1] - 2026-11-01
 
 ### Fixed
@@ -260,7 +274,9 @@ Oboro（朧樱）首个公开版本，自 Sakura Macaron 更名而来。
 - 移动端适配：`(hover: none)` 下背景回退为随内容定位。
 - 工程：stylelint（官方 obsidianmd 规则）+ GitHub Actions lint / 自动发版工作流 + 一键安装脚本。
 
-[Unreleased]: https://github.com/player-Muteki/oboro/compare/0.3.0...HEAD
+[Unreleased]: https://github.com/player-Muteki/oboro/compare/0.3.2...HEAD
+[0.3.2]: https://github.com/player-Muteki/oboro/releases/tag/0.3.2
+[0.3.1]: https://github.com/player-Muteki/oboro/releases/tag/0.3.1
 [0.3.0]: https://github.com/player-Muteki/oboro/releases/tag/0.3.0
 [0.2.0]: https://github.com/player-Muteki/oboro/releases/tag/0.2.0
 [0.1.4]: https://github.com/player-Muteki/oboro/releases/tag/0.1.4

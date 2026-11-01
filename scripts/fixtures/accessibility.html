@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Oboro accessibility regression</title>
+<link rel="stylesheet" href="../../theme.css">
+<style>
+body { margin: 24px; font: 20px sans-serif; }
+.sample { display: block; width: 420px; min-height: 40px; }
+.hover-popover, .modal, .menu, .suggestion-container, .notice { position: static; }
+.workspace-leaf-content { width: 280px; height: 180px; display: flex; flex-direction: column; }
+.nav-files-container { overflow: hidden auto; flex: 1; padding: 4px 12px 24px; }
+</style>
+<body class="theme-light styled-scrollbars">
+<div class="markdown-rendered">
+  <strong id="reading" class="sample">Bold reading text</strong>
+  <b id="legacy" class="sample">Bold HTML text</b>
+  <strong><span class="MathJax" id="math">x + y = 2</span> <code id="code">inline code</code></strong>
+  <pre class="language-js" id="codeblock"><code>const sakura = 1;</code></pre>
+</div>
+<div class="markdown-source-view mod-cm6">
+  <span class="cm-strong sample" id="editing">Bold editor text</span>
+  <span class="cm-strong"><span class="MathJax" id="edit-math">a + b</span><span class="cm-inline-code" id="edit-code">code</span></span>
+  <div class="cm-line HyperMD-codeblock-begin" id="edit-codeblock">```js</div>
+</div>
+<div class="hover-popover">Preview</div>
+<div class="modal">Modal</div>
+<div class="menu">Menu</div>
+<div class="suggestion-container">Suggestions</div>
+<div class="notice">Notice</div>
+<div class="workspace-leaf-content" data-type="file-explorer">
+  <div class="nav-files-container" id="files"><div style="height:1200px">Scrollable files</div></div>
+</div>
+</body>

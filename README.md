@@ -35,11 +35,11 @@ Night Sakura (dark):
   sakura-pink in light mode, drawn from the night-sakura syntax palette in dark.
 - **Language pills** — macaron-colored pills on the top-right of code blocks for nine languages
   (C, C++, C#, x86, ASM, Verilog, Java, Python, Rust), all contrast ≥ 4.5:1.
-- **Gradient bold** — light "berry → gold", dark "rose → cream gold", with an inline-code rescue patch and a
-  print/PDF solid fallback.
+- **Gradient bold** — light "berry → purple", dark "soft peach gold → champagne gold", with inline-code /
+  nested-math fixes and solid-text fallbacks for print/PDF and forced colors.
 - **Six-level heading color ladder** + serif heading stack (Lora → Source Han Serif → Songti).
-- **Engineering** — official stylelint rules, GitHub Actions lint + tag-triggered release, solid-color fallbacks
-  on every `color-mix()` declaration (auto-fallback on older kernels), mobile background positioning adaptation.
+- **Engineering** — official stylelint rules, version / SVG consistency checks, validated tag-triggered draft releases,
+  isolated browser regressions, and mobile background positioning adaptation.
 
 ## Palette quick reference
 
@@ -90,8 +90,9 @@ There is also a toggle to disable the code-block light band.
 ## Development
 
 ```bash
-npm install
-npm run lint          # stylelint-config-obsidianmd (the same rules as community review)
+npm ci
+npm run check         # lint + metadata tests + version / SVG consistency
+npm run check:browser # optional: requires agent-browser, Chromium, Python 3 + Pillow
 ./scripts/install.sh /path/to/vault .obsidian_linux
 ```
 
@@ -101,8 +102,8 @@ command palette to hot-reload. Release and marketplace procedures: [docs/mainten
 ## Compatibility
 
 - Minimum Obsidian **1.13.0**.
-- Panel translucency uses `color-mix()` (Chromium 111+); unsupported kernels fall back to solid colors with
-  layout unaffected.
+- Panel translucency requires `color-mix()` support; older kernels without it are not guaranteed.
+- Cherry-branch scrollbar decoration falls back to a basic thumb when the required CSS features are missing.
 - On mobile (`hover: none`) the background falls back to content-anchored positioning, avoiding the WKWebView
   fixed-background issue.
 - The theme loads no remote resources; wallpapers are user-provided.

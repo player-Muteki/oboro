@@ -30,9 +30,9 @@ Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护�
   **面板实度 / 玻璃模糊 / 饱和度提升 / 亮度提升 / 壁纸**均可在 Style Settings 实时调节。
 - **代码块七段脉冲光带**：倾斜 30° 的分段渐变条，白光每 3.5s 扫过一次；浅色是樱花粉系，深色取自夜樱语法色板。
 - **语言胶囊**：C / C++ / C# / x86 / ASM / Verilog / Java / Python / Rust 九种语言的代码块右上角显示马卡龙配色胶囊，对比度全部 ≥ 4.5:1。
-- **渐变加粗**：浅色「莓红→金」、深色「樱玫→奶油金」，带行内代码拯救补丁与打印/PDF 实色回退。
+- **渐变加粗**：浅色「莓红→紫红」、深色「柔和桃金→香槟金」，保留行内代码与内嵌公式修复，打印/PDF 和强制颜色模式提供实色回退。
 - **六级标题色阶梯** + 标题衬线字体（Lora → 思源宋体 → 宋体系列）。
-- **工程化**：官方 stylelint 规则校验、GitHub Actions lint + 标签自动发版、全部 `color-mix` 声明带实色兜底（旧内核自动回退）、移动端背景定位适配。
+- **工程化**：官方 stylelint 规则、版本与 SVG 一致性校验、标签校验通过后生成发布草稿、隔离浏览器回归，以及移动端背景定位适配。
 
 ## 色板速览
 
@@ -82,8 +82,9 @@ Obsidian 双模式主题：浅色是清透的**樱粉**，深色是低饱和护�
 ## 开发
 
 ```bash
-npm install
-npm run lint          # stylelint-config-obsidianmd（社区审核同款规则）
+npm ci
+npm run check         # lint + 元数据测试 + 版本 / SVG 一致性
+npm run check:browser # 可选：需 agent-browser、Chromium、Python 3 + Pillow
 ./scripts/install.sh /path/to/vault .obsidian_linux
 ```
 
@@ -93,7 +94,8 @@ npm run lint          # stylelint-config-obsidianmd（社区审核同款规则�
 ## 兼容性
 
 - 最低 Obsidian **1.13.0**。
-- 面板半透明使用 `color-mix()`（Chromium 111+）；不支持时自动回退实色，布局不受影响。
+- 面板半透明依赖 `color-mix()`；不保证不支持该特性的旧内核兼容性。
+- 樱枝滚动条在缺少所需 CSS 特性的内核上退回基础滑块。
 - 移动端（iPad 等）`(hover: none)` 下背景回退为随内容定位，规避 WKWebView 的 fixed 背景问题。
 - 主题不加载任何远程资源；壁纸由用户自行配置。
 

@@ -3,14 +3,27 @@
 ## 日常改动
 
 1. 修改 `theme.css`（唯一样式源文件；调色板集中在第 2/3/4 节）。
-2. `npm run lint` —— 使用官方 `stylelint-config-obsidianmd`（与社区主题审核同一套规则）。
+2. `npm ci && npm run check` —— 官方 stylelint、版本检查器单元测试、版本与 SVG 一致性；CI 的 Node 22/24 矩阵执行同一入口。
+   涉及视觉/交互时另跑 `npm run check:browser`（需 agent-browser、其 Chromium、Python 3 与 Pillow；不会连接用户库）。
 3. `./scripts/install.sh <vault路径> <配置目录>` 安装到测试库，重载后目检。
 4. 提交时同步更新 `CHANGELOG.md` 的 `[Unreleased]` 段。
+
+## 开发依赖安全审计
+
+- 2026-11-01 本地 `npm audit` 返回 5 条中危报告，源于同一个
+  `minimatch` 拒绝服务问题（`GHSA-g3hv-75wg-m249`），沿官方 lint 配置的
+  `stylelint-no-unsupported-browser-features → doiuse → multimatch → minimatch` 链传播；
+  不是 5 个独立漏洞，当次审计未提供自动修复路径。
+- 这些包仅用于开发检查，不包含在发布的 `theme.css` / `manifest.json` 中；
+  当次 `npm audit --omit=dev` 为 0，但不代表开发工具链没有风险。
+- 后续升级时重新执行两种审计，跟踪上游兼容修复；避免仅为消除告警而运行
+  `npm audit fix --force` 或强制跨大版本覆盖传递依赖。处理不可信配置/输入时，
+  应在隔离环境中运行检查并限制执行时间。
 
 ## 发版
 
 1. `CHANGELOG.md`：把 `[Unreleased]` 内容落到新版本号段（SemVer）。
-2. `manifest.json` 的 `version` 改为同一版本号。
+2. 同步修改 `manifest.json`、`package.json`、`package-lock.json` 顶层及 `packages[""].version`，执行 `npm run check`。
 3. 提交后打同号标签并推送：
 
    ```bash
@@ -18,7 +31,8 @@
    git push origin main 0.1.1
    ```
 
-4. `release.yml` 工作流会自动创建 Draft Release 并附上 `manifest.json` + `theme.css`，
+4. `release.yml` 先执行 `npm run check`，再校验标签与 manifest 版本完全一致（不加 `v` 前缀）；
+   全部通过后才创建 Draft Release 并附上 `manifest.json` + `theme.css`，
    到 GitHub Releases 页补写说明并 Publish。
 
 ## 上架社区目录（首次）
@@ -61,6 +75,17 @@
   底部导航显隐、侧栏抽屉与平板分屏；桌面圆角、侧栏按钮位置应保持不变。
 - 桌面浏览器中的 DOM/CSS 测试只能验证选择器、层叠和几何布局，不能替代 iPad WebKit 真机验证。
 
+## 无障碍回归
+
+- `python3 scripts/check-accessibility.py`：隔离 Chromium 会话，覆盖浅深色阅读/编辑粗体、
+  `<b>`、粗体内公式/行内代码，以及强制颜色模式下的实际字形像素。
+- 高对比由 Chromium 启动参数模拟，并断言 `(forced-colors: active)` 生效。
+  显式回退为 `currentcolor`，不依赖透明填充的引擎兜底；不能据计算样式透明就断言字形不可见。
+- 减少动态效果时，代码光带、弹窗、菜单、建议、通知和悬停预览动画应停用；
+  **不能全局清除动画**：`ob-scrollbar-progress` 是滚动状态同步，仍须从 0 更新到 1。
+- 输出截图在 `/tmp/oboro-accessibility-*`。浏览器模拟不替代 Windows 高对比、iPad/手机真机验证。
+- 浏览器套件目前需本地执行；CI/发布门禁只包含 lint、元数据和 SVG 静态回归。
+
 ## 粗体配色回归
 
 - `--ob-bold-color` 与 `--ob-bold-gradient-end` 控制阅读 `strong` / `b` 和编辑 `.cm-strong` 的渐变；
@@ -85,7 +110,10 @@
 
 ## 编辑区与面板细枝繁樱滚动条回归
 
-- 浅深色 SVG 集中在第 2/3 节：`--ob-scrollbar-art-image` 是轨道原画，
+- 图稿唯一源文件是 `scripts/assets/scrollbar-art.svg`（可直接打开的 SVG），四色映射在
+  `scripts/scrollbar_art.py`。修改后执行 `python3 scripts/check-scrollbar-art.py --write`，统一生成
+  浅深色轨道、选中图与端部渐隐图；不要手改 CSS 内嵌 SVG。默认检查会验证生成结果与主稿一致。
+  浅深色生成结果集中在第 2/3 节：`--ob-scrollbar-art-image` 是轨道原画，
   `--ob-scrollbar-active-art-image` 是原生滑块的变色版。两者仅允许 paint 颜色不同，
   路径、花位、变换、透明度、18×192 图幅必须完全相同。执行
   `python3 scripts/check-scrollbar-art.py` 检查不变量；不要通过增加形状、底色、光晕或色条替代重着色。
@@ -96,8 +124,9 @@
   选中枝面和花瓣保持浓莓樱红；只改画内 paint，不通过降低整条轨道的 opacity 弱化背景。深色以暖金枝干、
   珊瑚粉花心和奶金瓣缘拉开与灰紫原画的色差；深色未选中花枝降低明度，但不压暗透明背景或铺设色条。
   上下各 18px 缓入/缓出，中段保留完整色差；端部裁切在 SVG 内完成，原生伪元素不依赖 mask/filter 支持。
-  原有花朵与花苞较初版放大约 12%，仅调整现有实例的 scale；原画、变色版与端部派生图保持同尺度，
-  不移动花位、不放大枝干、不改变背景，不添加花签、花朵、胶囊底框、亮边或端光。
+  精绘主稿保留主要花位与枝干轮廓，补入不对称花瓣、翻折透色、分叉花脉、疏密花丝、侧花与伴生花苞；
+  枝干保留断续皴理和横向皮孔。原画、变色版与端部派生图始终共享同一几何与透明度，
+  不为高亮单独增加花朵、花签、胶囊底框、亮边或端光，也不改变透明背景。
   保留原生比例长度、64px 最小高度和完整拖动热区；短笔记按实际滑块长度变色。
 - 几何同步使用 CSS 滚动时间线 `--ob-scrollbar-progress`，并非自动播放动效；减少动态效果时
   仍需跟随用户滚动，不能停止同步使原画错位。高度容器设在无内边距的 `.cm-editor` /

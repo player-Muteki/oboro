@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 """Check paint-only highlighting and its phase-aligned SVG end fades.
 
-After editing either active palette, run with --write to regenerate its end images.
+Edit assets/scrollbar-art.svg, then run --write to regenerate all palettes/end images.
 """
 import argparse
 from pathlib import Path
 import re
+import sys
 import urllib.parse
 import xml.etree.ElementTree as ET
+
+# Keep standalone checks from leaving bytecode artifacts in the repository.
+sys.dont_write_bytecode = True
+
+from scrollbar_art import render_art, replace_art
 
 
 EDGE_PX = 18
@@ -68,12 +74,12 @@ def regenerate(css: str) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--write', action='store_true', help='regenerate end images after palette edits')
+    parser.add_argument('--write', action='store_true', help='regenerate all palettes and end images from the SVG master')
     args = parser.parse_args()
     path = Path(__file__).resolve().parents[1] / 'theme.css'
     css = path.read_text()
     if args.write:
-        css = regenerate(css)
+        css = regenerate(replace_art(css))
         path.write_text(css)
     assert f'border: {EDGE_PX}px solid transparent;' in css, 'CSS edge width differs from generated images'
     assert css.count(f'18px calc({PHASE_PAD_PX}px +') == 2, 'CSS phase padding differs from generated images'
@@ -81,6 +87,8 @@ def main() -> None:
     highlights = svg_values(css, '--ob-scrollbar-active-art-image')
     assert len(originals) == len(highlights) == 2, 'Both palettes need a matched SVG pair'
     for mode, original, highlight in zip(('light', 'dark'), originals, highlights):
+        assert original == render_art(mode, False), f'{mode}: master changed; regenerate with --write'
+        assert highlight == render_art(mode, True), f'{mode}: master changed; regenerate with --write'
         for svg in (original, highlight):
             root = ET.fromstring(svg)
             assert root.attrib['viewBox'] == '0 0 18 192', f'{mode}: unexpected tile dimensions'
