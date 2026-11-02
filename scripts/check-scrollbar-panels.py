@@ -94,7 +94,9 @@ SETUP = r"""
 GEOMETRY = r"""
 [...document.querySelectorAll('[data-scroll]')].map(e=>{
  const r=e.getBoundingClientRect(), c=getComputedStyle(e), s=getComputedStyle(e,'::-webkit-scrollbar-thumb');
- return {id:e.id,x:r.right-18,y:r.top,outerH:r.height,outerW:r.width,h:e.clientHeight,
+ return {id:e.id,x:r.right-parseFloat(c.borderRightWidth)-18,y:r.top+parseFloat(c.borderTopWidth),
+   borderBlock:parseFloat(c.borderTopWidth)+parseFloat(c.borderBottomWidth),
+   borderInline:parseFloat(c.borderLeftWidth)+parseFloat(c.borderRightWidth),outerH:r.height,outerW:r.width,h:e.clientHeight,
    total:e.scrollHeight,top:e.scrollTop,w:e.clientWidth,scrollW:e.scrollWidth,
    container:c.containerType,padding:parseFloat(c.paddingTop)+parseFloat(c.paddingBottom),
    probe:parseFloat(s.outlineWidth),progress:parseFloat(c.getPropertyValue('--ob-scrollbar-progress'))||0};
@@ -105,16 +107,19 @@ GEOMETRY = r"""
 def main():
     assert shutil.which('agent-browser'), 'Install agent-browser before running this check'
     browser('--args', '--no-sandbox', 'open', (ROOT / 'scripts/fixtures/scrollbar-panels.html').as_uri())
+    panel_count = evaluate("document.querySelectorAll('#panels > .panel').length")
     reports = []
     cases = [
         # Both palettes, fractional viewport heights, horizontal overflow and mobile safe area/keyboard.
         dict(mode='light', phone=False, tablet=False, width=1440, cols=4, height=370.375, horizontal=False, safe=0, keyboard=0),
         dict(mode='dark', phone=False, tablet=False, width=1440, cols=4, height=493.7375, horizontal=True, safe=0, keyboard=0),
         dict(mode='light', phone=False, tablet=True, width=834, cols=2, height=270.375, horizontal=True, safe=34, keyboard=0),
+        dict(mode='dark', phone=False, tablet=True, width=834, cols=2, height=370.375, horizontal=False, safe=34, keyboard=0),
+        dict(mode='light', phone=True, tablet=False, width=390, cols=1, height=370.375, horizontal=True, safe=34, keyboard=160),
         dict(mode='dark', phone=True, tablet=False, width=390, cols=1, height=270.375, horizontal=False, safe=34, keyboard=160),
     ]
     for index, case in enumerate(cases):
-        browser('set', 'viewport', case['width'], math.ceil(18/case['cols'])*(math.ceil(case['height'])+16)+100)
+        browser('set', 'viewport', case['width'], math.ceil(panel_count/case['cols'])*(math.ceil(case['height'])+16)+100)
         browser('open', (ROOT / 'scripts/fixtures/scrollbar-panels.html').as_uri())
         setup = SETUP
         for name, value in sorted(case.items(), key=lambda item: -len(item[0])):
@@ -130,12 +135,12 @@ def main():
                 assert a[key] == b[key], (case, a['id'], key, a[key], b[key], 'containment changed native layout')
             # Both wrapper and self size containers include the horizontal gutter; subtract it once.
             is_note = a['id'].startswith('docked-')
-            gutter = round(a['outerH']) - a['h']
+            gutter = round(a['outerH']) - a['h'] - a['borderBlock']
             assert a['probe'] - gutter == a['h'], (case, a, 'viewport compensation mismatch')
             if not is_note:
                 assert a['container'] == 'size scroll-state', (case, a, 'missing self size/scroll-state')
-            assert a['outerW'] - a['w'] == (0 if a['id'] == 'short' else 18), (case, a, 'native vertical width changed')
-        unaffected = evaluate("['embedded-query','code-scroll','embedded-backlinks'].map(id=>{let e=document.getElementById(id);return {id,container:getComputedStyle(e).containerType,w:e.offsetWidth-e.clientWidth}})")
+            assert a['outerW'] - a['w'] - a['borderInline'] == (0 if a['id'] == 'short' else 18), (case, a, 'native vertical width changed')
+        unaffected = evaluate("['embedded-query','code-scroll','embedded-backlinks','plugin-readme-code','theme-readme-code'].map(id=>{let e=document.getElementById(id);return {id,container:getComputedStyle(e).containerType,w:e.offsetWidth-e.clientWidth}})")
         for e in unaffected:
             assert e['container'] == 'normal', (case, e, 'embedded content was size-contained')
             assert e['w'] in (0,12), (case, e, 'embedded scrollbar was restyled')
@@ -155,7 +160,10 @@ def main():
             for g in geometry:
                 rect = tuple(round(n) for n in (g['x'], g['y'], g['x']+18, g['y']+g['h']))
                 # Native track must stay stationary while content and thumb move.
-                assert ImageChops.difference(reference_at_start.crop(rect), reference.crop(rect)).getbbox() is None, (case, fraction, g['id'], 'track moved')
+                # Fractional bordered scrollports can differ by 1/255 during compositing.
+                # Use the same paint tolerance as the highlight/motion checks, not exact RGB.
+                track_changes = mask(ImageChops.difference(reference_at_start.crop(rect), reference.crop(rect)))
+                assert track_changes.getbbox() is None, (case, fraction, g['id'], 'track moved')
                 changes = mask(ImageChops.difference(new.crop(rect), reference.crop(rect)))
                 if g['total'] <= g['h']:
                     assert changes.getbbox() is None, (case, g, 'short content got a fake thumb')

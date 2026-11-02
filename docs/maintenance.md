@@ -149,9 +149,13 @@
   共享 `:is()` 的特异性取最高分支，默认间距使用 `var()` 回退，避免高特异性默认值压过各面板的单独配置。
   `scroll-state(scrollable: inline)` 对 `overflow-x:hidden` 的程序化滚动也可能成立，不等于有可见横向槽。
   原生文件列表必须使用 `--ob-scrollbar-inline-gutter: 0px`，避免多扣 12px 使高亮原画随进度偏移。
+- 插件/主题市场是 `.modal.mod-community-modal` 独立弹窗，不在 `.modal.mod-settings` 内。只装饰
+  `.community-modal-search-results-wrapper`（列表）与 `.community-modal-info`（详情/README）；
+  不接管详情外壳 `.community-modal-details` 或 README 内的代码块。列表 padding 在内部网格，
+  自身上下补偿为 0；详情自身 padding 桌面/平板为 32px/32px，手机为 72px/16px，使用原生间距变量。
 - `python3 scripts/check-scrollbar-panels.py` 使用独立 agent-browser 会话和 Python Pillow，打开仓库内的
   `scripts/fixtures/scrollbar-panels.html`，不连接/修改用户 Obsidian。检查浅深色、390/834/1440px、
-  非整数高度、横向溢出、安全区、键盘和手机设置；校验尺寸/内容高度、轨道原位、面板独立进度、
+  非整数高度、横向溢出、安全区、键盘、手机设置及两种市场的列表/详情；校验尺寸/内容高度、轨道原位、面板独立进度、
   高亮只出现在原生滑块内、短内容不造滑块及嵌入滚动区保持原生，并验证原生拖动和 PageDown，
   截图/报告写入临时目录。
 - `python3 scripts/check-scrollbar-motion.py` 保留原画几何/透明度和 18px 渐隐，以白色轨道/红色高亮在黑底上校验轮廓；
@@ -159,7 +163,7 @@
 - 所需特性以 `@supports` 联合检测（滚动时间线、size/scroll-state 容器和 CSS round）；
   不支持时去除装饰原画并回退基础滑块，不展示未同步的花枝副本。强制颜色模式普通/悬停/按压均为系统实色。
   纵向覆盖主区/侧栏的 Markdown 阅读容器与 CM6 scroller，以及文件、全局搜索、目录、标签、书签、
-  属性、反向/出站链接和设置滚动区；不通配任意 `.view-content` 或插件容器。嵌入笔记、嵌入查询、
+  属性、反向/出站链接、设置以及插件/主题市场列表与详情滚动区；不通配任意 `.view-content` 或插件容器。嵌入笔记、嵌入查询、
   代码/表格内部滚动条以及所有横向滚动条保持原样；Canvas/PDF/Bases/插件自有滚动器不在本次装饰范围。
   不使用 JS、滚动事件、定位覆盖层、巨大投影、滤镜或编辑器裁切。
 - 回归应覆盖浅深色、长短/空笔记、顶部/任意中间位置/底部、独立分栏、原生拖动和键盘，

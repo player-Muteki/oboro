@@ -33,6 +33,7 @@ panels.SESSION = 'oboro-scrollbar-motion'
 
 def main():
     panels.browser('--args', '--no-sandbox', 'open', (ROOT / 'scripts/fixtures/scrollbar-panels.html').as_uri())
+    panel_count = panels.evaluate("document.querySelectorAll('#panels > .panel').length")
     cases = [
         dict(mode='light', phone=False, tablet=False, width=1440, cols=4, height=494, horizontal=True, safe=0, keyboard=0),
         dict(mode='dark', phone=False, tablet=False, width=1440, cols=4, height=494, horizontal=True, safe=0, keyboard=0),
@@ -49,7 +50,7 @@ def main():
               for k, v in images.items()}
     count = 0
     for index, case in enumerate(cases):
-        panels.browser('set', 'viewport', case['width'], math.ceil(18/case['cols'])*(case['height']+16)+100)
+        panels.browser('set', 'viewport', case['width'], math.ceil(panel_count/case['cols'])*(case['height']+16)+100)
         panels.browser('open', (ROOT / 'scripts/fixtures/scrollbar-panels.html').as_uri())
         setup = panels.SETUP
         for name, value in sorted(case.items(), key=lambda item: -len(item[0])):
@@ -75,6 +76,7 @@ def main():
                     continue
                 rect = tuple(round(n) for n in (g['x'], g['y'], g['x']+18, g['y']+g['h']))
                 silhouette = panels.mask(ImageChops.difference(reference.crop(rect), blank.crop(rect)), 0)
+                assert panels.count(silhouette) > 12, (case, g['id'], 'missing visible reference artwork')
                 changes = panels.mask(ImageChops.difference(current.crop(rect), reference.crop(rect)))
                 outside = panels.count(ImageChops.subtract(changes, silhouette))
                 assert outside == 0, (case, fraction, g['id'], outside, 'highlight art moved outside stationary original')

@@ -4,7 +4,7 @@
 <!-- Minimal native layout rules, before the theme, matching Obsidian 1.14.x. -->
 <style id="native">
 * { box-sizing:border-box; }
-body { --size-4-1:4px;--size-4-2:8px;--size-4-3:12px;--size-4-4:16px;--size-4-6:24px;--size-4-8:32px;--size-4-12:48px;--size-4-16:64px;--scrollbar-width:12px;--scrollbar-height:12px;--safe-area-inset-bottom:0px;--keyboard-height:0px;--modal-header-height:44px; }
+body { --size-4-1:4px;--size-4-2:8px;--size-4-3:12px;--size-4-4:16px;--size-4-6:24px;--size-4-8:32px;--size-4-12:48px;--size-4-16:64px;--size-4-18:72px;--scrollbar-width:12px;--scrollbar-height:12px;--safe-area-inset-bottom:0px;--keyboard-height:0px;--modal-header-height:44px; }
 body.styled-scrollbars ::-webkit-scrollbar {width:12px;height:12px;}
 .workspace-leaf-content {width:100%;height:100%;overflow:hidden;display:flex;flex-direction:column;}
 .view-content {height:100%;width:100%;overflow:auto;padding:12px;padding-bottom:max(var(--safe-area-inset-bottom),32px);}
@@ -29,6 +29,19 @@ body.styled-scrollbars ::-webkit-scrollbar {width:12px;height:12px;}
 .is-phone .modal.mod-settings .vertical-tab-header::after {content:"";display:block;flex:0 0 auto;height:max(var(--keyboard-height),100px);}
 .is-phone .modal.mod-settings .vertical-tab-content {padding-inline:16px;padding-bottom:max(100px,var(--safe-area-inset-bottom));}
 .is-phone .modal.mod-sidebar-layout :is(.vertical-tab-header,.vertical-tab-content) {padding-top:calc(var(--modal-header-height) + 16px);}
+/* Marketplace scrollports from Obsidian 1.14.x: controls/titlebar stay outside the track. */
+.mod-community-modal .modal-content {height:100%;display:flex;min-height:0;}
+.mod-community-modal .modal-sidebar {display:flex;flex-direction:column;width:100%;height:100%;}
+.community-modal-controls {flex:0 0 auto;padding:12px;}
+.community-modal-search-results-wrapper {flex:1 0 auto;overflow:auto;border-top:1px solid #888;contain:strict;}
+.community-modal-search-results {display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;padding:12px;}
+.community-modal-details {flex:1 1 820px;overflow:auto;display:flex;flex-direction:column;min-width:0;}
+.community-modal-info {flex:1 1 0px;overflow-y:auto;padding:32px 64px;display:flex;flex-direction:column;gap:16px;}
+.setting-page-titlebar {height:36px;flex:0 0 36px;}
+.is-phone .community-modal-controls {padding-top:72px;}
+.is-phone .community-modal-search-results {gap:8px;padding:16px;}
+.is-phone .community-modal-info {padding:72px 16px 16px;}
+.is-phone .community-modal-details {padding:16px;}
 </style>
 <link id="theme" rel="stylesheet" href="../../theme.css">
 <style id="fixture">
@@ -83,6 +96,17 @@ for (const [id,type,cls,header,inner] of cases) {
  } else if(type==='settings') section.classList.add('modal','mod-settings');
  else content=`<div class="workspace-leaf-content" data-type="${type}">${header?'<div class="header">'+type+'</div>':''}${content}</div>`;
  section.innerHTML=content;document.getElementById('panels').append(section);
+}
+// Both markets share the same scrollports, independently of the settings modal.
+for (const market of ['plugin','theme']) for (const details of [false,true]) {
+ const section=document.createElement('section');
+ section.className=`panel modal mod-community-modal mod-sidebar-layout mod-community-${market}`;
+ const id=`market-${market}-${details?'info':'list'}`;
+ const nested=`<pre id="${market}-readme-code" class="internal-scroll">${'code\n'.repeat(12)}</pre>`;
+ section.innerHTML=`<div class="modal-content">${details
+  ? `<div class="community-modal-details"><div class="setting-page-titlebar">Details · Back</div><div id="${id}" data-scroll class="community-modal-info"><div class="community-modal-readme">${entries(55)}${nested}</div></div></div>`
+  : `<div class="modal-sidebar"><div class="community-modal-controls">Search · Sort · Filter</div><div id="${id}" data-scroll class="community-modal-search-results-wrapper"><div class="community-modal-search-results">${entries(55)}</div></div></div>`}</div>`;
+ document.getElementById('panels').append(section);
 }
 // Autosizing/nested and unsupported/plugin scrollports must keep native sizing.
 const untouched=document.createElement('section');untouched.className='panel';

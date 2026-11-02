@@ -2624,7 +2624,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   );
 }
 
-/* 主编辑器、侧栏笔记及内置面板「细枝繁樱」：连续原画固定在透明轨道，原生滑块只重绘同一幅画的变色版本。
+/* 主编辑器、侧栏笔记、内置面板及插件/主题市场「细枝繁樱」：连续原画固定在透明轨道，原生滑块只重绘同一幅画的变色版本。
    图稿源文件 scripts/assets/scrollbar-art.svg；运行 python3 scripts/check-scrollbar-art.py --write 统一生成所有状态。
    两幅原画 SVG 仅 paint 颜色不同，路径、花位、透明度完全相同；端部派生 SVG 只渐隐原画，留白不染色。
    支持滚动时间线时按实际滚动进度对齐长卷；编辑器高度取无内边距包装层，内置面板取自身 content-box 加上下内边距，
@@ -2641,6 +2641,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   .workspace-leaf-content[data-type='backlink'] .backlink-pane,
   .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
   .modal.mod-settings .vertical-tab-content,
+  .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
   body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
   .is-phone .modal.mod-settings .vertical-tab-header
 ) {
@@ -2657,6 +2658,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   .workspace-leaf-content[data-type='backlink'] .backlink-pane,
   .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
   .modal.mod-settings .vertical-tab-content,
+  .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
   body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
   .is-phone .modal.mod-settings .vertical-tab-header
 )::-webkit-scrollbar:vertical {
@@ -2672,6 +2674,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   .workspace-leaf-content[data-type='backlink'] .backlink-pane,
   .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
   .modal.mod-settings .vertical-tab-content,
+  .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
   body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
   .is-phone .modal.mod-settings .vertical-tab-header
 )::-webkit-scrollbar-track:vertical {
@@ -2693,6 +2696,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   .workspace-leaf-content[data-type='backlink'] .backlink-pane,
   .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
   .modal.mod-settings .vertical-tab-content,
+  .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
   body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
   .is-phone .modal.mod-settings .vertical-tab-header
 )::-webkit-scrollbar-track-piece:vertical {
@@ -2710,6 +2714,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   .workspace-leaf-content[data-type='backlink'] .backlink-pane,
   .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
   .modal.mod-settings .vertical-tab-content,
+  .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
   body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
   .is-phone .modal.mod-settings .vertical-tab-header
 )::-webkit-scrollbar-thumb:vertical,
@@ -2722,6 +2727,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   .workspace-leaf-content[data-type='backlink'] .backlink-pane,
   .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
   .modal.mod-settings .vertical-tab-content,
+  .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
   body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
   .is-phone .modal.mod-settings .vertical-tab-header
 )::-webkit-scrollbar-thumb:vertical:hover,
@@ -2734,6 +2740,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
   .workspace-leaf-content[data-type='backlink'] .backlink-pane,
   .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
   .modal.mod-settings .vertical-tab-content,
+  .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
   body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
   .is-phone .modal.mod-settings .vertical-tab-header
 )::-webkit-scrollbar-thumb:vertical:active {
@@ -2777,6 +2784,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   ) {
@@ -2796,6 +2804,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   ) {
@@ -2826,6 +2835,23 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
 
   .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane {
     --ob-scrollbar-panel-top: var(--size-4-3);
+  }
+
+  /* 市场独立于 mod-settings：列表的 padding 在内层网格，详情在滚动容器自身。
+     只接管这两个有界视口，不给详情外壳或 README 内的代码块加 size containment。 */
+  .modal.mod-community-modal .community-modal-search-results-wrapper {
+    --ob-scrollbar-panel-top: 0px;
+    --ob-scrollbar-panel-bottom: 0px;
+  }
+
+  .modal.mod-community-modal .community-modal-info {
+    --ob-scrollbar-panel-top: var(--size-4-8);
+    --ob-scrollbar-panel-bottom: var(--size-4-8);
+  }
+
+  .is-phone .modal.mod-community-modal .community-modal-info {
+    --ob-scrollbar-panel-top: var(--size-4-18);
+    --ob-scrollbar-panel-bottom: var(--size-4-4);
   }
 
   .modal.mod-settings .vertical-tab-content {
@@ -2869,6 +2895,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical,
@@ -2881,6 +2908,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical:hover,
@@ -2893,6 +2921,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical:active {
@@ -2930,6 +2959,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
       .workspace-leaf-content[data-type='backlink'] .backlink-pane,
       .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
       .modal.mod-settings .vertical-tab-content,
+      .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
       body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
       .is-phone .modal.mod-settings .vertical-tab-header
     )::-webkit-scrollbar-thumb:vertical,
@@ -2942,6 +2972,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
       .workspace-leaf-content[data-type='backlink'] .backlink-pane,
       .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
       .modal.mod-settings .vertical-tab-content,
+      .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
       body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
       .is-phone .modal.mod-settings .vertical-tab-header
     )::-webkit-scrollbar-thumb:vertical:hover,
@@ -2954,6 +2985,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
       .workspace-leaf-content[data-type='backlink'] .backlink-pane,
       .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
       .modal.mod-settings .vertical-tab-content,
+      .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
       body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
       .is-phone .modal.mod-settings .vertical-tab-header
     )::-webkit-scrollbar-thumb:vertical:active {
@@ -2972,6 +3004,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-track:vertical {
@@ -2987,6 +3020,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical,
@@ -2999,6 +3033,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical:hover,
@@ -3011,6 +3046,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical:active {
@@ -3032,6 +3068,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-track-piece:vertical:decrement,
@@ -3044,6 +3081,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-track-piece:vertical:increment {
@@ -3059,6 +3097,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-track:vertical {
@@ -3074,6 +3113,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical,
@@ -3086,6 +3126,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical:hover,
@@ -3098,6 +3139,7 @@ body:not(.is-mobile) .side-dock-ribbon-action:hover {
     .workspace-leaf-content[data-type='backlink'] .backlink-pane,
     .workspace-leaf-content[data-type='outgoing-link'] .outgoing-link-pane,
     .modal.mod-settings .vertical-tab-content,
+    .modal.mod-community-modal :is(.community-modal-search-results-wrapper, .community-modal-info),
     body:not(.is-phone) .modal.mod-settings .vertical-tab-header :is(.vertical-tab-header-group-container, .setting-search-results),
     .is-phone .modal.mod-settings .vertical-tab-header
   )::-webkit-scrollbar-thumb:vertical:active {
